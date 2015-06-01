@@ -1,13 +1,21 @@
 package com.shhutapp.fragments.area;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.shhutapp.Actions;
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
 import com.shhutapp.controls.Clickator;
@@ -17,6 +25,8 @@ import com.shhutapp.geo.maparea.MapAreaManager;
 import com.shhutapp.geo.maparea.MapAreaMeasure;
 import com.shhutapp.geo.maparea.MapAreaWrapper;
 import com.shhutapp.pages.BasePage;
+import com.shhutapp.services.Locator;
+import com.shhutapp.social.twitter.extpack.winterwell.json.JSONObject;
 import com.shhutapp.utils.Geo;
 
 /**
@@ -28,15 +38,24 @@ public class Map extends BaseFragments{
     private Clickator clickator;
     private MapAreaManager manager;
     private Bundle saved;
+    private RelativeLayout rlMyLocation;
+    private double lat;
+    private double lon;
     public Map(){
         super(MainActivity.getMainActivity());
+        lat = 0;
+        lon = 0;
     }
     public Map(MainActivity act){
         super(act);
+        lat = 0;
+        lon = 0;
     }
     public Map(MainActivity act, BasePage page){
         super(act);
         this.page = page;
+        lat = 0;
+        lon = 0;
     }
     @Override
     public   void onCreate(Bundle saved){
@@ -58,10 +77,25 @@ public class Map extends BaseFragments{
         clickator = (Clickator) rView.findViewById(R.id.clickator);
         clickator.setMap(zv.getMap());
         clickator.setAreaManager(createManager());
+        rlMyLocation = (RelativeLayout) rView.findViewById(R.id.rlMyLocation);
+        rlMyLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                act.startService(new Intent(MainActivity.getMainActivity(), Locator.class));
+            }
+        });
     }
     @Override
     public void onResume(){
         super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Actions.Location);
+        act.registerReceiver(brMyLocation, filter);
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        act.unregisterReceiver(brMyLocation);
     }
     private MapAreaManager createManager(){
         return new MapAreaManager(zv.getMap(), 4, Color.RED, Color.HSVToColor(70, new float[] {1, 1, 200}),
@@ -106,5 +140,17 @@ public class Map extends BaseFragments{
                 });
         //map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon),18)); ;
     }
-
+    private BroadcastReceiver brMyLocation = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String command = intent.getExtras().getString("command");
+            if(command != null) {
+                JSONObject obj = new JSONObject(command);
+                lat = obj.getDouble("lat");
+                lon = obj.getDouble("lon");
+                CameraPosition pos = new CameraPosition.Builder().target(new LatLng(lat,lon)).zoom(18).build();
+                zv.getMap().animateCamera(CameraUpdateFactory.newCameraPosition(pos));
+            }
+        }
+    };
 }

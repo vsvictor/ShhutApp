@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
+import com.shhutapp.utils.Convertor;
 import com.shhutapp.utils.Geo;
 
 public class MapAreaWrapper {
@@ -41,15 +42,18 @@ public class MapAreaWrapper {
         Point pCenter = map.getProjection().toScreenLocation(center);
         Point pRadius = map.getProjection().toScreenLocation(MapAreasUtils.toRadiusLatLng(center, radiusMeters));
         double pixels = Geo.distance(pCenter, pRadius);
-        double d = pixels/3;
         if (centerDrawableId != -1) {
-            BitmapFactory.Options opt = new BitmapFactory.Options();
-            opt.inSampleSize = (int)pixels;
-            Bitmap b = BitmapFactory.decodeResource(MainActivity.getMainActivity().getResources(), R.drawable.logo,opt);
-            centerMarker.setIcon(BitmapDescriptorFactory.fromBitmap(b));
+            Bitmap bitmap = BitmapFactory.decodeResource(MainActivity.getMainActivity().getResources(),R.drawable.logo);
+            int pHeight = (int)Convertor.convertDpToPixel(50, MainActivity.getMainActivity());
+            int pWidth  = (int)Convertor.convertDpToPixel(38, MainActivity.getMainActivity());
+            Bitmap scaled = Bitmap.createScaledBitmap(bitmap, pWidth, pHeight, false);
+            centerMarker.setIcon(BitmapDescriptorFactory.fromBitmap(scaled));
         }
         if (radiusDrawableId != -1) {
-
+            Bitmap bitmap = BitmapFactory.decodeResource(MainActivity.getMainActivity().getResources(),R.drawable.radius);
+            int pHeight = (int)Convertor.convertDpToPixel(18, MainActivity.getMainActivity());
+            int pWidth  = (int)Convertor.convertDpToPixel(18, MainActivity.getMainActivity());
+            Bitmap scaled = Bitmap.createScaledBitmap(bitmap, pWidth, pHeight, false);
         	radiusMarker.setIcon(BitmapDescriptorFactory.fromResource(radiusDrawableId));
         }
         circle = map.addCircle(new CircleOptions()
@@ -114,5 +118,10 @@ public class MapAreaWrapper {
     @Override
     public String toString() {
     	return "center: " + getCenter() + " radius: " + getRadius();
+    }
+    public void remove(){
+        circle.remove();
+        centerMarker.remove();
+        radiusMarker.remove();
     }
 }

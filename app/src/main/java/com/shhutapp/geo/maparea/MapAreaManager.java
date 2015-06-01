@@ -1,5 +1,4 @@
 package com.shhutapp.geo.maparea;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -199,6 +198,7 @@ public class MapAreaManager implements OnMapLongClickListener{
         		moveDrawableId, radiusDrawableId, moveDrawableAnchorU, moveDrawableAnchorV, resizeDrawableAnchorU, resizeDrawableAnchorV);
         areas.add(circle);
         circleManagerListener.onCreateCircle(circle);
+		isFound = (areas.size()>0);
     }
 	public void setFound(boolean is){
 		isFound = is;
@@ -211,5 +211,10 @@ public class MapAreaManager implements OnMapLongClickListener{
 			if(Geo.distance(wr.getCenter(),geopoint)<wr.getRadius()) return wr;
 		}
 		return null;
+	}
+	public void delete(MapAreaWrapper wr){
+		areas.remove(wr);
+		wr.remove();
+		isFound = (areas.size()>0);
 	}
 }
