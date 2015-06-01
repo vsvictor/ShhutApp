@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="header_left_text">16dp</dimen>
+    <dimen name="header_left_left_buttons">20dp</dimen>
+    <dimen name="header_right_right_buttons">20dp</dimen>
+    <dimen name="header_buttons_height">24dp</dimen>
+    <dimen name="header_buttons_width">24dp</dimen>
+    <dimen name="header_image_width">24dp</dimen>
+    <dimen name="header_image_height">24dp</dimen>
+    <dimen name="header_right_on_off">66dp</dimen>
+    <dimen name="header_on_off_whidth">38dp</dimen>
+    <dimen name="header_on_off_height">24dp</dimen>
+    <dimen name="header_counter_right">64dp</dimen>
+    <dimen name="header_edittext_width">228dp</dimen>
+    <dimen name="header_edittext_left">72dp</dimen>
+</resources>

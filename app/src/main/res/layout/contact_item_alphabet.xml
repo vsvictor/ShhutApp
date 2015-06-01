@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlWhiteListAddItemAlpha"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/white_list_contact_added_height"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="@dimen/white_list_add_contact_selected_panel_width"
+        android:layout_height="match_parent"
+        android:id="@+id/rlSymbol">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A"
+            android:id="@+id/tvSymbol"
+            android:layout_centerInParent="true"
+            android:textSize="24sp"
+            android:textColor="@color/red" />
+    </RelativeLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivAvatarAlpha"
+        android:layout_width="@dimen/white_list_contact_added_avatar_width"
+        android:layout_height="@dimen/white_list_contact_added_avatar_height"
+        android:src="@drawable/avatar"
+        android:layout_marginLeft="@dimen/white_list_contact_added_avatar_left"
+        android:layout_marginTop="@dimen/white_list_contact_added_avatar_top"
+        android:layout_marginRight="@dimen/white_list_contact_added_avatar_right"
+        android:layout_marginBottom="@dimen/white_list_contact_added_avatar_bottom"
+        android:layout_toRightOf="@id/rlSymbol"
+        app:border_width="2dp"
+        app:border_color="#FFFFFFFF"/>
+
+
+    <TextView
+        android:id="@+id/tvNameWhiteListAddAlpha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/ivAvatarAlpha"
+        android:text="tvNameWhiteList"
+        android:textColor="@color/black"
+        android:textSize="@dimen/white_list_contact_text_size" />
+
+    <RelativeLayout
+        android:id="@+id/rlWhiteListSelectAddAlpha"
+        android:layout_width="@dimen/white_list_contact_added_cb_width"
+        android:layout_height="@dimen/white_list_contact_added_cb_height"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/white_list_contact_added_cb_left"
+        android:layout_marginRight="@dimen/white_list_contact_added_cb_right"
+        android:layout_marginTop="@dimen/white_list_contact_added_cb_top"
+        android:layout_marginBottom="@dimen/white_list_contact_added_cb_bottom">
+
+        <ImageView
+            android:id="@+id/rbWhiteListOffAddAlpha"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:src="@drawable/cb_off"
+            android:visibility="visible"
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:id="@+id/rbWhiteListOnAddAlpha"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:src="@drawable/cb_on"
+            android:visibility="invisible"
+            android:scaleType="fitXY" />
+    </RelativeLayout>
+</RelativeLayout>

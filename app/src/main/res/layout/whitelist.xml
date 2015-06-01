@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="@dimen/whitelist_height"
+    android:id="@+id/rlWhiteList"
+    android:background="@color/white">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/whitelist_height"
+        android:id="@+id/rlWhiteListEmpty">
+        <RelativeLayout
+            android:layout_width="@dimen/whitelist_piccenter_width"
+            android:layout_height="@dimen/whitelist_piccenter_height"
+            android:id="@+id/rlWhiteListCenter"
+            android:layout_marginTop="@dimen/whitelist_piccenter_top"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ivWhiteListCenter"
+                android:src="@drawable/whitelist_center"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_firs_whitelist"
+                android:id="@+id/tvWhiteListCenterText"
+                android:textColor="@color/blue_body"
+                android:textSize="@dimen/messages_list_add_messages_text_size"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/messages_list_add_messages_top" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/whitelist_height"
+        android:id="@+id/rlWhiteListData">
+
+        <com.fortysevendeg.swipelistview.SwipeListView
+            xmlns:swipe="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/lvWhiteList"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="0dp"
+            android:listSelector="#00000000"
+            swipe:swipeActionLeft="reveal"
+            swipe:swipeActionRight="reveal"
+            swipe:swipeAnimationTime="0"
+            swipe:swipeBackView="@+id/whitelist_item_back"
+            swipe:swipeCloseAllItemsWhenMoveList="true"
+            swipe:swipeFrontView="@+id/whitelist_item_front"
+            swipe:swipeMode="left"
+            swipe:swipeOffsetLeft="328dp"
+            swipe:swipeOffsetRight="0dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/message_list_bottom_height"
+        android:id="@+id/rlWhiteListBottom"
+        android:layout_alignParentBottom="true"></RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/whitelist_button_pic_width"
+        android:layout_height="@dimen/whitelist_button_pic_height"
+        android:id="@+id/rlWhiteListAddButton"
+        android:layout_above="@+id/rlWhiteListBottom"
+        android:layout_marginBottom="@dimen/white_list_add_add_button_bottom"
+        android:layout_marginRight="@dimen/white_list_add_add_button_right"
+        android:layout_alignParentRight="true">
+
+        <ImageView
+            android:layout_width="@dimen/white_list_add_add_center_button_width"
+            android:layout_height="@dimen/white_list_add_add_center_button_height"
+            android:id="@+id/ivWhiteListAddButton"
+            android:src="@drawable/add_card"
+            android:scaleType="fitXY"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/white_list_add_add_center_button_right"
+            android:layout_marginBottom="@dimen/white_list_add_add_center_button_bottom" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivWhiteListAllMessage"
+            android:src="@drawable/whitelist_button_pic" />
+    </RelativeLayout>
+</RelativeLayout>

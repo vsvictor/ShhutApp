@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="queittime_list_piccenter_left">88dp</dimen>
+    <dimen name="queittime_list_piccenter_top">190dp</dimen>
+    <dimen name="queittime_list_piccenter_width">184dp</dimen>
+    <dimen name="queittime_list_piccenter_height">122dp</dimen>
+
+    <dimen name="queittime_list_add_messages_top">30dp</dimen>
+
+    <dimen name="queittime_list_add_add_button_height">65dp</dimen>
+    <dimen name="queittime_list_add_add_button_width">65dp</dimen>
+    <dimen name="queittime_list_add_add_button_bottom">16dp</dimen>
+    <dimen name="queittime_list_add_add_button_right">16dp</dimen>
+    <dimen name="queittime_bottom_height">48dp</dimen>
+
+    <dimen name="queittime_list_add_messages_text_size">18sp</dimen>
+
+    <dimen name="queittime_list_add_add_center_button_height">56dp</dimen>
+    <dimen name="queittime_list_add_add_center_button_width">56dp</dimen>
+
+    <dimen name="queittime_item_small_height">65dp</dimen>
+    <dimen name="queittime_item_big_height">72dp</dimen>
+    <dimen name="queittime_item_pics_right">18dp</dimen>
+    <dimen name="queittime_on_off_width">38dp</dimen>
+    <dimen name="queittime_on_off_height">24dp</dimen>
+
+    <dimen name="queittime_pics_step">11dp</dimen>
+    <dimen name="queittime_pics_width">20dp</dimen>
+    <dimen name="queittime_pics_height">20dp</dimen>
+    <dimen name="queittime_item_text_size">16dp</dimen>
+
+    <dimen name="queittime_scale_height">74dp</dimen>
+    <dimen name="queittime_scale_left">18dp</dimen>
+    <dimen name="queittime_scale_right">18dp</dimen>
+    <dimen name="queittime_scale_seek_height">36dp</dimen>
+    <dimen name="queittime_scale_seek_width">324dp</dimen>
+
+    <dimen name="queittime_control_height">72dp</dimen>
+    <dimen name="queittime_control_icon_width">40dp</dimen>
+    <dimen name="queittime_control_icon_height">40dp</dimen>
+    <dimen name="queittime_control_icon_left">59dp</dimen>
+    <dimen name="queittime_control_icon_rigth">59dp</dimen>
+
+    <dimen name="queittime_days_begin_height">40dp</dimen>
+    <dimen name="queittime_days_begin_width">40dp</dimen>
+    <dimen name="queittime_days_begin_left">16dp</dimen>
+    <dimen name="queittime_days_top">16dp</dimen>
+    <dimen name="queittime_days_bottom">16dp</dimen>
+
+    <dimen name="queittime_days_names_left">36dp</dimen>
+    <dimen name="queittime_days_names_right">16dp</dimen>
+    <dimen name="queittime_days_names_height">36dp</dimen>
+
+    <dimen name="queittime_0_day_width">20dp</dimen>
+    <dimen name="queittime_one_day_width">41dp</dimen>
+    <dimen name="queittime_day_first_left">20dp</dimen>
+
+    <string name="queittime">Queit time</string>
+</resources>

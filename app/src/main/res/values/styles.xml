@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="colorPrimary">@color/blue_action_bar</item>
+        <item name="colorPrimaryDark">@color/blue_action_bar</item>
+        <item name="colorAccent">@color/blue_action_bar</item>
+    </style>
+    <style name="QueitTieBarStyle" parent="@android:style/Widget.SeekBar">
+        <item name="android:progressDrawable">@drawable/qt_scale_noact</item>
+        <item name="android:indeterminateDrawable">@drawable/qt_scale_act</item>
+        <item name="android:thumb">@drawable/thumb_scaled</item>
+    </style>
+</resources>

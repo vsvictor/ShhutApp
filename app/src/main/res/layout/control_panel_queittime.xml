@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/rlQueitTimeControlPanel"
+    android:background="@color/blue_body">
+
+    <RelativeLayout
+        android:layout_width="@dimen/queittime_control_icon_width"
+        android:layout_height="@dimen/queittime_control_icon_height"
+        android:layout_marginLeft="@dimen/queittime_control_icon_left"
+        android:layout_marginTop="@dimen/controlpanelmain_top"
+        android:layout_centerVertical="true"
+        android:id="@+id/rlQueitTimeDays"
+        android:layout_marginBottom="@dimen/controlpanelmain_bottom">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivDaysOff"
+            android:scaleType="fitXY"
+            android:visibility="visible"
+            android:src="@drawable/days_off" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivDaysOn"
+            android:visibility="invisible"
+            android:scaleType="fitXY"
+            android:src="@drawable/days_on" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="@dimen/queittime_control_icon_width"
+        android:layout_height="@dimen/queittime_control_icon_height"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/rlQuietTimesWhiteList"
+        android:layout_marginBottom="@dimen/controlpanelmain_bottom">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivQuietTimeWLOff"
+            android:scaleType="fitXY"
+            android:visibility="visible"
+            android:src="@drawable/wl_off" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivQuietTimeWLOn"
+            android:scaleType="fitXY"
+            android:visibility="invisible"
+            android:src="@drawable/wl_on" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="@dimen/queittime_control_icon_width"
+        android:layout_height="@dimen/queittime_control_icon_height"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/queittime_control_icon_rigth"
+        android:layout_alignParentRight="true"
+        android:id="@+id/rlQueitTimeMsg">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivQueitTimeMsgOff"
+            android:scaleType="fitXY"
+            android:visibility="visible"
+            android:src="@drawable/msg_off" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivQueitTimeMsgOn"
+            android:visibility="invisible"
+            android:scaleType="fitXY"
+            android:src="@drawable/msg_on" />
+    </RelativeLayout>
+
+</RelativeLayout>

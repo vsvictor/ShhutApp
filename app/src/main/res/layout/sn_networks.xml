@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/setting_sn_panel_height"
+    android:id="@+id/rlMainControlPanel"
+    android:background="@color/blue_body">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_sn_panel_text_height"
+        android:id="@+id/rlSNPanelText">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send_application"
+            android:id="@+id/textView"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/setting_sn_panel_text_text_size" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/controlpanelmain_image"
+        android:layout_height="@dimen/controlpanelmain_image"
+        android:layout_marginLeft="@dimen/controlpanelmain_left"
+        android:layout_marginTop="@dimen/setting_sn_panel_top"
+        android:id="@+id/rlTwitter"
+        android:layout_marginBottom="@dimen/controlpanelmain_bottom">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivTwitter"
+            android:scaleType="fitXY"
+            android:src="@drawable/twitter" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="@dimen/controlpanelmain_image"
+        android:layout_height="@dimen/controlpanelmain_image"
+        android:layout_marginLeft="@dimen/controlpanelmain_step"
+        android:layout_marginTop="@dimen/setting_sn_panel_top"
+        android:layout_toRightOf="@id/rlTwitter"
+        android:id="@+id/rlFacebook"
+        android:layout_marginBottom="@dimen/controlpanelmain_bottom">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivFacebook"
+            android:scaleType="fitXY"
+            android:src="@drawable/facebook" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="@dimen/controlpanelmain_image"
+        android:layout_height="@dimen/controlpanelmain_image"
+        android:layout_marginLeft="@dimen/controlpanelmain_step"
+        android:layout_marginTop="@dimen/setting_sn_panel_top"
+        android:layout_toRightOf="@id/rlFacebook"
+        android:id="@+id/rlVK"
+        android:layout_marginBottom="@dimen/controlpanelmain_bottom">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivVK"
+            android:scaleType="fitXY"
+            android:src="@drawable/vk" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="@dimen/controlpanelmain_image"
+        android:layout_height="@dimen/controlpanelmain_image"
+        android:layout_marginLeft="@dimen/controlpanelmain_step"
+        android:layout_marginTop="@dimen/setting_sn_panel_top"
+        android:layout_toRightOf="@id/rlVK"
+        android:id="@+id/rlSMS"
+        android:layout_marginBottom="@dimen/controlpanelmain_bottom">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivSMS"
+            android:scaleType="fitXY"
+            android:src="@drawable/sms" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

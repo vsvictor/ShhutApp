@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/queittime_control_height"
+    android:background="@color/blue_body"
+    android:id="@+id/rlQueitTimeDays">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/queittime_days_names_height"
+        android:id="@+id/rlDaysNames"
+        android:layout_marginLeft="@dimen/queittime_days_names_left"
+        android:layout_marginTop="@dimen/queittime_days_top"
+        android:layout_marginBottom="@dimen/queittime_days_bottom"
+        android:layout_marginRight="@dimen/queittime_days_names_right"
+        android:layout_centerVertical="true">
+
+        <RelativeLayout
+            android:layout_width="@dimen/queittime_0_day_width"
+            android:layout_height="match_parent"
+            android:id="@+id/rlDay0"
+            android:background="@color/blue_action_bar">
+            <ImageView
+                android:id="@+id/ivCircle0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/circle_white"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRecFirst0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white_first"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRecLast0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white_last"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/ivRec0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/rect_days_white"
+                android:visibility="invisible" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="@dimen/queittime_one_day_width"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/rlDay0"
+            android:id="@+id/rlDay1"
+            android:background="@drawable/rect_days_blue">
+            <ImageView
+                android:id="@+id/ivCircle1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/circle_white"
+                android:visibility="invisible"
+                android:scaleType="fitXY" />
+            <ImageView
+                android:id="@+id/ivRecFirst1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white_first"
+                android:visibility="invisible"
+                android:scaleType="fitXY" />
+            <ImageView
+                android:id="@+id/ivRecLast1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white_last"
+                android:visibility="invisible"
+                android:scaleType="fitXY" />
+            <ImageView
+                android:id="@+id/ivRec1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white"
+                android:visibility="invisible" />
+            <TextView
+                android:id="@+id/tvDay1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="7dp"
+                android:text="@string/sun"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="@dimen/queittime_one_day_width"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/rlDay1"
+            android:id="@+id/rlDay2"
+            android:background="@drawable/rect_days_blue">
+            <ImageView
+                android:id="@+id/ivCircle2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/circle_white"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRecFirst2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white_first"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRecLast2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white_last"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRec2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white"
+                android:visibility="invisible" />
+            <TextView
+                android:id="@+id/tvDay2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="7dp"
+                android:text="@string/mon"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="@dimen/queittime_one_day_width"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/rlDay2"
+            android:id="@+id/rlDay3"
+            android:background="@drawable/rect_days_blue">
+            <ImageView
+                android:id="@+id/ivCircle3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/circle_white"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRecFirst3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white_first"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRecLast3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white_last"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRec3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/tvDay3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="7dp"
+                android:text="@string/tue"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="@dimen/queittime_one_day_width"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/rlDay3"
+            android:id="@+id/rlDay4"
+            android:background="@drawable/rect_days_blue">
+            <ImageView
+                android:id="@+id/ivCircle4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/circle_white"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRecFirst4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white_first"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRecLast4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white_last"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRec4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/tvDay4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="7dp"
+                android:text="@string/wed"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="@dimen/queittime_one_day_width"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/rlDay4"
+            android:id="@+id/rlDay5"
+            android:background="@drawable/rect_days_blue">
+            <ImageView
+                android:id="@+id/ivCircle5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/circle_white"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRecFirst5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white_first"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRecLast5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white_last"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRec5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/tvDay5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="7dp"
+                android:text="@string/thu"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="@dimen/queittime_one_day_width"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/rlDay5"
+            android:id="@+id/rlDay6"
+            android:background="@drawable/rect_days_blue">
+            <ImageView
+                android:id="@+id/ivCircle6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/circle_white"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRecFirst6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white_first"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRecLast6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white_last"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRec6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/tvDay6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="7dp"
+                android:text="@string/fri"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="@dimen/queittime_one_day_width"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/rlDay6"
+            android:id="@+id/rlDay7"
+            android:background="@drawable/rect_days_blue_last">
+            <ImageView
+                android:id="@+id/ivCircle7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/circle_white"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRecFirst7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white_first"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRecLast7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white_last"
+                android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/ivRec7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rect_days_white"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/tvDay7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="7dp"
+                android:text="@string/sat"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="@dimen/queittime_days_begin_width"
+        android:layout_height="@dimen/queittime_days_begin_height"
+        android:id="@+id/rlDaysBegin"
+        android:layout_marginLeft="@dimen/queittime_days_begin_left"
+        android:layout_marginTop="@dimen/queittime_days_top"
+        android:layout_marginBottom="@dimen/queittime_days_bottom"
+        android:layout_centerVertical="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivDaysBegin"
+            android:src="@drawable/days_on"
+            android:scaleType="fitXY" />
+    </RelativeLayout>
+
+</RelativeLayout>

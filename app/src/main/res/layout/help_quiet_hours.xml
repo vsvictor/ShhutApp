@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerVertical="true"
+    android:layout_centerHorizontal="true"
+    android:clickable="true"
+    android:background="@drawable/help_background_one">
+    <RelativeLayout android:layout_width="match_parent"
+       android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/help_margin_panel_top"
+        >
+    <RelativeLayout
+        android:layout_width="@dimen/controlpanelmain_image"
+        android:layout_height="@dimen/controlpanelmain_image"
+        android:layout_marginLeft="@dimen/controlpanelmain_left"
+        android:layout_marginTop="@dimen/help_margin_panel_top"
+        android:id="@+id/rlDreamMode"
+        android:layout_above="@+id/helpQuietHours"
+        android:layout_marginBottom="@dimen/controlpanelmain_bottom">
+
+
+    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="@dimen/controlpanelmain_image"
+            android:layout_height="@dimen/controlpanelmain_image"
+            android:layout_marginLeft="@dimen/controlpanelmain_step"
+            android:layout_marginTop="@dimen/controlpanelmain_top"
+            android:layout_above="@+id/helpQuietHours"
+            android:layout_toRightOf="@id/rlDreamMode"
+            android:id="@+id/rlQuietHours"
+
+            android:layout_marginBottom="@dimen/controlpanelmain_bottom">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ivQuietHours"
+                android:scaleType="fitXY"
+                android:src="@drawable/quiethours" />
+        </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="@dimen/help_width"
+        android:layout_height="@dimen/help_2_height"
+        android:background="@drawable/help_four"
+        android:layout_marginTop="@dimen/help_margin_hint_top"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/helpQuietHours">
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/help_quiet_hours"
+            android:layout_centerVertical="false"
+            android:id="@+id/helpSetTimeTitle"
+            android:layout_marginLeft="@dimen/help_text_margin_left"
+            android:layout_marginTop="@dimen/help_text_margin_top"
+            android:textSize="18sp"
+
+            android:textColor="@color/black" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/help_quiet_hours_text"
+            android:layout_centerVertical="false"
+            android:id="@+id/helpSetTimeText"
+            android:layout_below="@+id/helpSetTimeTitle"
+            android:layout_marginLeft="@dimen/help_text_margin_left"
+            android:layout_marginTop="@dimen/help_text_margin_top"
+
+            android:textSize="16sp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/help_congrat_next"
+            android:id="@+id/helpQuietHoursNext"
+            android:layout_marginRight="@dimen/help_next_margin_right"
+            android:layout_marginTop="@dimen/help_next_margin_top"
+            android:textSize="14sp"
+            android:textColor="@color/red_light"
+            android:layout_below="@+id/helpSetTimeText"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

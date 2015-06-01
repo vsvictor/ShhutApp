@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llTab"
+    android:layout_width="match_parent"
+    android:layout_height="46dp"
+    android:background="@color/blue_body"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/rlContacts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
+
+        <RelativeLayout
+            android:id="@+id/rlContactsRed"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/red_light" >
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvContactsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/contacts"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlApplications"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
+
+        <RelativeLayout
+            android:id="@+id/rlApplicationRed"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/red_light"
+            android:visibility="invisible" >
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvApplicationsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/applications"
+            android:textColor="@color/white_50_opacity" />
+u
+    </RelativeLayout>
+</LinearLayout>

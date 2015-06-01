@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/queittime_scale_height"
+    android:id="@+id/rlScale"
+    android:background="@color/blue_body">
+
+    <com.shhutapp.controls.MainTimeSeekBar
+        android:layout_width="@dimen/queittime_scale_seek_width"
+        android:layout_height="@dimen/queittime_scale_seek_height"
+        android:max="24"
+        android:id="@+id/sbBegin"
+        android:layout_marginLeft="@dimen/queittime_scale_left"
+        android:layout_marginRight="@dimen/queittime_scale_right"
+        style="@style/QueitTieBarStyle"
+        android:progressDrawable="@null" />
+    <com.shhutapp.controls.SecondTimeSeekBar
+        android:layout_width="@dimen/queittime_scale_seek_width"
+        android:layout_height="@dimen/queittime_scale_seek_height"
+        android:max="24"
+        android:id="@+id/sbBeginSec"
+        android:visibility="invisible"
+        android:layout_marginLeft="@dimen/queittime_scale_left"
+        android:layout_marginRight="@dimen/queittime_scale_right"
+        style="@style/QueitTieBarStyle"
+        android:progressDrawable="@null" />
+
+    <com.shhutapp.controls.MainTimeSeekBar
+        android:layout_width="@dimen/queittime_scale_seek_width"
+        android:layout_height="@dimen/queittime_scale_seek_height"
+        android:max="24"
+        android:id="@+id/sbEnd"
+        android:layout_marginLeft="@dimen/queittime_scale_left"
+        android:layout_marginRight="@dimen/queittime_scale_right"
+        android:layout_below="@id/sbBegin"
+        style="@style/QueitTieBarStyle"
+        android:progressDrawable="@null" />
+    <com.shhutapp.controls.SecondTimeSeekBar
+        android:layout_width="@dimen/queittime_scale_seek_width"
+        android:layout_height="@dimen/queittime_scale_seek_height"
+        android:max="24"
+        android:id="@+id/sbEndSec"
+        android:layout_marginLeft="@dimen/queittime_scale_left"
+        android:layout_marginRight="@dimen/queittime_scale_right"
+        android:layout_below="@id/sbBegin"
+        android:visibility="invisible"
+        style="@style/QueitTieBarStyle"
+        android:progressDrawable="@null" />
+
+</RelativeLayout>

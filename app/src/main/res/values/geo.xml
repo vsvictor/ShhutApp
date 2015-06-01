@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="here">As long as you are here</string>
+    <string name="quiet_hours">Quiet hours</string>
+    <string name="first_from_grand">First</string>
+</resources>

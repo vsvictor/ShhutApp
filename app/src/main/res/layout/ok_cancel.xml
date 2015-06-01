@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="@dimen/ok_cancel_height"
+    android:background="@color/blue_body"
+    android:id="@+id/rlOkCancel">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rlOkCancelWhite"
+        android:layout_marginTop="@dimen/ok_cancel_white_top"
+        android:layout_marginBottom="@dimen/ok_cancel_white_bottom"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="@dimen/ok_cancel_button_red"
+            android:layout_height="match_parent"
+            android:background="@color/red_light"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/ok_cancel_button_red_right"
+            android:layout_marginBottom="@dimen/ok_cancel_white_top"
+            android:layout_marginTop="@dimen/ok_cancel_white_top"
+            android:id="@+id/rlOkCancelOK">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ok"
+                android:textColor="@color/white"
+                android:id="@+id/tvOkCancelOK"
+                android:layout_centerInParent="true"
+                android:textSize="20sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="@dimen/ok_cancel_button_white"
+            android:layout_height="match_parent"
+            android:background="@color/white_50_opacity"
+            android:layout_marginRight="@dimen/ok_cancel_button_red_right"
+            android:layout_marginBottom="@dimen/ok_cancel_white_top"
+            android:layout_marginTop="@dimen/ok_cancel_white_top"
+            android:layout_toLeftOf="@id/rlOkCancelOK"
+            android:id="@+id/rlOkCancelCancel">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:textColor="@color/red_light"
+                android:id="@+id/tvOkCancelCancel"
+                android:layout_centerInParent="true"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

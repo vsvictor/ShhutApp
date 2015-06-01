@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mylocation_width">56dp</dimen>
+    <dimen name="mylocation_height">56dp</dimen>
+    <dimen name="mylocation_bottom">16dp</dimen>
+    <dimen name="mylocation_right">16dp</dimen>
+</resources>

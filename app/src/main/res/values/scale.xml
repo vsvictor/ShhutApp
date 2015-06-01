@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="scale_left">8dp</dimen>
+    <dimen name="scale_right">8dp</dimen>
+    <dimen name="scale_top">10dp</dimen>
+</resources>

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="false"
+    android:id="@+id/rlDreamMain"
+    android:background="@color/black">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rlDreamFilter">
+    </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/press_to_exit"
+        android:id="@+id/tvPressToExit"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rlDreamButtons"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/rl_dream_buttons_panel_right"
+        android:layout_marginTop="@dimen/rl_dream_buttons_panel_top">
+
+        <ImageView
+            android:layout_width="@dimen/rl_dream_buttons_size"
+            android:layout_height="@dimen/rl_dream_buttons_size"
+            android:id="@+id/rlDreamWL"
+            android:layout_marginLeft="@dimen/rl_dream_buttons_left"
+            android:layout_marginRight="@dimen/ok_cancel_button_red_right"
+            android:src="@drawable/dream_wl"
+            android:scaleType="fitXY" />
+        <ImageView
+            android:layout_width="@dimen/rl_dream_buttons_size"
+            android:layout_height="@dimen/rl_dream_buttons_size"
+            android:id="@+id/rlDreamMsg"
+            android:layout_marginLeft="@dimen/rl_dream_buttons_left"
+            android:layout_marginRight="@dimen/ok_cancel_button_red_right"
+            android:src="@drawable/dream_msg"
+            android:scaleType="fitXY" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rlDreamCenter"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="false"
+        android:layout_marginTop="@dimen/rl_dream_center_top">
+
+        <ImageView
+            android:layout_width="@dimen/rl_dream_center_pict_size"
+            android:layout_height="@dimen/rl_dream_center_pict_size"
+            android:id="@+id/ivMonth"
+            android:src="@drawable/dream_month"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/rl_dream_center_pict_bottom" />
+
+        <RelativeLayout
+            android:layout_below="@id/ivMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlDreamBegin"
+            android:layout_centerHorizontal="true">
+
+            <RelativeLayout
+                android:id="@+id/rlDreamBeginPanel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/begin"
+                android:id="@+id/tvDreamBeginText"
+                android:textColor="@color/white"
+                android:textSize="@dimen/rl_dream_center_big_text_size" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_toRightOf="@id/rlDreamBeginPanel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rlDreamBeginValue"
+                android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:id="@+id/tvDreamBeginValue"
+                android:textColor="@color/white"
+                android:textSize="@dimen/rl_dream_center_big_text_size"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_below="@id/rlDreamBeginPanel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rlDreamTimer"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:id="@+id/tvDreamTimerHoursValue"
+                    android:textSize="@dimen/rl_dream_center_big_text_size"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/tvDreamTimerHoursValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/h"
+                    android:layout_alignBaseline="@id/tvDreamTimerHoursValue"
+                    android:id="@+id/tvDreamTimerHoursText"
+                    android:textSize="@dimen/rl_dream_center_small_text_size"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/tvDreamTimerHoursText"
+                    android:text="00"
+                    android:id="@+id/tvDreamTimerMinValue"
+                    android:textSize="@dimen/rl_dream_center_big_text_size"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/tvDreamTimerMinValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/min"
+                    android:layout_alignBaseline="@id/tvDreamTimerHoursValue"
+                    android:id="@+id/tvDreamTimerMinText"
+                    android:textSize="@dimen/rl_dream_center_small_text_size"
+                    android:textColor="@color/white" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rlDreamIconPanel"
+        android:layout_marginTop="@dimen/rl_dream_icon_top"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/rl_dream_icon_panel_left"
+        android:layout_marginRight="@dimen/rl_dream_icon_panel_right">
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rl_dream_icon_panel_height">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/rl_dream_icon_panel_height"
+            android:id="@+id/rlDreamCall">
+
+            <ImageView
+                android:layout_width="@dimen/rl_dream_icon_width"
+                android:layout_height="@dimen/rl_dream_icon_height"
+                android:id="@+id/ivDreamCall"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/dream_call" />
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/ivDreamCall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/tvDreamCallCount"
+                android:singleLine="false"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/rl_dream_icon_text_size" />
+        </RelativeLayout>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rl_dream_icon_panel_height">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/rl_dream_icon_panel_height"
+            android:id="@+id/rlDreamApp"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:layout_width="@dimen/rl_dream_icon_width"
+                android:layout_height="@dimen/rl_dream_icon_height"
+                android:id="@+id/ivDreamApp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/dream_app" />
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/ivDreamApp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/tvDreamAppCount"
+                android:singleLine="false"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/rl_dream_icon_text_size" />
+
+        </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rl_dream_icon_panel_height">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/rl_dream_icon_panel_height"
+            android:id="@+id/rlDreamMessage"
+
+            android:layout_gravity="right"
+            android:layout_alignParentRight="true">
+            <ImageView
+                android:layout_width="@dimen/rl_dream_icon_width"
+                android:layout_height="@dimen/rl_dream_icon_height"
+                android:id="@+id/ivDreamMessage"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/dream_mess" />
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/ivDreamMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/tvDreamMsgCount"
+                android:singleLine="false"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/rl_dream_icon_text_size" />
+
+        </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

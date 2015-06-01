@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/rlMessageNew"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rlMessageNewHeader"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="false"
+        android:layout_centerHorizontal="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/messages_new_header_height"
+            android:id="@+id/rlMessageNewHeaderText"
+            android:layout_centerHorizontal="true"
+            android:background="@color/blue_body">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/message_new_header_text"
+            android:id="@+id/tvMessageNewHeader"
+            android:textColor="@color/white"
+            android:textSize="@dimen/messages_new_header_text_size"
+            android:layout_centerInParent="true" />
+        </RelativeLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ivMessageNewTriangle"
+            android:layout_below="@+id/rlMessageNewHeaderText"
+            android:importantForAccessibility="yes"
+            android:src="@drawable/triangle"
+            android:layout_marginLeft="@dimen/messages_new_triangle_left" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rlMessageNewHeader"
+        android:id="@+id/rlMessageNewEditor">
+
+        <ImageView
+            android:layout_width="@dimen/messages_new_location_width"
+            android:layout_height="@dimen/messages_new_location_height"
+            android:id="@+id/ivMessageNewLocation"
+            android:src="@drawable/location"
+            android:layout_marginLeft="@dimen/messages_new_location_left"
+            android:layout_marginRight="@dimen/messages_new_location_right"
+            android:layout_marginTop="17dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/ivMessageNewLocation"
+
+            android:id="@+id/rlEditText"
+            android:layout_marginRight="16dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/messages_new_edittext_height"
+                android:id="@+id/edMessageNew"
+                android:singleLine="true"
+                android:background="@null"
+                android:layout_marginTop="@dimen/messages_new_edittext_top"
+                android:textSize="@dimen/messages_new_edittext_textsize" >
+                <requestFocus/>
+            </EditText>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edMessageNew"
+                android:id="@+id/rlEditTextNormal"
+                android:visibility="visible">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/messages_new_edittext_bottom_line"
+                    android:id="@+id/ivEditTextLineGreen"
+                    android:src="@drawable/green_line"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/message_new_message_counter_text"
+                    android:layout_below="@id/ivEditTextLineGreen"
+                    android:id="@+id/tvMessageCounter"
+                    android:layout_alignParentRight="true"
+                    android:textSize="@dimen/messages_new_messsage_counter"
+                    android:layout_marginTop="@dimen/messages_new_messsage_counter_top" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edMessageNew"
+                android:id="@+id/rlEditTextError"
+                android:visibility="invisible">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/messages_new_edittext_bottom_line"
+                    android:id="@+id/ivEditTextLineRed"
+                    android:src="@drawable/red_line"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/message_has_been"
+                    android:id="@+id/tvTextError"
+                    android:textSize="@dimen/messages_new_error_text"
+                    android:textColor="@color/red"
+                    android:layout_marginTop="@dimen/messages_new_messsage_error_text_top"
+                    android:layout_alignParentBottom="false" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:id="@+id/ivMessageError"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/text_error"
+                    android:layout_marginTop="8dp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

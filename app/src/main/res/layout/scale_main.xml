@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="@dimen/scale_height"
+    android:id="@+id/rlScale"
+    android:background="@color/blue_body">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+<!--
+        <RelativeLayout
+            android:id="@+id/rlSeek"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/scale_top"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp" >
+            <com.shhutapp.controls.MainSeekBar
+                android:id="@+id/tbHours"
+                android:layout_width="match_parent"
+                android:layout_height="19dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"/>
+            <com.shhutapp.controls.VertLine
+                android:id="@+id/idVert"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_above="@id/tbHours"
+                android:layout_marginBottom="14dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"/>
+        </RelativeLayout>
+-->
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/rlTimer"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:id="@+id/rlAfter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Text"
+                    android:id="@+id/tvHoursValue"
+                    android:textSize="@dimen/timer_text_size"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Text"
+                    android:id="@+id/tvHours"
+                    android:textSize="@dimen/timer_text_size"
+                    android:textColor="@color/white_50_opacity"
+                    android:layout_toRightOf="@id/tvHoursValue"
+                    android:layout_marginLeft="5dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:id="@+id/tvMinutesValue"
+                    android:textSize="@dimen/timer_text_size"
+                    android:textColor="@color/white"
+                    android:layout_toRightOf="@id/tvHours"
+                    android:layout_marginLeft="5dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Text"
+                    android:id="@+id/tvMinutes"
+                    android:textSize="@dimen/timer_text_size"
+                    android:textColor="@color/white_50_opacity"
+                    android:layout_toRightOf="@id/tvMinutesValue"
+                    android:layout_marginLeft="5dp" />
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="|"
+                android:id="@+id/tvDiriv"
+                android:layout_toRightOf="@id/rlAfter"
+                android:layout_centerHorizontal="true"
+                android:textSize="@dimen/timer_text_size"
+                android:textColor="@color/white_50_opacity"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/tvBefore"
+                android:layout_toRightOf="@id/tvDiriv"
+                android:layout_centerHorizontal="true"
+                android:textSize="@dimen/timer_text_size"
+                android:textColor="@color/white" />
+
+
+        </RelativeLayout>
+        <com.shhutapp.controls.MainTimeSeekBar
+            android:layout_width="@dimen/queittime_scale_seek_width"
+            android:layout_height="@dimen/main_scale_seek_height"
+            android:max="24"
+            android:id="@+id/msbBegin"
+            android:layout_marginLeft="@dimen/queittime_scale_left"
+            android:layout_marginRight="@dimen/queittime_scale_right"
+            style="@style/QueitTieBarStyle"
+            android:progressDrawable="@null"
+            android:layout_centerVertical="true" />
+        <com.shhutapp.controls.SecondTimeSeekBar
+            android:layout_width="@dimen/queittime_scale_seek_width"
+            android:layout_height="@dimen/main_scale_seek_height"
+            android:max="24"
+            android:id="@+id/msbSeconds"
+            android:layout_marginLeft="@dimen/queittime_scale_left"
+            android:layout_marginRight="@dimen/queittime_scale_right"
+            style="@style/QueitTieBarStyle"
+            android:progressDrawable="@null"
+            android:visibility="invisible"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+</RelativeLayout>

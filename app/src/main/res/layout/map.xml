@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <com.shhutapp.controls.ZoneView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map" />
+
+    <com.shhutapp.controls.Clickator
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/clickator" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/message_list_bottom_height"
+        android:id="@+id/rlMapBottom"
+        android:layout_alignParentBottom="true">
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="@dimen/mylocation_width"
+        android:layout_height="@dimen/mylocation_height"
+        android:layout_above="@id/rlMapBottom"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/mylocation_bottom"
+        android:layout_marginRight="@dimen/mylocation_right"
+        android:id="@+id/rlMyLocation">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivMyLocation"
+            android:src="@drawable/mylocation"
+            android:scaleType="fitXY" />
+    </RelativeLayout>
+
+</RelativeLayout>

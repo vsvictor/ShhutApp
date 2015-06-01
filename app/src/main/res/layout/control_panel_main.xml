@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/rlMainControlPanel"
+    android:background="@color/blue_body">
+
+    <RelativeLayout
+        android:layout_width="@dimen/controlpanelmain_image"
+        android:layout_height="@dimen/controlpanelmain_image"
+        android:layout_marginLeft="@dimen/controlpanelmain_left"
+        android:layout_marginTop="@dimen/controlpanelmain_top"
+        android:layout_centerVertical="true"
+        android:id="@+id/rlDreamMode"
+        android:layout_marginBottom="@dimen/controlpanelmain_bottom">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivDreamMode"
+            android:scaleType="fitXY"
+            android:src="@drawable/dreammode" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="@dimen/controlpanelmain_image"
+        android:layout_height="@dimen/controlpanelmain_image"
+        android:layout_marginLeft="@dimen/controlpanelmain_step"
+        android:layout_marginTop="@dimen/controlpanelmain_top"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/rlDreamMode"
+        android:id="@+id/rlQuietHours"
+        android:layout_marginBottom="@dimen/controlpanelmain_bottom">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivQuietHours"
+            android:scaleType="fitXY"
+            android:src="@drawable/quiethours" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="@dimen/controlpanelmain_image"
+        android:layout_height="@dimen/controlpanelmain_image"
+        android:layout_marginLeft="@dimen/controlpanelmain_step"
+        android:layout_marginTop="@dimen/controlpanelmain_top"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/rlQuietHours"
+        android:id="@+id/rlWhiteList"
+        android:layout_marginBottom="@dimen/controlpanelmain_bottom">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivWhiteList"
+            android:scaleType="fitXY"
+            android:src="@drawable/whitelist" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="@dimen/controlpanelmain_image"
+        android:layout_height="@dimen/controlpanelmain_image"
+        android:layout_marginLeft="@dimen/controlpanelmain_step"
+        android:layout_marginTop="@dimen/controlpanelmain_top"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/rlWhiteList"
+        android:id="@+id/rlMessages"
+        android:layout_marginBottom="@dimen/controlpanelmain_bottom">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivMessages"
+            android:scaleType="fitXY"
+            android:src="@drawable/messages" />
+    </RelativeLayout>
+
+</RelativeLayout>

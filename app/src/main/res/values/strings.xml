@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ShhutApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="min">min</string>
+    <string name="add_firs_place">Add you\nfirst location!</string>
+    <string name="add_firs_massage">Make\nfirst message!</string>
+    <string name="add_firs_whitelist">Make\nfirst white list!</string>
+    <string name="add_firs_queittime">Make\nfirst queit time!</string>
+    <string name="h">h</string>
+    <string name="m">m</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="social_text">Hi! I use ShhutApp. This innovative application to manage alerts on Android. ShhutApp.com</string>
+
+    <string name="help_congrat_next">ПРОДОЛЖИТЬ</string>
+
+    <string name="help_congrat">Поздравляем!</string>
+    <string name="help_congrat_text">Вы стали обладателем\nинновационного инструмента\nпо управлению звонками и\nоповещениями.</string>
+
+    <string name="help_set_time">Установка времени</string>
+    <string name="help_set_time_text">Выставляйте необходимое\nвремя для каждого режима.\nДля выбора минут задержите\nползунок.</string>
+
+    <string name="help_dream_mode">Спящий режим</string>
+    <string name="help_dream_mode_text">Включение этого режима не\nпозволит Вас отвлечь, чем бы\nВы не занимались.</string>
+
+    <string name="help_quiet_hours">Тихие часы</string>
+    <string name="help_quiet_hours_text">Заранее планируйте время в\nкотрое Вас не побеспокоят.</string>
+
+    <string name="help_white_list">Белый список</string>
+    <string name="help_white_list_text">Составляйте списки из\nконтактов и приложений для\nкоторых Вы будете доступны.</string>
+
+    <string name="help_message">Сообщения</string>
+    <string name="help_message_text">Не заставляйте окружающих\nволноваться! Создавайте\nсообщения, прикрепляя к ним\nгеолокацию</string>
+
+    <string name="help_location">Местоположение</string>
+    <string name="help_location_text">Отмечайте места, сочетая\nмногообразие перечисленных\nфункций, и Вы взгляните\nпо-новому на использование\nВашего устройства</string>
+
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="controlpanelmain_left">16dp</dimen>
+    <dimen name="controlpanelmain_right">16dp</dimen>
+    <dimen name="controlpanelmain_top">16dp</dimen>
+    <dimen name="controlpanelmain_bottom">16dp</dimen>
+    <dimen name="controlpanelmain_step">56dp</dimen>
+    <dimen name="controlpanelmain_image">40dp</dimen>
+</resources>

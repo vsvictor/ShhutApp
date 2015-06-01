@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="@dimen/header_height"
+    android:id="@+id/rlHeader"
+    android:background="@color/blue_body">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:layout_centerVertical="true"
+        android:id="@+id/tvHeader"
+        android:layout_marginLeft="@dimen/header_left_text"
+        android:textSize="20sp"
+        android:textColor="@color/white" />
+
+    <EditText
+        android:layout_width="@dimen/header_edittext_width"
+        android:layout_height="wrap_content"
+        android:id="@+id/edSearch"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/header_edittext_left"
+        android:textSize="20sp"
+        android:background="@null"
+        android:visibility="invisible" />
+
+    <RelativeLayout
+        android:layout_width="@dimen/header_buttons_width"
+        android:layout_height="@dimen/header_buttons_height"
+        android:layout_marginLeft="@dimen/header_left_left_buttons"
+        android:layout_centerVertical="true"
+        android:id="@+id/rlLeftButtons">
+
+        <ImageView
+            android:layout_width="@dimen/header_image_width"
+            android:layout_height="@dimen/header_image_height"
+            android:id="@+id/ivCancel"
+            android:layout_alignParentBottom="false"
+            android:src="@drawable/cancel"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:layout_width="@dimen/header_image_width"
+            android:layout_height="@dimen/header_image_height"
+            android:id="@+id/ivBack"
+            android:src="@drawable/back"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:layout_width="@dimen/header_image_width"
+            android:layout_height="@dimen/header_image_height"
+            android:id="@+id/ivBackSearch"
+            android:visibility="invisible"
+            android:src="@drawable/back_gray"
+            android:scaleType="fitXY" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/header_buttons_width"
+        android:layout_height="@dimen/header_buttons_height"
+        android:id="@+id/rlRightButtons"
+        android:layout_marginRight="@dimen/header_right_right_buttons"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true">
+
+        <ImageView
+            android:layout_width="@dimen/header_image_width"
+            android:layout_height="@dimen/header_image_height"
+            android:id="@+id/ivOk"
+            android:src="@drawable/ok"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:layout_width="@dimen/header_image_width"
+            android:layout_height="@dimen/header_image_height"
+            android:id="@+id/ivNext"
+            android:src="@drawable/next"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:layout_width="@dimen/header_image_width"
+            android:layout_height="@dimen/header_image_height"
+            android:id="@+id/ivSearch"
+            android:src="@drawable/search"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:layout_width="@dimen/header_image_width"
+            android:layout_height="@dimen/header_image_height"
+            android:id="@+id/ivHelp"
+            android:src="@drawable/help"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:layout_width="@dimen/header_image_width"
+            android:layout_height="@dimen/header_image_height"
+            android:id="@+id/ivMenu"
+            android:src="@drawable/menu"
+            android:visibility="invisible" />
+        <ImageView
+            android:layout_width="@dimen/header_image_width"
+            android:layout_height="@dimen/header_image_height"
+            android:id="@+id/ivCancelSearch"
+            android:src="@drawable/cancel_gray"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/header_on_off_whidth"
+        android:layout_height="@dimen/header_on_off_height"
+        android:id="@+id/rlCardOnOff"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/header_right_on_off">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivCardOn"
+            android:layout_centerInParent="true"
+            android:src="@drawable/card_on"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivCardOff"
+            android:layout_centerInParent="true"
+            android:src="@drawable/card_off"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00"
+        android:textSize="20dp"
+        android:id="@+id/tvCounter"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/header_counter_right"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/white"
+        android:visibility="invisible" />
+
+</RelativeLayout>

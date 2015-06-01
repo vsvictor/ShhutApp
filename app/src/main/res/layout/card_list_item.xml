@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlCardListItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/card_list_item_front"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/ivGrayLine"
+        android:layout_width="match_parent"
+        android:layout_height="113dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/card" />
+    
+    <TextView
+        android:id="@+id/tvCardName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="TextView"
+        android:textSize="24sp" />
+
+    <RelativeLayout
+        android:id="@+id/rlAddressSymbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvCardName"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp" >
+
+        <ImageView
+            android:id="@+id/ivAddressSymbol"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/empty_back" />
+
+        <TextView
+            android:id="@+id/tvAddressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_toRightOf="@id/ivAddressSymbol"
+            android:text="TextView"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/rlActivateSymbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rlAddressSymbol"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp" >
+
+        <ImageView
+            android:id="@+id/ivHere"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/here" />
+
+        <TextView
+            android:id="@+id/tvActivateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_toRightOf="@id/ivHere"
+            android:text="TextView"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/ivHours"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/hours" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlWhiteListSymbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/rlActivateSymbol"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@+id/rlActivateSymbol" >
+
+        <ImageView
+            android:id="@+id/ivWhiteListSymbol"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/hours" />
+
+        <TextView
+            android:id="@+id/tvWhiteListText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_toRightOf="@id/ivWhiteListSymbol"
+            android:text="TextView"
+            android:textSize="14sp" />
+    </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/card_list_item_back"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentRight="true"
+        android:background="@color/gray_light"
+        android:visibility="invisible" >
+
+        <ImageView
+            android:id="@+id/ivCardListDelete"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/delete" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/white_list_contacts_familiar_height"
+        android:id="@+id/rlFamiliar">
+
+        <RelativeLayout
+            android:id="@+id/rlContactsPress"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="@dimen/white_list_contacts_familiar_icon_width"
+            android:layout_height="@dimen/white_list_contacts_familiar_icon_height"
+            android:id="@+id/ivFamiliar"
+            android:layout_marginLeft="@dimen/white_list_contacts_familiar_icon_left"
+            android:layout_marginTop="@dimen/white_list_contacts_familiar_icon_top"
+            android:src="@drawable/familiar"
+            android:scaleType="fitXY"
+            android:layout_marginBottom="@dimen/white_list_contacts_familiar_icon_bottom"
+            android:layout_marginRight="@dimen/white_list_contacts_familiar_icon_right" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/familiar"
+            android:id="@+id/tvFamiliar"
+            android:textSize="@dimen/white_list_contacts_familiar_text_size"
+            android:layout_toRightOf="@id/ivFamiliar"
+            android:layout_centerVertical="true"
+            android:singleLine="false"
+            android:textColor="@color/black" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="@dimen/white_list_contacts_familiar_all_width"
+            android:layout_height="@dimen/white_list_contacts_familiar_all_height"
+            android:id="@+id/ivAddAllContact"
+            android:layout_marginRight="@dimen/white_list_contacts_familiar_all_right"
+            android:layout_marginLeft="@dimen/white_list_contacts_familiar_all_left"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/add_contact"
+            android:scaleType="fitXY" />
+        <ImageView
+            android:layout_width="@dimen/white_list_contacts_familiar_add_width"
+            android:layout_height="@dimen/white_list_contacts_familiar_add_height"
+            android:id="@+id/ivAddContact"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/ivAddAllContact"
+            android:src="@drawable/add_contact"
+            android:scaleType="fitXY" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/white_list_contacts_unfamiliar_height"
+        android:id="@+id/rlNonFamiliar">
+
+        <ImageView
+            android:layout_width="@dimen/white_list_contacts_unfamiliar_icon_width"
+            android:layout_height="@dimen/white_list_contacts_unfamiliar_icon_height"
+            android:id="@+id/ivUnFamiliar"
+            android:layout_marginLeft="@dimen/white_list_contacts_unfamiliar_icon_left"
+            android:layout_marginTop="@dimen/white_list_contacts_unfamiliar_icon_top"
+            android:src="@drawable/nonfamiliar"
+            android:scaleType="fitXY"
+            android:layout_marginBottom="@dimen/white_list_contacts_unfamiliar_icon_bottom"
+            android:layout_marginRight="@dimen/white_list_contacts_unfamiliar_icon_right" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unfamiliar"
+            android:id="@+id/tvUnFamiliar"
+            android:textSize="@dimen/white_list_contacts_unfamiliar_text_size"
+            android:layout_toRightOf="@id/ivUnFamiliar"
+            android:layout_centerVertical="true"
+            android:singleLine="false"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:layout_width="@dimen/white_list_contacts_unfamiliar_cb_width"
+            android:layout_height="@dimen/white_list_contacts_unfamiliar_cb_height"
+            android:id="@+id/ivCBUnfamiliar_on"
+            android:layout_marginRight="@dimen/white_list_contacts_unfamiliar_cb_right"
+            android:layout_marginLeft="@dimen/white_list_contacts_unfamiliar_cb_left"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/cb_on"
+            android:scaleType="fitXY" />
+        <ImageView
+            android:layout_width="@dimen/white_list_contacts_unfamiliar_cb_width"
+            android:layout_height="@dimen/white_list_contacts_unfamiliar_cb_height"
+            android:id="@+id/ivCBUnfamiliar_off"
+            android:layout_marginRight="@dimen/white_list_contacts_unfamiliar_cb_right"
+            android:layout_marginLeft="@dimen/white_list_contacts_unfamiliar_cb_left"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/cb_off"
+            android:scaleType="fitXY" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/white_list_contacts_org_height"
+        android:id="@+id/rlOrganizations">
+
+        <ImageView
+            android:layout_width="@dimen/white_list_contacts_org_icon_width"
+            android:layout_height="@dimen/white_list_contacts_org_icon_height"
+            android:id="@+id/ivOrgizations"
+            android:layout_marginLeft="@dimen/white_list_contacts_org_icon_left"
+            android:layout_marginTop="@dimen/white_list_contacts_org_icon_top"
+            android:src="@drawable/organizations"
+            android:scaleType="fitXY"
+            android:layout_marginBottom="@dimen/white_list_contacts_org_icon_bottom"
+            android:layout_marginRight="@dimen/white_list_contacts_org_icon_right" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/ivOrgizations"
+            android:id="@+id/llOrganizationsText"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/num_orgs"
+                android:id="@+id/tvOrganizations"
+                android:textSize="@dimen/white_list_contacts_org_text_size"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/not_book"
+                android:id="@+id/tvOrganizationsExt"
+                android:textSize="@dimen/white_list_contacts_orgext_text_size"
+                android:textColor="@color/black_light" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="@dimen/white_list_contacts_org_cb_width"
+            android:layout_height="@dimen/white_list_contacts_org_cb_height"
+            android:id="@+id/ivCBOrganizations_on"
+            android:layout_marginRight="@dimen/white_list_contacts_org_cb_right"
+            android:layout_marginLeft="@dimen/white_list_contacts_org_cb_left"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/cb_on"
+            android:scaleType="fitXY"
+            android:layout_marginTop="@dimen/white_list_contacts_org_cb_top"
+            android:layout_marginBottom="@dimen/white_list_contacts_org_cb_bottom" />
+        <ImageView
+            android:layout_width="@dimen/white_list_contacts_org_cb_width"
+            android:layout_height="@dimen/white_list_contacts_org_cb_height"
+            android:id="@+id/ivCBOrganizations_off"
+            android:layout_marginRight="@dimen/white_list_contacts_org_cb_right"
+            android:layout_marginLeft="@dimen/white_list_contacts_org_cb_left"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/cb_off"
+            android:scaleType="fitXY"
+            android:layout_marginTop="@dimen/white_list_contacts_org_cb_top"
+            android:layout_marginBottom="@dimen/white_list_contacts_org_cb_bottom" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/white_list_contacts_urgent_height"
+        android:id="@+id/rlUrgent">
+
+        <ImageView
+            android:layout_width="@dimen/white_list_contacts_urgent_icon_width"
+            android:layout_height="@dimen/white_list_contacts_urgent_icon_height"
+            android:id="@+id/ivUrgent"
+            android:layout_marginLeft="@dimen/white_list_contacts_urgent_icon_left"
+            android:layout_marginTop="@dimen/white_list_contacts_urgent_icon_top"
+            android:src="@drawable/urgent"
+            android:scaleType="fitXY"
+            android:layout_marginBottom="@dimen/white_list_contacts_urgent_icon_bottom"
+            android:layout_marginRight="@dimen/white_list_contacts_urgent_icon_right" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/ivUrgent"
+            android:id="@+id/llUrgentText"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/urgent"
+                android:id="@+id/tvUrgent"
+                android:textSize="@dimen/white_list_contacts_urgent_text_size"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/urgent_ext"
+                android:id="@+id/tvUrgentExt"
+                android:textSize="@dimen/white_list_contacts_urgentext_text_size"
+                android:textColor="@color/black_light" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="@dimen/white_list_contacts_urgent_cb_width"
+            android:layout_height="@dimen/white_list_contacts_urgent_cb_height"
+            android:id="@+id/ivCBUrgent_on"
+            android:layout_marginRight="@dimen/white_list_contacts_urgent_cb_right"
+            android:layout_marginLeft="@dimen/white_list_contacts_urgent_cb_left"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/cb_on"
+            android:scaleType="fitXY"
+            android:layout_marginTop="@dimen/white_list_contacts_urgent_cb_top"
+            android:layout_marginBottom="@dimen/white_list_contacts_urgent_cb_bottom" />
+        <ImageView
+            android:layout_width="@dimen/white_list_contacts_urgent_cb_width"
+            android:layout_height="@dimen/white_list_contacts_urgent_cb_height"
+            android:id="@+id/ivCBUrgent_off"
+            android:layout_marginRight="@dimen/white_list_contacts_urgent_cb_right"
+            android:layout_marginLeft="@dimen/white_list_contacts_urgent_cb_left"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/cb_off"
+            android:scaleType="fitXY"
+            android:layout_marginTop="@dimen/white_list_contacts_urgent_cb_top"
+            android:layout_marginBottom="@dimen/white_list_contacts_urgent_cb_bottom" />
+
+    </RelativeLayout>
+</LinearLayout>

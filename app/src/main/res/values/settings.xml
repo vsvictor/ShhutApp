@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="setting_sn_panel_height">104dp</dimen>
+    <dimen name="setting_sn_panel_top">48dp</dimen>
+    <dimen name="setting_sn_panel_text_height">32dp</dimen>
+    <dimen name="setting_sn_panel_text_text_size">24sp</dimen>
+
+    <string name="settings">Settings</string>
+    <string name="send_application">Send application!</string>
+</resources>

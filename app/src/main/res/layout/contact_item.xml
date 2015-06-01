@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlWhiteListAddItem"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/white_list_contact_added_height"
+    android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivAvatar"
+        android:layout_width="@dimen/white_list_contact_added_avatar_width"
+        android:layout_height="@dimen/white_list_contact_added_avatar_height"
+        android:src="@drawable/avatar"
+        android:layout_marginLeft="@dimen/white_list_contact_added_avatar_left"
+        android:layout_marginTop="@dimen/white_list_contact_added_avatar_top"
+        android:layout_marginRight="@dimen/white_list_contact_added_avatar_right"
+        android:layout_marginBottom="@dimen/white_list_contact_added_avatar_bottom"
+        app:border_width="2dp"
+        app:border_color="#FFFFFFFF"/>
+
+
+    <TextView
+        android:id="@+id/tvNameWhiteListAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/ivAvatar"
+        android:text="tvNameWhiteList"
+        android:textColor="@color/black"
+        android:textSize="@dimen/white_list_contact_text_size" />
+
+    <RelativeLayout
+        android:id="@+id/rlWhiteListSelectAdd"
+        android:layout_width="@dimen/white_list_contact_added_cb_width"
+        android:layout_height="@dimen/white_list_contact_added_cb_height"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/white_list_contact_added_cb_left"
+        android:layout_marginRight="@dimen/white_list_contact_added_cb_right"
+        android:layout_marginTop="@dimen/white_list_contact_added_cb_top"
+        android:layout_marginBottom="@dimen/white_list_contact_added_cb_bottom">
+
+        <ImageView
+            android:id="@+id/rbWhiteListOffAdd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:src="@drawable/cb_off"
+            android:visibility="visible"
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:id="@+id/rbWhiteListOnAdd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:src="@drawable/cb_on"
+            android:visibility="invisible"
+            android:scaleType="fitXY" />
+    </RelativeLayout>
+</RelativeLayout>

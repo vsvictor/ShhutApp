@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/queittime_list_height"
+    android:id="@+id/rlQueitTime"
+    android:background="@color/white">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/queittime_list_height"
+        android:id="@+id/rlQueitTimeEmpty">
+        <RelativeLayout
+            android:layout_width="@dimen/queittime_list_piccenter_width"
+            android:layout_height="@dimen/queittime_list_piccenter_height"
+            android:id="@+id/rlQueitTimeCenter"
+            android:layout_marginTop="@dimen/queittime_list_piccenter_top"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ivQueitTimeCenter"
+                android:src="@drawable/queittime_center"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_firs_queittime"
+                android:id="@+id/tvQueitTimeCenterText"
+                android:textColor="@color/blue_body"
+                android:textSize="@dimen/queittime_list_add_messages_text_size"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/queittime_list_add_messages_top" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/queittime_list_height"
+        android:id="@+id/rlQueitTimeData">
+
+        <com.fortysevendeg.swipelistview.SwipeListView
+            xmlns:swipe="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/lvQueitTime"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="0dp"
+            android:listSelector="#00000000"
+            swipe:swipeActionLeft="reveal"
+            swipe:swipeActionRight="reveal"
+            swipe:swipeAnimationTime="0"
+            swipe:swipeBackView="@+id/queittime_item_back"
+            swipe:swipeCloseAllItemsWhenMoveList="true"
+            swipe:swipeFrontView="@+id/queittime_item_front"
+            swipe:swipeMode="left"
+            swipe:swipeOffsetLeft="328dp"
+            swipe:swipeOffsetRight="0dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/queittime_bottom_height"
+        android:id="@+id/rlQueitTimeBottom"
+        android:layout_alignParentBottom="true"></RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/queittime_list_add_add_button_width"
+        android:layout_height="@dimen/queittime_list_add_add_button_height"
+        android:id="@+id/rlQueitAddButton"
+        android:layout_above="@+id/rlQueitTimeBottom"
+        android:layout_marginBottom="@dimen/queittime_list_add_add_button_bottom"
+        android:layout_marginRight="@dimen/queittime_list_add_add_button_right"
+        android:layout_alignParentRight="true">
+
+        <ImageView
+            android:layout_width="@dimen/queittime_list_add_add_center_button_width"
+            android:layout_height="@dimen/queittime_list_add_add_center_button_height"
+            android:id="@+id/ivQueitTimeButton"
+            android:src="@drawable/add_card"
+            android:scaleType="fitXY"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentRight="false"
+            android:layout_marginRight="@dimen/queittime_list_add_add_button_right"
+            android:layout_marginBottom="@dimen/queittime_list_add_add_button_bottom"
+            android:layout_centerInParent="true" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivQueitTimeAllMessage"
+            android:src="@drawable/queittime_button_pic" />
+    </RelativeLayout>
+</RelativeLayout>

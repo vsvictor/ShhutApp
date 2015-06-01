@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="@dimen/message_scale_panel_height"
+    android:id="@+id/rlMessageScale"
+    android:background="@color/blue_body">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rlMessageTimeText"
+        android:layout_centerHorizontal="true">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlMessageListTimeText"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00"
+                android:id="@+id/tvMessageScaleCount"
+                android:textSize="@dimen/messages_list_time_text_size"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/min"
+                android:id="@+id/tvMessageListMinutes"
+                android:layout_toRightOf="@id/tvMessageScaleCount"
+                android:layout_marginLeft="5dp"
+                android:textSize="@dimen/messages_list_time_text_size"
+                android:textColor="@color/white_light" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/message_list_text"
+            android:id="@+id/tvMessageListText"
+            android:layout_below="@id/rlMessageListTimeText"
+            android:textColor="@color/white"
+            android:textSize="@dimen/messages_list_franq_text_size" />
+
+    </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlMessageSeek"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp" >
+            <com.shhutapp.controls.TimeBarHours
+                android:id="@+id/tbMessageTime"
+                android:layout_width="match_parent"
+                android:layout_height="19dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:splitTrack="true"
+                android:layout_marginBottom="14dp"
+                android:layout_marginTop="20dp" />
+        </RelativeLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="@dimen/message_list_height"
+    android:id="@+id/rlMessageList"
+    android:background="@color/white">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/message_list_height"
+        android:id="@+id/rlMessageListEmpty">
+    <RelativeLayout
+        android:layout_width="@dimen/message_list_piccenter_width"
+        android:layout_height="@dimen/message_list_piccenter_height"
+        android:id="@+id/rlMessageListCenter"
+        android:layout_marginTop="@dimen/message_list_piccenter_top"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivMessageListCenter"
+            android:src="@drawable/message_center_pic"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_firs_massage"
+            android:id="@+id/tvMessageListCenterText"
+            android:textColor="@color/blue_body"
+            android:textSize="@dimen/messages_list_add_messages_text_size"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/messages_list_add_messages_top" />
+    </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/message_list_height"
+        android:id="@+id/rlMessageListData">
+
+        <com.fortysevendeg.swipelistview.SwipeListView
+            xmlns:swipe="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/lvMessageList"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="0dp"
+            android:listSelector="#00000000"
+            swipe:swipeActionLeft="reveal"
+            swipe:swipeActionRight="reveal"
+            swipe:swipeAnimationTime="0"
+            swipe:swipeBackView="@+id/message_list_item_back"
+            swipe:swipeCloseAllItemsWhenMoveList="true"
+            swipe:swipeFrontView="@+id/messages_list_item_front"
+            swipe:swipeMode="left"
+            swipe:swipeOffsetLeft="328dp"
+            swipe:swipeOffsetRight="0dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/message_list_bottom_height"
+        android:id="@+id/rlWhiteListBottom"
+        android:layout_alignParentBottom="true"></RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/message_list_add_add_button_width"
+        android:layout_height="@dimen/message_list_add_add_button_height"
+        android:id="@+id/rlMessageListAddButton"
+        android:layout_above="@+id/rlWhiteListBottom"
+        android:layout_marginBottom="@dimen/message_list_add_add_button_bottom"
+        android:layout_marginRight="@dimen/message_list_add_add_button_right"
+        android:layout_alignParentRight="true">
+
+        <ImageView
+            android:layout_width="@dimen/message_list_add_add_center_button_width"
+            android:layout_height="@dimen/message_list_add_add_center_button_height"
+            android:id="@+id/ivMessageListAddButton"
+            android:src="@drawable/add_card"
+            android:scaleType="fitXY"
+            android:layout_centerInParent="true" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivMessageListAllMessage"
+            android:src="@drawable/message_button_pic" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="whitelist_height">560dp</dimen>
+    <dimen name="whitelist_piccenter_width">262dp</dimen>
+    <dimen name="whitelist_piccenter_height">150dp</dimen>
+    <dimen name="whitelist_piccenter_left">50dp</dimen>
+    <dimen name="whitelist_piccenter_top">184dp</dimen>
+
+    <dimen name="whitelist_button_pic_height">106dp</dimen>
+    <dimen name="whitelist_button_pic_width">100dp</dimen>
+    <dimen name="white_list_add_add_button_bottom">16dp</dimen>
+    <dimen name="white_list_add_add_button_right">16dp</dimen>
+    <dimen name="white_list_add_add_center_button_height">56dp</dimen>
+    <dimen name="white_list_add_add_center_button_width">56dp</dimen>
+    <dimen name="white_list_add_add_center_button_right">2dp</dimen>
+    <dimen name="white_list_add_add_center_button_bottom">4dp</dimen>
+
+    <dimen name="white_list_contacts_familiar_height">72dp</dimen>
+    <dimen name="white_list_contacts_familiar_icon_height">40dp</dimen>
+    <dimen name="white_list_contacts_familiar_icon_width">40dp</dimen>
+    <dimen name="white_list_contacts_familiar_icon_left">16dp</dimen>
+    <dimen name="white_list_contacts_familiar_icon_right">16dp</dimen>
+    <dimen name="white_list_contacts_familiar_icon_top">16dp</dimen>
+    <dimen name="white_list_contacts_familiar_icon_bottom">16dp</dimen>
+
+    <dimen name="white_list_contacts_familiar_text_size">16sp</dimen>
+
+    <dimen name="white_list_contacts_familiar_add_height">24dp</dimen>
+    <dimen name="white_list_contacts_familiar_add_width">24dp</dimen>
+
+    <dimen name="white_list_contacts_familiar_all_height">24dp</dimen>
+    <dimen name="white_list_contacts_familiar_all_width">24dp</dimen>
+    <dimen name="white_list_contacts_familiar_all_left">16dp</dimen>
+    <dimen name="white_list_contacts_familiar_all_right">16dp</dimen>
+
+    <dimen name="white_list_contacts_unfamiliar_height">72dp</dimen>
+    <dimen name="white_list_contacts_unfamiliar_icon_height">40dp</dimen>
+    <dimen name="white_list_contacts_unfamiliar_icon_width">40dp</dimen>
+    <dimen name="white_list_contacts_unfamiliar_icon_left">16dp</dimen>
+    <dimen name="white_list_contacts_unfamiliar_icon_right">16dp</dimen>
+    <dimen name="white_list_contacts_unfamiliar_icon_top">16dp</dimen>
+    <dimen name="white_list_contacts_unfamiliar_icon_bottom">16dp</dimen>
+
+    <dimen name="white_list_contacts_unfamiliar_text_size">16sp</dimen>
+
+    <dimen name="white_list_contacts_unfamiliar_cb_height">24dp</dimen>
+    <dimen name="white_list_contacts_unfamiliar_cb_width">24dp</dimen>
+    <dimen name="white_list_contacts_unfamiliar_cb_left">16dp</dimen>
+    <dimen name="white_list_contacts_unfamiliar_cb_right">16dp</dimen>
+
+    <dimen name="white_list_contacts_org_height">84dp</dimen>
+    <dimen name="white_list_contacts_org_icon_height">40dp</dimen>
+    <dimen name="white_list_contacts_org_icon_width">40dp</dimen>
+    <dimen name="white_list_contacts_org_icon_left">16dp</dimen>
+    <dimen name="white_list_contacts_org_icon_right">16dp</dimen>
+    <dimen name="white_list_contacts_org_icon_top">20dp</dimen>
+    <dimen name="white_list_contacts_org_icon_bottom">24dp</dimen>
+
+    <dimen name="white_list_contacts_org_cb_height">24dp</dimen>
+    <dimen name="white_list_contacts_org_cb_width">24dp</dimen>
+    <dimen name="white_list_contacts_org_cb_left">16dp</dimen>
+    <dimen name="white_list_contacts_org_cb_right">16dp</dimen>
+    <dimen name="white_list_contacts_org_cb_top">28dp</dimen>
+    <dimen name="white_list_contacts_org_cb_bottom">32dp</dimen>
+
+    <dimen name="white_list_contacts_org_text_size">16sp</dimen>
+    <dimen name="white_list_contacts_orgext_text_size">14sp</dimen>
+
+    <dimen name="white_list_contacts_urgent_height">92dp</dimen>
+    <dimen name="white_list_contacts_urgent_icon_height">40dp</dimen>
+    <dimen name="white_list_contacts_urgent_icon_width">40dp</dimen>
+    <dimen name="white_list_contacts_urgent_icon_left">16dp</dimen>
+    <dimen name="white_list_contacts_urgent_icon_right">16dp</dimen>
+    <dimen name="white_list_contacts_urgent_icon_top">20dp</dimen>
+    <dimen name="white_list_contacts_urgent_icon_bottom">32dp</dimen>
+
+    <dimen name="white_list_contacts_urgent_cb_height">24dp</dimen>
+    <dimen name="white_list_contacts_urgent_cb_width">24dp</dimen>
+    <dimen name="white_list_contacts_urgent_cb_left">16dp</dimen>
+    <dimen name="white_list_contacts_urgent_cb_right">16dp</dimen>
+    <dimen name="white_list_contacts_urgent_cb_top">20dp</dimen>
+    <dimen name="white_list_contacts_urgent_cb_bottom">48dp</dimen>
+
+    <dimen name="white_list_contacts_urgent_text_size">16sp</dimen>
+    <dimen name="white_list_contacts_urgentext_text_size">14sp</dimen>
+
+    <dimen name="white_list_app_selected_height">190dp</dimen>
+    <dimen name="white_list_app_dirivider_height">2dp</dimen>
+    <dimen name="white_list_app_list_height">322dp</dimen>
+
+    <dimen name="white_list_app_selected_panel_width">36dp</dimen>
+    <dimen name="white_list_app_selected_data_width">314dp</dimen>
+    <dimen name="white_list_app_selected_data_right">10dp</dimen>
+    <dimen name="white_list_app_selected_icon_width">24dp</dimen>
+    <dimen name="white_list_app_selected_icon_height">24dp</dimen>
+    <dimen name="white_list_app_selected_icon_top">32dp</dimen>
+    <dimen name="white_list_app_selected_icon_left">6dp</dimen>
+
+    <dimen name="white_list_app_dirivider_left">36dp</dimen>
+    <dimen name="white_list_app_dirivider_right">10dp</dimen>
+
+    <dimen name="white_list_add_contact_selected_height">190dp</dimen>
+    <dimen name="white_list_add_contact_selected_bottom">5dp</dimen>
+    <dimen name="white_list_add_contact_selected_panel_width">36dp</dimen>
+    <dimen name="white_list_add_contact_selected_data_width">314dp</dimen>
+    <dimen name="white_list_add_contact_selected_data_right">10dp</dimen>
+    <dimen name="white_list_add_contact_selected_data_top">16dp</dimen>
+
+    <dimen name="white_list_add_contact_selected_icon_width">24dp</dimen>
+    <dimen name="white_list_add_contact_selected_icon_height">24dp</dimen>
+    <dimen name="white_list_add_contact_selected_icon_top">32dp</dimen>
+    <dimen name="white_list_add_contact_selected_icon_left">6dp</dimen>
+    <dimen name="white_list_add_contact_dirivider_height">2dp</dimen>
+    <dimen name="white_list_add_contact_dirivider_left">36dp</dimen>
+    <dimen name="white_list_add_contact_dirivider_right">10dp</dimen>
+    <dimen name="white_list_add_contact_list_height">368dp</dimen>
+
+    <dimen name="white_list_contact_added_height">56dp</dimen>
+    <dimen name="white_list_contact_added_top">5dp</dimen>
+    <dimen name="white_list_contact_added_avatar_width">40dp</dimen>
+    <dimen name="white_list_contact_added_avatar_height">40dp</dimen>
+    <dimen name="white_list_contact_added_avatar_top">8dp</dimen>
+    <dimen name="white_list_contact_added_avatar_bottom">8dp</dimen>
+    <dimen name="white_list_contact_added_avatar_left">0dp</dimen>
+    <dimen name="white_list_contact_added_avatar_right">10dp</dimen>
+    <dimen name="white_list_contact_added_cb_width">24dp</dimen>
+    <dimen name="white_list_contact_added_cb_height">24dp</dimen>
+    <dimen name="white_list_contact_added_cb_left">20dp</dimen>
+    <dimen name="white_list_contact_added_cb_right">20dp</dimen>
+    <dimen name="white_list_contact_added_cb_top">16dp</dimen>
+    <dimen name="white_list_contact_added_cb_bottom">16dp</dimen>
+    <dimen name="white_list_contact_text_size">14sp</dimen>
+
+    <string name="whitelist">White list</string>
+    <string name="contacts">Contacts</string>
+    <string name="applications">Applications</string>
+    <string name="familiar">Familiar</string>
+    <string name="familiar_nums">Familiar numbers</string>
+    <string name="unfamiliar">Unfamiliar</string>
+    <string name="num_orgs">Numbers of organizations</string>
+    <string name="not_book">Not from the phone book</string>
+    <string name="urgent">Urgent call</string>
+    <string name="urgent_ext">Allow after 3 missing\nfor 5 minutes</string>
+</resources>

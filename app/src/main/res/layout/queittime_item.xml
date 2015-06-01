@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/queittime_item"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/queittime_item_big_height"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/queittime_item_front"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+        <RelativeLayout
+            android:id="@+id/rlTextQueit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true">
+        <TextView
+            android:id="@+id/tvTextQueit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="@dimen/queittime_item_text_size" />
+
+            <TextView
+                android:id="@+id/tvDaysQueit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvTextQueit"
+                android:text="TextView"
+                android:textSize="@dimen/queittime_item_text_size" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlQueitTimePicts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/queittime_item_pics_right">
+            <RelativeLayout
+                android:layout_width="@dimen/queittime_on_off_width"
+                android:layout_height="@dimen/queittime_on_off_height"
+                android:id="@+id/rlQueitTimeOnOff"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ivQueitTimeOn"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/card_on"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ivQueitTimeOff"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/card_off"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="@dimen/queittime_pics_width"
+                android:layout_height="@dimen/queittime_pics_height"
+                android:id="@+id/rlQueitTimeMsg"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/rlQueitTimeOnOff"
+                android:layout_marginRight="@dimen/queittime_pics_step">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ivQueitTimeMsgOn"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/min_msg_on"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ivQueitTimeMsgOff"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/min_msg_off"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="@dimen/queittime_pics_width"
+                android:layout_height="@dimen/queittime_pics_height"
+                android:id="@+id/rlQueitTimeWL"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/rlQueitTimeMsg"
+                android:layout_marginRight="@dimen/queittime_pics_step">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ivQueitTimeWLOn"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/min_wl_on"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ivQueitTimeWLOff"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/min_wl_off"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="@dimen/queittime_pics_width"
+                android:layout_height="@dimen/queittime_pics_height"
+                android:id="@+id/rlQueitTimeDays"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/rlQueitTimeWL"
+                android:layout_marginRight="@dimen/queittime_pics_step">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ivQueitTimeDaysOn"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/min_days_on"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ivQueitTimeDaysOff"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/min_days_off"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/queittime_item_back"
+        android:layout_width="@dimen/queittime_item_small_height"
+        android:layout_height="@dimen/queittime_item_small_height"
+        android:layout_alignParentRight="true"
+        android:background="@color/gray_light"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/ivQueitTimeDelete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:src="@drawable/delete"
+            android:scaleType="fitXY" />
+    </RelativeLayout>
+
+</RelativeLayout>

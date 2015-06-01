@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="card_list_piccenter_left">70dp</dimen>
+    <dimen name="card_list_piccenter_top">127dp</dimen>
+    <dimen name="card_list_piccenter_width">220dp</dimen>
+    <dimen name="card_list_piccenter_height">151dp</dimen>
+
+    <dimen name="card_list_add_locale_top">36dp</dimen>
+
+    <dimen name="card_list_add_add_button_height">56dp</dimen>
+    <dimen name="card_list_add_add_button_width">56dp</dimen>
+    <dimen name="card_list_add_add_button_bottom">16dp</dimen>
+    <dimen name="card_list_add_add_button_right">16dp</dimen>
+
+    <dimen name="card_list_bottom_height">48dp</dimen>
+
+    <dimen name="card_list_add_locale_text_size">18sp</dimen>
+</resources>

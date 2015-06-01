@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/map_id"
+    android:orientation="vertical">
+<!--
+    <com.shhutapp.controls.ZoneView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true" >
+    </com.shhutapp.controls.ZoneView>
+-->
+<!--
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.shhutapp.fragments.area.MapArea"
+        android:id="@+id/fragment" />
+-->
+    <RelativeLayout
+        android:layout_width="@dimen/mylocation_width"
+        android:layout_height="@dimen/mylocation_height"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/mylocation_bottom"
+        android:layout_marginRight="@dimen/mylocation_right"
+        android:id="@+id/rlMyLocation">
+
+    </RelativeLayout>
+
+</RelativeLayout>

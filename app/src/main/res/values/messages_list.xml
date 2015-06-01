@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="message_list_piccenter_left">51dp</dimen>
+    <dimen name="message_list_piccenter_top">134dp</dimen>
+    <dimen name="message_list_piccenter_width">258dp</dimen>
+    <dimen name="message_list_piccenter_height">137dp</dimen>
+
+    <dimen name="messages_list_add_messages_top">46dp</dimen>
+
+
+    <dimen name="message_list_add_add_center_button_height">56dp</dimen>
+    <dimen name="message_list_add_add_center_button_width">56dp</dimen>
+
+    <dimen name="message_list_bottom_height">48dp</dimen>
+
+    <dimen name="message_scale_panel_height">98dp</dimen>
+
+    <dimen name="messages_list_franq_top">5dp</dimen>
+
+    <dimen name="messages_list_add_messages_text_size">18sp</dimen>
+    <dimen name="messages_list_time_text_size">20sp</dimen>
+    <dimen name="message_list_add_add_button_height">65dp</dimen>
+    <dimen name="message_list_add_add_button_width">65dp</dimen>
+    <dimen name="message_list_add_add_button_bottom">16dp</dimen>
+    <dimen name="message_list_add_add_button_right">16dp</dimen>
+
+    <dimen name="messages_list_franq_text_size">16sp</dimen>
+    <dimen name="messages_new_header_text_size">16sp</dimen>
+
+    <dimen name="messages_item_radio_width">20dp</dimen>
+    <dimen name="messages_item_radio_height">20dp</dimen>
+    <dimen name="messages_item_radio_rigth">20dp</dimen>
+
+    <dimen name="messages_new_height">56dp</dimen>
+    <dimen name="messages_new_header_height">56dp</dimen>
+    <dimen name="messages_new_triangle_height">56dp</dimen>
+    <dimen name="messages_new_triangle_left">22dp</dimen>
+    <dimen name="messages_new_location_width">15dp</dimen>
+    <dimen name="messages_new_location_height">20dp</dimen>
+    <dimen name="messages_new_location_left">22dp</dimen>
+    <dimen name="messages_new_location_right">7dp</dimen>
+
+    <dimen name="messages_new_edittext_height">30dp</dimen>
+    <dimen name="messages_new_edittext_top">12dp</dimen>
+    <dimen name="messages_new_edittext_textsize">16sp</dimen>
+    <dimen name="messages_new_edittext_bottom_line">1dp</dimen>
+
+    <dimen name="messages_new_messsage_counter">12sp</dimen>
+    <dimen name="messages_new_error_text">12sp</dimen>
+    <dimen name="messages_new_text_style">10sp</dimen>
+    <dimen name="messages_new_messsage_counter_top">10dp</dimen>
+    <dimen name="messages_new_messsage_error_text_top">10dp</dimen>
+
+    <string name="messages">Messages</string>
+    <string name="message_list_text">Frequency of sending SMS to single number</string>
+    <string name="message_new_header_text">Add your location in message</string>
+    <string name="message_new_message_counter_text">0/0</string>
+    <string name="message_has_been">This message has been</string>
+</resources>

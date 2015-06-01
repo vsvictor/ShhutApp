@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="@dimen/card_list_height"
+    android:id="@+id/rlCardList"
+    android:background="@color/white">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/card_list_height"
+        android:id="@+id/rlCardListEmpty">
+    <RelativeLayout
+        android:layout_width="@dimen/card_list_piccenter_width"
+        android:layout_height="@dimen/card_list_piccenter_height"
+        android:id="@+id/rlCardListCenter"
+        android:layout_marginTop="@dimen/card_list_piccenter_top"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ivCardListCenter"
+            android:src="@drawable/geo_center_pic" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_firs_place"
+            android:id="@+id/tvCardListCenterText"
+            android:textColor="@color/blue_body"
+            android:textSize="@dimen/card_list_add_locale_text_size"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/card_list_add_locale_top" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/card_list_bottom_height"
+        android:id="@+id/rlCardListBottom"
+        android:layout_alignParentBottom="true"></RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/card_list_add_add_button_width"
+        android:layout_height="@dimen/card_list_add_add_button_height"
+        android:id="@+id/rlAddLocation"
+        android:layout_above="@+id/rlCardListBottom"
+        android:layout_marginBottom="@dimen/card_list_add_add_button_bottom"
+        android:layout_marginRight="@dimen/card_list_add_add_button_right"
+        android:layout_alignParentRight="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivCardListAddLocation"
+            android:src="@drawable/add_location"
+            android:scaleType="fitXY" />
+    </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rlCardListData">
+
+        <com.fortysevendeg.swipelistview.SwipeListView
+            xmlns:swipe="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/lvCardList"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="0dp"
+            android:listSelector="#00000000"
+            swipe:swipeActionLeft="reveal"
+            swipe:swipeActionRight="reveal"
+            swipe:swipeAnimationTime="0"
+            swipe:swipeBackView="@+id/card_list_item_back"
+            swipe:swipeCloseAllItemsWhenMoveList="true"
+            swipe:swipeFrontView="@+id/card_list_item_front"
+            swipe:swipeMode="left"
+            swipe:swipeOffsetLeft="328dp"
+            swipe:swipeOffsetRight="0dp" />
+    </RelativeLayout>
+</RelativeLayout>
