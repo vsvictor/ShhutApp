@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -15,6 +16,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.shhutapp.MainActivity;
+import com.shhutapp.R;
 import com.shhutapp.geo.maparea.MapAreaManager;
 import com.shhutapp.geo.maparea.MapAreaWrapper;
 import com.shhutapp.utils.Geo;
@@ -24,6 +26,10 @@ import com.shhutapp.utils.Geo;
  */
 public class Clickator extends View {
     private boolean downed;
+    private long downed_time = 0;
+    private long down_beg = 0;
+    private long down_end = 0;
+    private boolean partDelete = false;
     private Point lastPoint;
     private GoogleMap map;
     private MapAreaManager manager;
@@ -97,34 +103,63 @@ public class Clickator extends View {
         }
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            return false;
+            Log.i("Gesture", "onFling");
+            MapAreaWrapper wr;
+            Point p = new Point((int)e1.getX(), (int)e1.getY());
+            Log.i("Gesture","Coords"+p.x+":"+p.y);
+            LatLng llast = map.getProjection().fromScreenLocation(p);
+            if(((wr=manager.inArea(llast))!=null)&& partDelete){
+                Log.i("Gesture", "Deleted");
+                manager.delete(wr);
+            }
+            return true;
         }
     });
     private ScaleGestureDetector sg = new ScaleGestureDetector(MainActivity.getMainActivity(), new ScaleGestureDetector.OnScaleGestureListener() {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
             float scale = detector.getScaleFactor();
+            //Log.i("Scale", String.valueOf(scale));
             CameraPosition oldpos = map.getCameraPosition();
-            CameraPosition newpos = new CameraPosition.Builder().target(oldpos.target).zoom(scale*oldpos.zoom).build();
+            float zoom = scale*oldpos.zoom;
+            if(zoom > 18) zoom = 18;
+            int width = Clickator.this.getWidth();
+            int height = Clickator.this.getHeight();
+            Point p = new Point(width/2, height/2);
+            LatLng l = map.getProjection().fromScreenLocation(p);
+            CameraPosition newpos = new CameraPosition.Builder().target(oldpos.target).zoom(zoom).build();
             map.moveCamera(CameraUpdateFactory.newCameraPosition(newpos));
             return true;
         }
         @Override
         public boolean onScaleBegin(ScaleGestureDetector detector) {
+            float scale = detector.getScaleFactor();
+            Log.i("Scale", "Begin:"+String.valueOf(scale));
+            CameraPosition oldpos = map.getCameraPosition();
+            Point p = map.getProjection().toScreenLocation(oldpos.target);
+            Log.i("Scale", "Posinion:" + p.x + ":" + p.y);
+            int i = (int) MainActivity.getMainActivity().getResources().getDimension(R.dimen.abc_action_bar_default_height_material);
+            Log.i("Scale", "Action bar:" + i);
             return true;
         }
         @Override
         public void onScaleEnd(ScaleGestureDetector detector) {
+            float scale = detector.getScaleFactor();
+            Log.i("Scale", "End"+String.valueOf(scale));
         }
     });
     @Override
     public boolean onTouchEvent(MotionEvent event){
         if(event.getAction() == MotionEvent.ACTION_UP){
             downed = false;
+            down_end = event.getEventTime();
+            partDelete = ((down_end-down_beg)<500);
         }
         if(event.getAction() == MotionEvent.ACTION_DOWN){
             lastPoint = new Point((int)event.getX(),(int)event.getY());
             downed = true;
+            partDelete = false;
+            down_beg = event.getDownTime();
         }
         sg.onTouchEvent(event);
         dt.onTouchEvent(event);
