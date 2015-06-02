@@ -43,8 +43,9 @@ public class MapAreaManager implements OnMapLongClickListener{
 	private float moveDrawableAnchorV;
 	private float resizeDrawableAnchorU;
 	private float resizeDrawableAnchorV;
+    private String currName;
 
-	public interface CircleManagerListener {
+    public interface CircleManagerListener {
 		void onCreateCircle(MapAreaWrapper draggableCircle);
 		void onResizeCircleEnd(MapAreaWrapper draggableCircle);
 		void onMoveCircleEnd(MapAreaWrapper draggableCircle);
@@ -194,11 +195,12 @@ public class MapAreaManager implements OnMapLongClickListener{
     		LatLng radiusLatLng = map.getProjection().fromScreenLocation(new Point(screenCenterPoint.x + (int)initRadius.value, screenCenterPoint.y));
     		initRadiusMetersFinal = MapAreasUtils.toRadiusMeters(point, radiusLatLng);
     	}
-        MapAreaWrapper circle = new MapAreaWrapper(map, point, initRadiusMetersFinal, "Name",strokeWidth, strokeColor, fillColor, minRadiusMeters, maxRadiusMeters,
+        currName = String.valueOf(areas.size());
+        MapAreaWrapper circle = new MapAreaWrapper(map, point, initRadiusMetersFinal, currName,strokeWidth, strokeColor, fillColor, minRadiusMeters, maxRadiusMeters,
         		moveDrawableId, radiusDrawableId, moveDrawableAnchorU, moveDrawableAnchorV, resizeDrawableAnchorU, resizeDrawableAnchorV, "Address", MainActivity.getMainActivity());
         areas.add(circle);
         circleManagerListener.onCreateCircle(circle);
-		isFound = (areas.size()>0);
+		isFound = true;//(areas.size()>0);
     }
 	public void setFound(boolean is){
 		isFound = is;
@@ -215,6 +217,15 @@ public class MapAreaManager implements OnMapLongClickListener{
 	public void delete(MapAreaWrapper wr){
 		areas.remove(wr);
 		wr.remove();
-		isFound = (areas.size()>0);
+		isFound = false;
 	}
+	public MapAreaWrapper findByName(String name){
+		for(MapAreaWrapper wr: areas){
+			if(wr.getName().equalsIgnoreCase(name)) return wr;
+		}
+		return null;
+	}
+    public String getCurrentName(){
+        return currName;
+    }
 }

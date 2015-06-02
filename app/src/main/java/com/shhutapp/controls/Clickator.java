@@ -2,6 +2,8 @@ package com.shhutapp.controls;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Point;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -19,6 +21,7 @@ import com.shhutapp.MainActivity;
 import com.shhutapp.R;
 import com.shhutapp.geo.maparea.MapAreaManager;
 import com.shhutapp.geo.maparea.MapAreaWrapper;
+import com.shhutapp.services.Addressator;
 import com.shhutapp.utils.Geo;
 
 /**
@@ -34,6 +37,7 @@ public class Clickator extends View {
     private GoogleMap map;
     private MapAreaManager manager;
     private MotionEvent currevent;
+    private boolean isMenu;
 
     public Clickator(Context context) {
         super(context);
@@ -56,6 +60,9 @@ public class Clickator extends View {
     }
     public void setAreaManager(MapAreaManager manager){
         this.manager = manager;
+    }
+    public void setMenuVisible(boolean isMenu){
+        this.isMenu = isMenu;
     }
     private GestureDetector dt = new GestureDetector(new GestureDetector.OnGestureListener() {
         @Override
@@ -103,6 +110,15 @@ public class Clickator extends View {
                 LatLng l = map.getProjection().fromScreenLocation(p);
                 manager.onMapLongClick(l);
                 manager.setFound(true);
+                MapAreaWrapper wr = manager.findByName(manager.getCurrentName());
+                if(wr != null) {
+                    Intent intent = new Intent(MainActivity.getMainActivity(), Addressator.class);
+                    intent.putExtra("name", wr.getName());
+                    intent.putExtra("lat", wr.getCenter().latitude);
+                    intent.putExtra("long", wr.getCenter().longitude);
+                    intent.putExtra("radius", Math.abs(wr.getRadius()));
+                    MainActivity.getMainActivity().startService(intent);
+                }
             }
         }
         @Override

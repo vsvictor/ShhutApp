@@ -78,6 +78,8 @@ public class MapAreaWrapper {
             Bitmap bitmap = BitmapFactory.decodeResource(MainActivity.getMainActivity().getResources(),R.drawable.logo);
             int pHeight = (int)Convertor.convertDpToPixel((int)(radiusInPixels/6), MainActivity.getMainActivity());
             int pWidth  = (int)Convertor.convertDpToPixel((int)((38*radiusInPixels/6)/56), MainActivity.getMainActivity());
+            if(pHeight<=0) pHeight = 1;
+            if(pWidth<=0) pWidth = 1;
             Bitmap scaled = Bitmap.createScaledBitmap(bitmap, pWidth, pHeight, false);
             centerMarker.setIcon(BitmapDescriptorFactory.fromBitmap(scaled));
         }
@@ -85,6 +87,8 @@ public class MapAreaWrapper {
             Bitmap bitmap = BitmapFactory.decodeResource(MainActivity.getMainActivity().getResources(),R.drawable.radius);
             int pHeight = (int)Convertor.convertDpToPixel((int)(18*(radiusInPixels/6)/56), MainActivity.getMainActivity());
             int pWidth  = (int)Convertor.convertDpToPixel((int)(18*(radiusInPixels/6)/56), MainActivity.getMainActivity());
+            if(pHeight<=0) pHeight = 1;
+            if(pWidth<=0) pWidth = 1;
             Bitmap scaled = Bitmap.createScaledBitmap(bitmap, pWidth, pHeight, false);
         	radiusMarker.setIcon(BitmapDescriptorFactory.fromBitmap(scaled));
         }
@@ -186,6 +190,8 @@ public class MapAreaWrapper {
         Bitmap bitmap = BitmapFactory.decodeResource(MainActivity.getMainActivity().getResources(),R.drawable.logo);
         int pHeight = (int)Convertor.convertDpToPixel((int)(radiusInPixels/6), MainActivity.getMainActivity());
         int pWidth  = (int)Convertor.convertDpToPixel((int)((38*radiusInPixels/6)/56), MainActivity.getMainActivity());
+        if(pHeight<=0) pHeight = 1;
+        if(pWidth<=0) pWidth = 1;
         Bitmap scaled = Bitmap.createScaledBitmap(bitmap, pWidth, pHeight, false);
 
         if(centerMarker != null) centerMarker.remove();
@@ -206,6 +212,9 @@ public class MapAreaWrapper {
         Bitmap bitmap = BitmapFactory.decodeResource(MainActivity.getMainActivity().getResources(),R.drawable.radius);
         int pHeight = (int)Convertor.convertDpToPixel((int)(18*(radiusInPixels/6)/56), MainActivity.getMainActivity());
         int pWidth  = (int)Convertor.convertDpToPixel((int)(18*(radiusInPixels/6)/56), MainActivity.getMainActivity());
+        if(pHeight<=0) pHeight = 1;
+        if(pWidth<=0) pWidth = 1;
+
         Bitmap scaled = Bitmap.createScaledBitmap(bitmap, pWidth, pHeight, false);
 
         if(radiusMarker != null) radiusMarker.remove();

@@ -17,12 +17,169 @@
         android:layout_height="@dimen/message_list_bottom_height"
         android:id="@+id/rlMapBottom"
         android:layout_alignParentBottom="true">
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/map_address_height"
+        android:layout_above="@id/rlMapBottom"
+        android:id="@+id/rlMapAddress"
+        android:background="@color/white"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/tvMapAddress"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlMapSearchBack"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/map_search_height"
+        android:layout_marginLeft="@dimen/map_search_left"
+        android:layout_marginRight="@dimen/map_search_right"
+        android:layout_marginTop="@dimen/map_search_top"
+        android:background="@drawable/rect_map_search" >
+
+        <ImageView
+            android:id="@+id/ivSearchMenu"
+            android:src="@drawable/menu_gray"
+            android:scaleType="fitXY"
+            android:layout_width="@dimen/map_search_menu_width"
+            android:layout_height="@dimen/map_search_menu_height"
+            android:layout_marginLeft="@dimen/map_search_menu_left"
+            android:layout_centerVertical="true" />
+
+        <ImageView
+            android:id="@+id/ivSearchCancel"
+            android:src="@drawable/cancel_gray"
+            android:scaleType="fitXY"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/map_search_cancel_width"
+            android:layout_height="@dimen/map_search_cancel_height"
+            android:layout_marginRight="@dimen/map_search_cancel_right"
+            android:layout_centerVertical="true" />
+
+        <EditText
+            android:id="@+id/edMapTextSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/ivSearchMenu"
+            android:layout_toLeftOf="@id/ivSearchCancel"
+            android:layout_marginLeft="@dimen/map_search_edit_left"
+            android:layout_marginRight="@dimen/map_search_edit_right"
+            android:background="@color/white"
+            android:hint="@string/what_to_look_for"
+            android:inputType="text"
+            android:textSize="@dimen/map_menu_item_textsize" />
 
     </RelativeLayout>
     <RelativeLayout
+        android:layout_marginLeft="@dimen/map_menu_left"
+        android:layout_marginTop="@dimen/map_menu_top"
+        android:background="@drawable/rect_map_search"
+        android:layout_width="@dimen/map_menu_width"
+        android:layout_height="@dimen/map_menu_height"
+        android:id="@+id/rlMapMenu">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/map_menu_topbar_height">
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/item1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/map_menu_item_height">
+            <TextView
+                android:id="@+id/tvItem1"
+                android:text="@string/item1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/map_menu_item_left"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/map_menu_item_textsize" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/item2"
+            android:layout_below="@+id/item1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/map_menu_item_height">
+            <TextView
+                android:id="@+id/tvItem2"
+                android:text="@string/item2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/map_menu_item_left"
+                android:textSize="@dimen/map_menu_item_textsize" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/item3"
+            android:layout_below="@+id/item2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/map_menu_item_height">
+            <TextView
+                android:id="@+id/tvItem3"
+                android:text="@string/item3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/map_menu_item_left"
+                android:textSize="@dimen/map_menu_item_textsize" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/item4"
+            android:layout_below="@+id/item3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/map_menu_item_height">
+            <TextView
+                android:id="@+id/tvItem4"
+                android:text="@string/item4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/map_menu_item_left"
+                android:textSize="@dimen/map_menu_item_textsize" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlMapUpdate"
+        android:layout_below="@+id/rlMapSearchBack"
+        android:layout_marginTop="@dimen/map_update_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/map_update_height">
+        <ImageView
+            android:src="@drawable/update_map"
+            android:scaleType="fitXY"
+            android:layout_centerInParent="true"
+            android:layout_width="@dimen/map_update_height"
+            android:layout_height="@dimen/map_update_height"
+            android:id="@+id/ivUpdateMap" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/lvAddress"
+        android:layout_marginLeft="@dimen/map_search_left"
+        android:layout_marginRight="@dimen/map_search_right"
+        android:background="@color/white"
+        android:layout_below="@+id/rlMapSearchBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+
+    <RelativeLayout
         android:layout_width="@dimen/mylocation_width"
         android:layout_height="@dimen/mylocation_height"
-        android:layout_above="@id/rlMapBottom"
+        android:layout_above="@+id/rlMapBottom"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="@dimen/mylocation_bottom"
         android:layout_marginRight="@dimen/mylocation_right"
