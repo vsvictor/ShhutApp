@@ -1,6 +1,7 @@
 package com.shhutapp.fragments.area;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -25,6 +26,7 @@ import com.shhutapp.geo.maparea.MapAreaManager;
 import com.shhutapp.geo.maparea.MapAreaMeasure;
 import com.shhutapp.geo.maparea.MapAreaWrapper;
 import com.shhutapp.pages.BasePage;
+import com.shhutapp.services.Addressator;
 import com.shhutapp.services.Locator;
 import com.shhutapp.social.twitter.extpack.winterwell.json.JSONObject;
 import com.shhutapp.utils.Geo;
@@ -41,6 +43,7 @@ public class Map extends BaseFragments{
     private RelativeLayout rlMyLocation;
     private double lat;
     private double lon;
+    private String newName;
     public Map(){
         super(MainActivity.getMainActivity());
         lat = 0;
@@ -76,7 +79,8 @@ public class Map extends BaseFragments{
         zv.onResume();
         clickator = (Clickator) rView.findViewById(R.id.clickator);
         clickator.setMap(zv.getMap());
-        clickator.setAreaManager(createManager());
+        manager = createManager();
+        clickator.setAreaManager(manager);
         rlMyLocation = (RelativeLayout) rView.findViewById(R.id.rlMyLocation);
         rlMyLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +102,7 @@ public class Map extends BaseFragments{
         act.unregisterReceiver(brMyLocation);
     }
     private MapAreaManager createManager(){
+        int defRadius = act.getSettings().getDefaultAreaRadius();
         return new MapAreaManager(zv.getMap(), 4, Color.RED, Color.HSVToColor(70, new float[] {1, 1, 200}),
                 R.drawable.logo, R.drawable.drag_circle, 0.5f, 1.0f, 0.5f, 0.5f,
                 new MapAreaMeasure(act.getSettings().getDefaultAreaRadius(), MapAreaMeasure.Unit.meters),
@@ -110,17 +115,40 @@ public class Map extends BaseFragments{
                             if(Geo.distance(wr.getCenter(), draggableCircle.getCenter())<=(draggableCircle.getRadius()+wr.getRadius())){
                                 newRadius = Geo.distance(wr.getCenter(), draggableCircle.getCenter())-wr.getRadius();
                                 draggableCircle.setRadius(newRadius);
-                                //draggableCircle.rebuildSizeMarker();
+                                draggableCircle.rebuildCenterMarker();
+                                draggableCircle.rebuildRadiusMarker();
+                                draggableCircle.rebuildSizeMarker();
                             }
                         }
-                        /*ContentValues row = new ContentValues();
+                        ContentValues row = new ContentValues();
                         row.put("radius", Math.abs(newRadius));
                         String[] args = {draggableCircle.getName()};
-                        getDB().update("locations", row, "name=?", args);*/
+                        act.getDB().update("locations", row, "name=?", args);
 
                     }
                     @Override
                     public void onCreateCircle(MapAreaWrapper draggableCircle) {
+                        /*for(MapAreaWrapper wr : manager.getCircles()){
+                            if(wr.equals(draggableCircle)) continue;
+                            if(Geo.distance(wr.getCenter(), draggableCircle.getCenter())<=(draggableCircle.getRadius()+wr.getRadius())){
+                                double newRadius = Geo.distance(wr.getCenter(), draggableCircle.getCenter())-wr.getRadius();
+                                draggableCircle.setRadius(newRadius);
+                                newName = draggableCircle.getName();
+                            }
+                        }
+                        if(draggableCircle.getRadius()<act.getSettings().getMinAreaRadius()) manager.delete(draggableCircle);
+                        else{
+                            if(draggableCircle.getName().equals("")){
+                                draggableCircle.setName(String.valueOf(manager.getCircles().size()));
+                                newName = draggableCircle.getName();
+                            }
+                            Intent intent = new Intent(getMainActivity(), Addressator.class);
+                            intent.putExtra("name", draggableCircle.getName());
+                            intent.putExtra("lat", draggableCircle.getCenter().latitude);
+                            intent.putExtra("long", draggableCircle.getCenter().longitude);
+                            intent.putExtra("radius", Math.abs(draggableCircle.getRadius()));
+                            getMainActivity().startService(intent);
+                        }*/
                     }
                     @Override
                     public void onMoveCircleEnd(MapAreaWrapper draggableCircle) {
@@ -133,6 +161,9 @@ public class Map extends BaseFragments{
                     }
                     @Override
                     public void onMinRadius(MapAreaWrapper draggableCircle) {
+                        String[] args = {draggableCircle.getName()};
+                        act.getDB().delete("locations", "name=?", args);
+                        manager.delete(draggableCircle);
                     }
                     @Override
                     public void onMaxRadius(MapAreaWrapper draggableCircle) {
@@ -148,7 +179,7 @@ public class Map extends BaseFragments{
                 JSONObject obj = new JSONObject(command);
                 lat = obj.getDouble("lat");
                 lon = obj.getDouble("lon");
-                CameraPosition pos = new CameraPosition.Builder().target(new LatLng(lat,lon)).zoom(18).build();
+                CameraPosition pos = new CameraPosition.Builder().target(new LatLng(lat,lon)).zoom(16).build();
                 zv.getMap().animateCamera(CameraUpdateFactory.newCameraPosition(pos));
             }
         }

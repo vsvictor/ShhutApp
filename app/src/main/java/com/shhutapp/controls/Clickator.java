@@ -33,6 +33,7 @@ public class Clickator extends View {
     private Point lastPoint;
     private GoogleMap map;
     private MapAreaManager manager;
+    private MotionEvent currevent;
 
     public Clickator(Context context) {
         super(context);
@@ -80,6 +81,9 @@ public class Clickator extends View {
                 Point pEnd = new Point((int)x2, (int)y2);
                 Point pCenter = map.getProjection().toScreenLocation(wr.getCenter());
                 wr.setRadius(Geo.distance(pCenter, pEnd));
+                wr.rebuildCenterMarker();
+                wr.rebuildRadiusMarker();
+                wr.rebuildSizeMarker();
             }
             else {
                 CameraPosition oldpos = map.getCameraPosition();
@@ -106,7 +110,7 @@ public class Clickator extends View {
             Log.i("Gesture", "onFling");
             MapAreaWrapper wr;
             Point p = new Point((int)e1.getX(), (int)e1.getY());
-            Log.i("Gesture","Coords"+p.x+":"+p.y);
+            Log.i("Gesture", "Coords" + p.x + ":" + p.y);
             LatLng llast = map.getProjection().fromScreenLocation(p);
             if(((wr=manager.inArea(llast))!=null)&& partDelete){
                 Log.i("Gesture", "Deleted");
@@ -129,6 +133,10 @@ public class Clickator extends View {
             LatLng l = map.getProjection().fromScreenLocation(p);
             CameraPosition newpos = new CameraPosition.Builder().target(oldpos.target).zoom(zoom).build();
             map.moveCamera(CameraUpdateFactory.newCameraPosition(newpos));
+            for(MapAreaWrapper wr:manager.getCircles()){
+                wr.rebuildCenterMarker();
+                wr.rebuildRadiusMarker();
+            }
             return true;
         }
         @Override
@@ -150,6 +158,7 @@ public class Clickator extends View {
     });
     @Override
     public boolean onTouchEvent(MotionEvent event){
+        this.currevent = event;
         if(event.getAction() == MotionEvent.ACTION_UP){
             downed = false;
             down_end = event.getEventTime();
@@ -161,8 +170,8 @@ public class Clickator extends View {
             partDelete = false;
             down_beg = event.getDownTime();
         }
-        sg.onTouchEvent(event);
-        dt.onTouchEvent(event);
+        if(event.getPointerCount()>1)sg.onTouchEvent(event);
+        else dt.onTouchEvent(event);
         return true;
     }
 }

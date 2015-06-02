@@ -32,7 +32,7 @@ public class Settings {
 		ed.commit();
 	}
 	public int getDefaultAreaRadius(){
-		return sh.getInt("defaultAreaRadius", 30);
+		return sh.getInt("defaultAreaRadius", 100);
 	}
 	public void setDefaultCallVolume(int vol){
 		SharedPreferences.Editor ed = sh.edit();

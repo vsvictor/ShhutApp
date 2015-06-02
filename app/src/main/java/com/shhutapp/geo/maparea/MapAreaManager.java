@@ -9,9 +9,9 @@ import android.view.View;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.shhutapp.MainActivity;
 import com.shhutapp.geo.maparea.MapAreaWrapper.MarkerMoveResult;
 import com.shhutapp.utils.Geo;
 
@@ -194,8 +194,8 @@ public class MapAreaManager implements OnMapLongClickListener{
     		LatLng radiusLatLng = map.getProjection().fromScreenLocation(new Point(screenCenterPoint.x + (int)initRadius.value, screenCenterPoint.y));
     		initRadiusMetersFinal = MapAreasUtils.toRadiusMeters(point, radiusLatLng);
     	}
-        MapAreaWrapper circle = new MapAreaWrapper(map, point, initRadiusMetersFinal, strokeWidth, strokeColor, fillColor, minRadiusMeters, maxRadiusMeters,
-        		moveDrawableId, radiusDrawableId, moveDrawableAnchorU, moveDrawableAnchorV, resizeDrawableAnchorU, resizeDrawableAnchorV);
+        MapAreaWrapper circle = new MapAreaWrapper(map, point, initRadiusMetersFinal, "Name",strokeWidth, strokeColor, fillColor, minRadiusMeters, maxRadiusMeters,
+        		moveDrawableId, radiusDrawableId, moveDrawableAnchorU, moveDrawableAnchorV, resizeDrawableAnchorU, resizeDrawableAnchorV, "Address", MainActivity.getMainActivity());
         areas.add(circle);
         circleManagerListener.onCreateCircle(circle);
 		isFound = (areas.size()>0);
