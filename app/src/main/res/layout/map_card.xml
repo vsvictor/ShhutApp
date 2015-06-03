@@ -4,4 +4,276 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:background="@color/blue_body"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/map_card_view_height"
+        android:id="@+id/rlCardData">
+
+        <RelativeLayout
+            android:background="@color/gray_light"
+            android:layout_marginLeft="@dimen/map_card_view_snap_left"
+            android:layout_marginRight="@dimen/map_card_view_snap_right"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_marginLeft="@dimen/map_card_view_filter_left"
+                android:layout_marginRight="@dimen/map_card_view_filter_right"
+                android:layout_marginTop="@dimen/map_card_view_filter_top"
+                android:layout_marginBottom="@dimen/map_card_view_filter_bottom"
+                android:background="@drawable/geocard_filter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/map_card_view_logo_top"
+                    android:layout_width="@dimen/map_card_view_logo_width"
+                    android:layout_height="@dimen/map_card_view_logo_height">
+
+                    <ImageView
+                        android:id="@+id/ivCardLogo"
+                        android:src="@drawable/logo"
+                        android:scaleType="fitXY"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                    <TextView
+                        android:layout_below="@id/ivCardLogo"
+                        android:text="Address"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:background="@color/blue_body"
+        android:layout_below="@id/rlCardData"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/map_card_control_height"
+        android:id="@+id/rlGeocardControl">
+
+        <RelativeLayout
+            android:layout_width="@dimen/queittime_control_icon_width"
+            android:layout_height="@dimen/queittime_control_icon_height"
+            android:layout_marginLeft="@dimen/queittime_control_icon_left"
+
+            android:id="@+id/rlGeoCardQueit"
+            android:layout_marginBottom="@dimen/controlpanelmain_bottom"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ivGeocardQuietOff"
+                android:scaleType="fitXY"
+                android:visibility="visible"
+                android:src="@drawable/qt_off" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ivGeocardQueitOn"
+                android:scaleType="fitXY"
+                android:visibility="invisible"
+                android:src="@drawable/qt_on" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/queittime_control_icon_width"
+            android:layout_height="@dimen/queittime_control_icon_height"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/rlGeoCardWhiteList"
+            android:layout_marginBottom="@dimen/controlpanelmain_bottom">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ivGeocardWLOff"
+                android:scaleType="fitXY"
+                android:visibility="visible"
+                android:src="@drawable/wl_off" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ivGeocardWLOn"
+                android:scaleType="fitXY"
+                android:visibility="invisible"
+                android:src="@drawable/wl_on" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/queittime_control_icon_width"
+            android:layout_height="@dimen/queittime_control_icon_height"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/queittime_control_icon_rigth"
+            android:layout_alignParentRight="true"
+            android:id="@+id/rlGeoCardMessages">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ivGeocardMsgOff"
+                android:scaleType="fitXY"
+                android:visibility="visible"
+                android:src="@drawable/msg_off" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ivGeocardMsgOn"
+                android:visibility="invisible"
+                android:scaleType="fitXY"
+                android:src="@drawable/msg_on" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@id/rlGeocardControl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/map_card_call_height"
+        android:id="@+id/rlGeocardCall">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/map_card_call_text_left"
+                android:text="@string/no_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:textSize="@dimen/map_card_call_text_textsize" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/map_card_call_cb_width"
+            android:layout_height="@dimen/map_card_call_cb_height"
+            android:id="@+id/rlGeocardCB">
+            <ImageView
+                android:id="@+id/ivGeocardCBOn"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/cb_on"
+                android:layout_width="@dimen/map_card_call_cb_pic_width"
+                android:layout_height="@dimen/map_card_call_cb_pic_height" />
+            <ImageView
+                android:id="@+id/ivGeocardCBOff"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/cb_off"
+                android:layout_width="@dimen/map_card_call_cb_pic_width"
+                android:layout_height="@dimen/map_card_call_cb_pic_height" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rlGeocardDirivider1"
+        android:layout_below="@id/rlGeocardCall"
+        android:background="@drawable/line_diriv"
+        android:layout_width="match_parent"
+        android:layout_height="1dp">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/rlGeocardDirivider1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/map_card_scale_height"
+        android:id="@+id/rlGeocardScale">
+
+        <com.shhutapp.controls.MainTimeSeekBarRed
+            android:layout_centerVertical="true"
+            style="@style/QueitTieBarStyle"
+            android:progressDrawable="@null"
+            android:layout_marginLeft="@dimen/queittime_scale_left"
+            android:layout_marginRight="@dimen/queittime_scale_right"
+            android:layout_marginTop="@dimen/map_card_scale_sb_top"
+            android:layout_marginBottom="@dimen/map_card_scale_sb_bottom"
+            android:layout_width="@dimen/queittime_scale_seek_width"
+            android:layout_height="@dimen/main_scale_seek_height"
+            android:layout_alignParentBottom="true"
+            android:max="24"
+            android:id="@+id/sbGeocardActivationMain" />
+        <com.shhutapp.controls.SecondTimeSeekBarRed
+            android:layout_centerVertical="true"
+            style="@style/QueitTieBarStyle"
+            android:progressDrawable="@null"
+            android:layout_marginLeft="@dimen/queittime_scale_left"
+            android:layout_marginRight="@dimen/queittime_scale_right"
+            android:layout_marginTop="@dimen/map_card_scale_sb_top"
+            android:layout_marginBottom="@dimen/map_card_scale_sb_bottom"
+            android:layout_width="@dimen/queittime_scale_seek_width"
+            android:layout_height="@dimen/main_scale_seek_height"
+            android:max="24"
+            android:layout_alignParentBottom="true"
+            android:visibility="invisible"
+            android:id="@+id/sbGeocardActivationSecond" />
+
+        <TextView
+            android:id="@+id/tvMomentActivation"
+            android:textSize="@dimen/map_card_scale_from_textsize"
+            android:text="@string/activation"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/sbGeocardActivationMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/tvMomentActivation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_alignParentBottom="true"
+                android:id="@+id/tvActHours"
+                android:text="0"
+                android:textSize="@dimen/map_card_scale_value_textsize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tvActTextHours"
+                android:layout_marginLeft="5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@id/tvActHours"
+                android:text="@string/h"
+                android:textSize="@dimen/map_card_scale_text_textsize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/tvActTextHours"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/tvActMinutes"
+                android:text="0"
+                android:textSize="@dimen/map_card_scale_value_textsize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tvActTextMinutes"
+                android:layout_marginLeft="5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@id/tvActMinutes"
+                android:text="@string/min"
+                android:textSize="@dimen/map_card_scale_text_textsize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rlGeocardDirivider2"
+        android:layout_below="@id/rlGeocardScale"
+        android:background="@drawable/line_diriv"
+        android:layout_width="match_parent"
+        android:layout_height="1dp">
+
+    </RelativeLayout>
+
 </RelativeLayout>

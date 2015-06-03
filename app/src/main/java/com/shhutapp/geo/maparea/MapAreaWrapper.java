@@ -1,5 +1,6 @@
 package com.shhutapp.geo.maparea;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -29,6 +31,7 @@ public class MapAreaWrapper {
     private float moveDrawableAnchorU;
     private float moveDrawableAnchorV;
 
+
     public static enum MarkerMoveResult {moved, radiusChange, minRadius, maxRadius, none};
     public static enum MarkerType {move, resize, none}
     private Context context;
@@ -38,6 +41,7 @@ public class MapAreaWrapper {
     private Marker sizeMarker;
     private Polyline arrow;
     private Circle circle;
+    private Marker addressMarker;
     private double radiusMeters;
     private int minRadiusMeters = -1;
     private int maxRadiusMeters = -1;
@@ -45,6 +49,12 @@ public class MapAreaWrapper {
     private float resizeU;
     private float resizeV;
     private String name;
+    private boolean raduisOff = false;
+    private boolean addressOff = true;
+    private float strokeWidth;
+    private int strokeColor;
+    private int fillColor;
+
     public MapAreaWrapper(GoogleMap map, LatLng center, double radiusMeters, String name, float strokeWidth, int strokeColor, int fillColor, int minRadiusMeters, int maxRadiusMeters,
     		int centerDrawableId, int radiusDrawableId, float moveDrawableAnchorU, float moveDrawableAnchorV, float resizeDrawableAnchorU, float resizeDrawableAnchorV,
             String address, Context context) {
@@ -59,6 +69,9 @@ public class MapAreaWrapper {
         this.moveDrawableAnchorU = moveDrawableAnchorU;
         this.moveDrawableAnchorV = moveDrawableAnchorV;
         this.name = name;
+        this.strokeWidth = strokeWidth;
+        this.strokeColor = strokeColor;
+        this.fillColor = fillColor;
         centerMarker = map.addMarker(new MarkerOptions()
                 .position(center)
                 .anchor(moveDrawableAnchorU, moveDrawableAnchorV)
@@ -92,27 +105,27 @@ public class MapAreaWrapper {
             Bitmap scaled = Bitmap.createScaledBitmap(bitmap, pWidth, pHeight, false);
         	radiusMarker.setIcon(BitmapDescriptorFactory.fromBitmap(scaled));
         }
+        if(!raduisOff) {
+            LatLng c = SphericalUtil.computeOffset(getCenter(), getRadius() / 2, 90);
+            Point p = map.getProjection().toScreenLocation(c);
+            Point p1 = map.getProjection().toScreenLocation(getCenter());
+            Point p2 = map.getProjection().toScreenLocation(radiusMarker.getPosition());
 
-        LatLng c = SphericalUtil.computeOffset(getCenter(), getRadius()/2, 90);
-        Point p = map.getProjection().toScreenLocation(c);
-        Point p1 = map.getProjection().toScreenLocation(getCenter());
-        Point p2 = map.getProjection().toScreenLocation(radiusMarker.getPosition());
+            ExIconGenerator gen = new ExIconGenerator(context);
+            Drawable shape = context.getResources().getDrawable(R.drawable.address_back);
+            gen.setBackground(shape);
+            Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Medium.ttf");
+            Bitmap b = gen.makeIcon(String.valueOf(Math.round(getRadius())) + " m", Color.MAGENTA, 16, tf);
+            sizeMarker = map.addMarker(new MarkerOptions()
+                    .position(c)
+                    .icon(BitmapDescriptorFactory.fromBitmap(b))
+                    .draggable(false));
 
-        ExIconGenerator gen = new ExIconGenerator(context);
-        Drawable shape = context.getResources().getDrawable(R.drawable.address_back);
-        gen.setBackground(shape);
-        Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Medium.ttf");
-        Bitmap b = gen.makeIcon(String.valueOf(Math.round(getRadius()))+" m", Color.MAGENTA, 16, tf);
-        sizeMarker = map.addMarker(new MarkerOptions()
-                .position(c)
-                .icon(BitmapDescriptorFactory.fromBitmap(b))
-                .draggable(false));
-
-        arrow = map.addPolyline(new PolylineOptions()
-                .add(getCenter(), radiusMarker.getPosition())
-                .width(2)
-                .color(0xFF00ACC1));
-
+            arrow = map.addPolyline(new PolylineOptions()
+                    .add(getCenter(), radiusMarker.getPosition())
+                    .width(2)
+                    .color(0xFF00ACC1));
+        }
         circle = map.addCircle(new CircleOptions()
                 .center(center)
                 .radius(radiusMeters)
@@ -132,6 +145,11 @@ public class MapAreaWrapper {
     }
     public double getRadius() {
     	return radiusMeters;
+    }
+    public int getRadiusInPixels(){
+        Point pCenter = map.getProjection().toScreenLocation(getCenter());
+        Point pRadius = map.getProjection().toScreenLocation(MapAreasUtils.toRadiusLatLng(getCenter(), radiusMeters));
+        return (int)Geo.distance(pCenter, pRadius);
     }
     public void setStokeWidth(float strokeWidth) {
     	circle.setStrokeWidth(strokeWidth);
@@ -178,16 +196,17 @@ public class MapAreaWrapper {
     }
     public void remove(){
         circle.remove();
-        centerMarker.remove();
-        radiusMarker.remove();
-        sizeMarker.remove();
-        arrow.remove();
+        if(centerMarker != null) centerMarker.remove();
+        if(radiusMarker != null)radiusMarker.remove();
+        if(sizeMarker != null) sizeMarker.remove();
+        if(arrow != null) arrow.remove();
+        if(addressMarker != null) addressMarker.remove();
     }
     public void rebuildCenterMarker(){
         Point pCenter = map.getProjection().toScreenLocation(getCenter());
         Point pRadius = map.getProjection().toScreenLocation(MapAreasUtils.toRadiusLatLng(getCenter(), getRadius()));
         radiusInPixels = Geo.distance(pCenter, pRadius);
-        Bitmap bitmap = BitmapFactory.decodeResource(MainActivity.getMainActivity().getResources(),R.drawable.logo);
+        Bitmap bitmap = BitmapFactory.decodeResource(MainActivity.getMainActivity().getResources(), R.drawable.logo);
         int pHeight = (int)Convertor.convertDpToPixel((int)(radiusInPixels/6), MainActivity.getMainActivity());
         int pWidth  = (int)Convertor.convertDpToPixel((int)((38*radiusInPixels/6)/56), MainActivity.getMainActivity());
         if(pHeight<=0) pHeight = 1;
@@ -209,7 +228,7 @@ public class MapAreaWrapper {
         Point pCenter = map.getProjection().toScreenLocation(getCenter());
         Point pRadius = map.getProjection().toScreenLocation(MapAreasUtils.toRadiusLatLng(getCenter(), getRadius()));
         radiusInPixels = Geo.distance(pCenter, pRadius);
-        Bitmap bitmap = BitmapFactory.decodeResource(MainActivity.getMainActivity().getResources(),R.drawable.radius);
+        Bitmap bitmap = BitmapFactory.decodeResource(MainActivity.getMainActivity().getResources(), R.drawable.radius);
         int pHeight = (int)Convertor.convertDpToPixel((int)(18*(radiusInPixels/6)/56), MainActivity.getMainActivity());
         int pWidth  = (int)Convertor.convertDpToPixel((int)(18*(radiusInPixels/6)/56), MainActivity.getMainActivity());
         if(pHeight<=0) pHeight = 1;
@@ -233,7 +252,7 @@ public class MapAreaWrapper {
         Drawable shape = context.getResources().getDrawable(R.drawable.address_back);
         gen.setBackground(shape);
         //gen.setColor(Color.WHITE);
-        Bitmap b = gen.makeIcon(String.valueOf(Math.round(getRadius()))+" m", Color.MAGENTA);
+        Bitmap b = gen.makeIcon(String.valueOf(Math.round(getRadius())) + " m", Color.MAGENTA);
         sizeMarker = map.addMarker(new MarkerOptions()
                 .position(c)
                 .icon(BitmapDescriptorFactory.fromBitmap(b))
@@ -245,8 +264,79 @@ public class MapAreaWrapper {
                 .width(2)
                 .color(0xFF00ACC1));
     }
+    public void rebuildArraw(){
+        if(arrow != null) arrow.remove();
+        arrow = map.addPolyline(new PolylineOptions()
+                .add(getCenter(), radiusMarker.getPosition())
+                .width(2)
+                .color(0xFF00ACC1));
+    }
+    public void rebuildAll(){
+        if(circle != null) circle.remove();
+        if(getRadius()<0) return;
+        circle = map.addCircle(new CircleOptions()
+                .center(getCenter())
+                .radius(getRadius())
+                .strokeWidth(this.strokeWidth)
+                .strokeColor(this.strokeColor)
+                .fillColor(fillColor));
+        rebuildCenterMarker();
+        rebuildRadiusMarker();
+        rebuildSizeMarker();
+        rebuildArraw();
+    }
+    public void rebuildAddressMarker(){
+        if(addressMarker != null) addressMarker.remove();
+        ExIconGenerator gen = new ExIconGenerator(context);
+        gen.setBackground(context.getResources().getDrawable(R.drawable.address_back));
+        Bitmap bitmap = gen.makeIcon(getName()+"\n"+address,Color.argb(255,38,50,56), 16);
+        Log.i("Sizes","Bitmap width /2:"+bitmap.getWidth()/2+" Radius in pixels:"+getRadiusInPixels());
+        if(getRadiusInPixels()>=bitmap.getWidth()/2) {
+            addressMarker = map.addMarker(new MarkerOptions()
+                    .position(getCenter())
+                    .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+                    .draggable(false));
+        }
+
+    }
     public void setName(String name){
         this.name = name;
     }
     public String getName(){return name;}
+    public void setRadiusOff(boolean b){
+        raduisOff = b;
+        sizeMarker.remove();
+        arrow.remove();
+    }
+    public boolean isRaduisOff(){
+        return raduisOff;
+    }
+    public void setAddressOff(boolean b){
+        if(b){
+            if(addressMarker != null) addressMarker.remove();
+        }
+        else{
+            ExIconGenerator gen = new ExIconGenerator(context);
+            gen.setBackground(context.getResources().getDrawable(R.drawable.address_back));
+            Bitmap bitmap = gen.makeIcon(getName()+"\n"+address,Color.argb(255,38,50,56), 16);
+            addressMarker = map.addMarker(new MarkerOptions()
+                    .position(getCenter())
+                    .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+                    .draggable(false));
+
+        }
+        addressOff = b;
+    }
+    public boolean isAdressOff(){
+        return addressOff;
+    }
+    public void update(){
+        String[] args = {getName()};
+        ContentValues row = new ContentValues();
+        row.put("name", getName());
+        row.put("lat", getCenter().latitude);
+        row.put("long", getCenter().longitude);
+        row.put("radius", getRadius());
+        MainActivity.getMainActivity().getDB().update("locations", row, "name=?", args);
+    }
 }

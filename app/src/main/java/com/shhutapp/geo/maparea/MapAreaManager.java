@@ -2,6 +2,8 @@ package com.shhutapp.geo.maparea;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -22,7 +24,7 @@ public class MapAreaManager implements OnMapLongClickListener{
 	private static int DEFAULT_STROKE_COLOR = 0xff000000;
 	private static int DEFAULT_STROKE_WIDTH = 1;
 
-    private List<MapAreaWrapper> areas = new ArrayList<MapAreaWrapper>(1);
+    private List<MapAreaWrapper> areas = new ArrayList<MapAreaWrapper>();
     private GoogleMap map;
     
 	private int fillColor = DEFAULT_FILL_COLOR;
@@ -34,7 +36,7 @@ public class MapAreaManager implements OnMapLongClickListener{
     
 	private MapAreaMeasure initRadius;
 	
-	private CircleManagerListener circleManagerListener;
+	public CircleManagerListener circleManagerListener;
 	
 	private int moveDrawableId = -1;
 	private int radiusDrawableId = -1;
@@ -228,4 +230,29 @@ public class MapAreaManager implements OnMapLongClickListener{
     public String getCurrentName(){
         return currName;
     }
+
+	public void load() {
+		int oldStrokeColor = Color.argb(255,197,17,98);
+		int oldFillColor = Color.argb(65,197,17,98);
+		Cursor c = MainActivity.getMainActivity().getDB().query("locations", null, null, null, null, null, null);
+		if (c.moveToFirst()) {
+			do {
+				String street = c.getString(3);
+				double lat = c.getDouble(4);
+				double lon = c.getDouble(5);
+				double radius = c.getDouble(6);
+				String name = c.getString(1);
+				MapAreaWrapper circle = new MapAreaWrapper(map, new LatLng(lat, lon), radius, name, strokeWidth, oldStrokeColor,
+						oldFillColor, minRadiusMeters, maxRadiusMeters, moveDrawableId, radiusDrawableId, moveDrawableAnchorU,
+						moveDrawableAnchorV, resizeDrawableAnchorU, resizeDrawableAnchorV, street, MainActivity.getMainActivity());
+				circle.setRadius(radius);
+				circleManagerListener.onCreateCircle(circle);
+				circle.setRadiusOff(true);
+                circle.setAddressOff(false);
+                circle.rebuildAddressMarker();
+				areas.add(circle);
+			} while (c.moveToNext());
+		}
+	}
+
 }

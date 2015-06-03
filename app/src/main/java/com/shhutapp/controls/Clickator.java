@@ -88,9 +88,16 @@ public class Clickator extends View {
                 Point pEnd = new Point((int)x2, (int)y2);
                 Point pCenter = map.getProjection().toScreenLocation(wr.getCenter());
                 wr.setRadius(Geo.distance(pCenter, pEnd));
-                wr.rebuildCenterMarker();
-                wr.rebuildRadiusMarker();
-                wr.rebuildSizeMarker();
+                if(!wr.isRaduisOff()) {
+                    wr.rebuildCenterMarker();
+                    wr.rebuildRadiusMarker();
+                    wr.rebuildSizeMarker();
+                }
+                if(!wr.isAdressOff()){
+                    wr.rebuildAddressMarker();
+                }
+                wr.update();
+                manager.circleManagerListener.onResizeCircleEnd(wr);
             }
             else {
                 CameraPosition oldpos = map.getCameraPosition();
@@ -131,6 +138,7 @@ public class Clickator extends View {
             if(((wr=manager.inArea(llast))!=null)&& partDelete){
                 Log.i("Gesture", "Deleted");
                 manager.delete(wr);
+                MainActivity.getMainActivity().getDB().delete("locations","name=?", new String[]{wr.getName()});
             }
             return true;
         }
@@ -150,8 +158,13 @@ public class Clickator extends View {
             CameraPosition newpos = new CameraPosition.Builder().target(oldpos.target).zoom(zoom).build();
             map.moveCamera(CameraUpdateFactory.newCameraPosition(newpos));
             for(MapAreaWrapper wr:manager.getCircles()){
-                wr.rebuildCenterMarker();
-                wr.rebuildRadiusMarker();
+                if(!wr.isRaduisOff()) {
+                    wr.rebuildCenterMarker();
+                    wr.rebuildRadiusMarker();
+                }
+                if(!wr.isAdressOff()){
+                    wr.rebuildAddressMarker();
+                }
             }
             return true;
         }

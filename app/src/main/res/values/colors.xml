@@ -12,4 +12,7 @@
     <color name="gray">#FFB2B2B2</color>
     <color name="red">#FFFF0000</color>
     <color name="red_light">#FFC92CB6</color>
+    <color name="geoscale_red_disable">#38FF4081</color>
+    <color name="geoscale_red_enable">#FFFF4081</color>
+
 </resources>

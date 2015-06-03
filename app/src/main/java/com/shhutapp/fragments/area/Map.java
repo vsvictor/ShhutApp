@@ -140,6 +140,7 @@ public class Map extends BaseFragments{
         clickator = (Clickator) rView.findViewById(R.id.clickator);
         clickator.setMap(zv.getMap());
         manager = createManager();
+        manager.load();
         clickator.setAreaManager(manager);
         rlMyLocation = (RelativeLayout) rView.findViewById(R.id.rlMyLocation);
         rlMyLocation.setOnClickListener(new View.OnClickListener() {
@@ -213,7 +214,7 @@ public class Map extends BaseFragments{
         ivMapUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                zv.getMap().
+                //zv.getMap().
             }
         });
     }
@@ -299,7 +300,9 @@ public class Map extends BaseFragments{
     }
     private MapAreaManager createManager(){
         int defRadius = act.getSettings().getDefaultAreaRadius();
-        return new MapAreaManager(zv.getMap(), 4, Color.RED, Color.HSVToColor(70, new float[] {1, 1, 200}),
+        int strokeColor = Color.argb(255, 0, 188, 212);
+        int fillColor = Color.argb(65,0,188,212);
+        return new MapAreaManager(zv.getMap(), 4, strokeColor, fillColor,
                 R.drawable.logo, R.drawable.drag_circle, 0.5f, 1.0f, 0.5f, 0.5f,
                 new MapAreaMeasure(act.getSettings().getDefaultAreaRadius(), MapAreaMeasure.Unit.meters),
                 new MapAreaManager.CircleManagerListener() { //listener for all circle events
@@ -311,9 +314,10 @@ public class Map extends BaseFragments{
                             if(Geo.distance(wr.getCenter(), draggableCircle.getCenter())<=(draggableCircle.getRadius()+wr.getRadius())){
                                 newRadius = Geo.distance(wr.getCenter(), draggableCircle.getCenter())-wr.getRadius();
                                 draggableCircle.setRadius(newRadius);
-                                draggableCircle.rebuildCenterMarker();
-                                draggableCircle.rebuildRadiusMarker();
-                                draggableCircle.rebuildSizeMarker();
+                                //draggableCircle.rebuildCenterMarker();
+                                //draggableCircle.rebuildRadiusMarker();
+                                //draggableCircle.rebuildSizeMarker();
+                                draggableCircle.rebuildAll();
                             }
                         }
                         ContentValues row = new ContentValues();
@@ -324,14 +328,16 @@ public class Map extends BaseFragments{
                     }
                     @Override
                     public void onCreateCircle(MapAreaWrapper draggableCircle) {
-                        /*for(MapAreaWrapper wr : manager.getCircles()){
+                        for(MapAreaWrapper wr : manager.getCircles()){
                             if(wr.equals(draggableCircle)) continue;
                             if(Geo.distance(wr.getCenter(), draggableCircle.getCenter())<=(draggableCircle.getRadius()+wr.getRadius())){
                                 double newRadius = Geo.distance(wr.getCenter(), draggableCircle.getCenter())-wr.getRadius();
                                 draggableCircle.setRadius(newRadius);
+                                draggableCircle.rebuildAll();
                                 newName = draggableCircle.getName();
                             }
                         }
+                        /*
                         if(draggableCircle.getRadius()<act.getSettings().getMinAreaRadius()) manager.delete(draggableCircle);
                         else{
                             if(draggableCircle.getName().equals("")){
