@@ -38,6 +38,7 @@ public class DBHelper extends SQLiteOpenHelper{
 				+ "name text,"
 				+ "city text,"
 				+ "street text,"
+				+ "background text,"
 				+ "lat real(3,16)," 
 				+ "long real(3,16)," 
 				+ "radius real" + ");";

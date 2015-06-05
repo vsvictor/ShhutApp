@@ -2,15 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <com.shhutapp.controls.ZoneView
+    <com.shhutapp.controls.ExMapView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/map" />
 
-    <com.shhutapp.controls.Clickator
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/clickator" />
 
     <RelativeLayout
         android:layout_width="match_parent"

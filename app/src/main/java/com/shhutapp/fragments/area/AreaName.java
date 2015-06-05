@@ -30,6 +30,7 @@ public class AreaName extends BaseFragments {
     private RelativeLayout rlEditTextNormal;
     private RelativeLayout rlEditTextError;
     private String currname;
+    private String photo;
     public AreaName(){
         super(MainActivity.getMainActivity());
     }
@@ -44,6 +45,7 @@ public class AreaName extends BaseFragments {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         currname = getArguments().getString("number");
+        photo = getArguments().getString("photo");
     }
     @Override
     public View onCreateView(LayoutInflater inf, ViewGroup container, Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class AreaName extends BaseFragments {
                     AreaCard ac = new AreaCard(getMainActivity(), page);
                     Bundle b = new Bundle();
                     b.putString("name", edMessage.getText().toString());
+                    b.putString("photo", photo);
                     ac.setArguments(b);
                     getMainActivity().getHeader().setTextHeader(edMessage.getText().toString());
                     getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.areaPage, ac).commit();

@@ -15,6 +15,7 @@ import android.os.IBinder;
 import android.provider.ContactsContract;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.SphericalUtil;
 import com.shhutapp.data.BaseObjectList;
 import com.shhutapp.data.Card;
 import com.shhutapp.data.CardType;
@@ -24,7 +25,6 @@ import com.shhutapp.data.GeoCard;
 import com.shhutapp.data.QueitCard;
 import com.shhutapp.data.SMSCard;
 import com.shhutapp.data.WhiteListCard;
-import com.shhutapp.utils.Geo;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -145,7 +145,7 @@ public class Carder extends Service{
 		LatLng loc = getMyLocation();
 		LatLng cen = new LatLng(c.getLantitude(), c.getLongitude());
 		//double dist = Math.abs(MapAreaManager.distance(cen, loc));
-		double dist = Math.abs(Geo.distance(cen, loc));
+		double dist = Math.abs(SphericalUtil.computeDistanceBetween(cen, loc));
 		return c.getRadius()>=dist;
 	}
 	public Logger createLogger(){

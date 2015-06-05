@@ -15,7 +15,13 @@
             android:layout_marginLeft="@dimen/map_card_view_snap_left"
             android:layout_marginRight="@dimen/map_card_view_snap_right"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/rlMapMap">
+
+            <ImageView
+                android:id="@+id/ivMapMap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <RelativeLayout
                 android:layout_marginLeft="@dimen/map_card_view_filter_left"

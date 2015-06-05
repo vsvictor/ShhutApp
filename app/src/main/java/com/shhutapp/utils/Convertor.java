@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Base64;
@@ -47,5 +48,10 @@ public class Convertor {
 		byte[] decodedString = Base64.decode(data, Base64.DEFAULT);
 		Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 		return decodedByte;
+	}
+	public static double distance(Point p1, Point p2){
+		float x = (p1.x-p2.x)*(p1.x-p2.x);
+		float y = (p1.y-p2.y)*(p1.y-p2.y);
+		return Math.sqrt(x+y);
 	}
 }

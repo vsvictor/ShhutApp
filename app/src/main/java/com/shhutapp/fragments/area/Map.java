@@ -6,7 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,22 +34,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.shhutapp.Actions;
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
-import com.shhutapp.controls.Clickator;
-import com.shhutapp.controls.ZoneView;
+import com.shhutapp.controls.ExMapView;
 import com.shhutapp.data.Address;
 import com.shhutapp.data.BaseObjectList;
 import com.shhutapp.data.FilteredAdapter;
 import com.shhutapp.fragments.BaseFragments;
 import com.shhutapp.fragments.OnNextListener;
-import com.shhutapp.geo.maparea.MapAreaManager;
-import com.shhutapp.geo.maparea.MapAreaMeasure;
-import com.shhutapp.geo.maparea.MapAreaWrapper;
+import com.shhutapp.geo.AreaManager;
 import com.shhutapp.pages.BasePage;
-import com.shhutapp.services.Addressator;
 import com.shhutapp.services.Finder;
 import com.shhutapp.services.Locator;
-//import com.shhutapp.social.twitter.extpack.winterwell.json.JSONObject;
-import com.shhutapp.utils.Geo;
+import com.shhutapp.utils.Convertor;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -56,9 +55,7 @@ import org.json.JSONException;
  */
 public class Map extends BaseFragments{
     private BasePage page;
-    private ZoneView zv;
-    private Clickator clickator;
-    private MapAreaManager manager;
+    private ExMapView zv;
     private Bundle saved;
     private RelativeLayout rlMyLocation;
     private double lat;
@@ -86,6 +83,9 @@ public class Map extends BaseFragments{
     private ListView lvAddress;
     private ImageView ivMapUpdate;
     private RelativeLayout rlMapUpdare;
+    private int centerX;
+    private int centerY;
+    private Point pCenter;
 
     public Map(){
         super(MainActivity.getMainActivity());
@@ -124,24 +124,35 @@ public class Map extends BaseFragments{
         getMainActivity().getHeader().setOnNextListener(new OnNextListener() {
             @Override
             public void onNext() {
-                AreaName ar = new AreaName(getMainActivity(), page);
-                Bundle b = new Bundle();
-                b.putString("number", manager.getCurrentName());
-                ar.setArguments(b);
-                getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.areaPage, ar).commit();
+                Bitmap bp = Bitmap.createBitmap(zv.getWidth(), zv.getHeight(), Bitmap.Config.ARGB_8888);
+                GoogleMap.SnapshotReadyCallback cb = new GoogleMap.SnapshotReadyCallback() {
+                    @Override
+                    public void onSnapshotReady(Bitmap bitmap) {
+                        int wInPic = (int) Convertor.convertDpToPixel(350, getMainActivity());
+                        int hInPic = (int) getMainActivity().getResources().getDimension(R.dimen.map_card_view_height);
+                        Bitmap bPrev = Bitmap.createBitmap(bitmap, 0, pCenter.y - hInPic / 2, wInPic, hInPic);
+                        Bitmap bp = makeTransparent(bPrev, 50);
+                        ContentValues row = new ContentValues();
+                        row.put("background", Convertor.BitmapToBase64(bp));
+                        getMainActivity().getDB().update("locations", row, "name=?", new String[]{zv.getManager().getLast().getName()});
+                        AreaName ar = new AreaName(getMainActivity(), page);
+                        Bundle b = new Bundle();
+                        b.putString("number", zv.getManager().getLast().getName());
+                        b.putString("photo", Convertor.BitmapToBase64(bp));
+                        ar.setArguments(b);
+                        getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.areaPage, ar).commit();
+                    }
+                };
+                zv.getMap().clear();
+                zv.getMap().snapshot(cb, bp);
             }
         });
 
-        zv = (ZoneView)rView.findViewById(R.id.map);
-        //zv.getMap().setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        zv = (ExMapView)rView.findViewById(R.id.map);
         MapsInitializer.initialize(act);
         zv.onCreate(saved);
         zv.onResume();
-        clickator = (Clickator) rView.findViewById(R.id.clickator);
-        clickator.setMap(zv.getMap());
-        manager = createManager();
-        manager.load();
-        clickator.setAreaManager(manager);
+        zv.getMap().getUiSettings().setAllGesturesEnabled(false);
         rlMyLocation = (RelativeLayout) rView.findViewById(R.id.rlMyLocation);
         rlMyLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -298,81 +309,6 @@ public class Map extends BaseFragments{
         act.unregisterReceiver(addressator);
         act.unregisterReceiver(finder);
     }
-    private MapAreaManager createManager(){
-        int defRadius = act.getSettings().getDefaultAreaRadius();
-        int strokeColor = Color.argb(255, 0, 188, 212);
-        int fillColor = Color.argb(65,0,188,212);
-        return new MapAreaManager(zv.getMap(), 4, strokeColor, fillColor,
-                R.drawable.logo, R.drawable.drag_circle, 0.5f, 1.0f, 0.5f, 0.5f,
-                new MapAreaMeasure(act.getSettings().getDefaultAreaRadius(), MapAreaMeasure.Unit.meters),
-                new MapAreaManager.CircleManagerListener() { //listener for all circle events
-                    @Override
-                    public void onResizeCircleEnd(MapAreaWrapper draggableCircle) {
-                        double newRadius = draggableCircle.getRadius();
-                        for(MapAreaWrapper wr : manager.getCircles()){
-                            if(wr.equals(draggableCircle)) continue;
-                            if(Geo.distance(wr.getCenter(), draggableCircle.getCenter())<=(draggableCircle.getRadius()+wr.getRadius())){
-                                newRadius = Geo.distance(wr.getCenter(), draggableCircle.getCenter())-wr.getRadius();
-                                draggableCircle.setRadius(newRadius);
-                                //draggableCircle.rebuildCenterMarker();
-                                //draggableCircle.rebuildRadiusMarker();
-                                //draggableCircle.rebuildSizeMarker();
-                                draggableCircle.rebuildAll();
-                            }
-                        }
-                        ContentValues row = new ContentValues();
-                        row.put("radius", Math.abs(newRadius));
-                        String[] args = {draggableCircle.getName()};
-                        act.getDB().update("locations", row, "name=?", args);
-
-                    }
-                    @Override
-                    public void onCreateCircle(MapAreaWrapper draggableCircle) {
-                        for(MapAreaWrapper wr : manager.getCircles()){
-                            if(wr.equals(draggableCircle)) continue;
-                            if(Geo.distance(wr.getCenter(), draggableCircle.getCenter())<=(draggableCircle.getRadius()+wr.getRadius())){
-                                double newRadius = Geo.distance(wr.getCenter(), draggableCircle.getCenter())-wr.getRadius();
-                                draggableCircle.setRadius(newRadius);
-                                draggableCircle.rebuildAll();
-                                newName = draggableCircle.getName();
-                            }
-                        }
-                        /*
-                        if(draggableCircle.getRadius()<act.getSettings().getMinAreaRadius()) manager.delete(draggableCircle);
-                        else{
-                            if(draggableCircle.getName().equals("")){
-                                draggableCircle.setName(String.valueOf(manager.getCircles().size()));
-                                newName = draggableCircle.getName();
-                            }
-                            Intent intent = new Intent(getMainActivity(), Addressator.class);
-                            intent.putExtra("name", draggableCircle.getName());
-                            intent.putExtra("lat", draggableCircle.getCenter().latitude);
-                            intent.putExtra("long", draggableCircle.getCenter().longitude);
-                            intent.putExtra("radius", Math.abs(draggableCircle.getRadius()));
-                            getMainActivity().startService(intent);
-                        }*/
-                    }
-                    @Override
-                    public void onMoveCircleEnd(MapAreaWrapper draggableCircle) {
-                    }
-                    @Override
-                    public void onMoveCircleStart(MapAreaWrapper draggableCircle) {
-                    }
-                    @Override
-                    public void onResizeCircleStart(MapAreaWrapper draggableCircle) {
-                    }
-                    @Override
-                    public void onMinRadius(MapAreaWrapper draggableCircle) {
-                        String[] args = {draggableCircle.getName()};
-                        act.getDB().delete("locations", "name=?", args);
-                        manager.delete(draggableCircle);
-                    }
-                    @Override
-                    public void onMaxRadius(MapAreaWrapper draggableCircle) {
-                    }
-                });
-        //map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon),18)); ;
-    }
     private BroadcastReceiver brMyLocation = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -482,5 +418,16 @@ public class Map extends BaseFragments{
             this.data = newData;
         }
     }
-
+    public Bitmap makeTransparent(Bitmap src, int value) {
+        int width = src.getWidth();
+        int height = src.getHeight();
+        Bitmap transBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(transBitmap);
+        canvas.drawARGB(0, 0, 0, 0);
+        // config paint
+        final Paint paint = new Paint();
+        paint.setAlpha(value);
+        canvas.drawBitmap(src, 0, 0, paint);
+        return transBitmap;
+    }
 }

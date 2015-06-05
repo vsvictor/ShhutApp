@@ -1,9 +1,19 @@
 package com.shhutapp.fragments.area;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
@@ -23,6 +33,9 @@ public class AreaCard extends BaseFragments {
     private BasePage page;
     private MainTimeSeekBarRed mainScale;
     private SecondTimeSeekBarRed secondScale;
+    private RelativeLayout rlMapMap;
+    private BitmapDrawable dr;
+    private ImageView ivMapMap;
 
     public AreaCard(){
         super(MainActivity.getMainActivity());
@@ -37,6 +50,9 @@ public class AreaCard extends BaseFragments {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String ph = getArguments().getString("photo");
+        Bitmap bp = Convertor.Base64ToBitmap(ph);
+        dr = new BitmapDrawable(bp);
     }
     @Override
     public View onCreateView(LayoutInflater inf, ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +62,10 @@ public class AreaCard extends BaseFragments {
     @Override
     public void onViewCreated(View view, Bundle saved) {
         super.onViewCreated(view, saved);
+        //rlMapMap = (RelativeLayout) rView.findViewById(R.id.rlMapMap);
+        ivMapMap = (ImageView) rView.findViewById(R.id.ivMapMap);
+        ivMapMap.setImageDrawable(dr);
+        //rlMapMap.setBackground(dr);
         mainScale = (MainTimeSeekBarRed) rView.findViewById(R.id.sbGeocardActivationMain);
         mainScale.setThumb(R.drawable.thumb_full_red);
         secondScale = (SecondTimeSeekBarRed) rView.findViewById(R.id.sbGeocardActivationSecond);
