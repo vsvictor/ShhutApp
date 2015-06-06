@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error">Error</string>
+    <string name="close">Close</string>
+    <string name="not_address">Can\'t identify the address. Network error</string>
+    <string name="not_location">Can\'t detect location</string>
+    <string name="not_source">No sources data for detection location</string>
+
+</resources>

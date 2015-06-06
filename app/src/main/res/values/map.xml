@@ -67,6 +67,13 @@
     <dimen name="map_card_scale_value_textsize">20sp</dimen>
     <dimen name="map_card_scale_text_textsize">14sp</dimen>
 
+    <dimen name="map_card_error_wight">310dp</dimen>
+    <dimen name="map_card_error_height">100dp</dimen>
+    <dimen name="map_card_error_circle">40dp</dimen>
+    <dimen name="map_card_error_circle_left">12dp</dimen>
+    <dimen name="map_card_error_circle_top">12dp</dimen>
+    <dimen name="map_card_error_circle_bottom">12dp</dimen>
+
     <string name="select_area">Select the place</string>
     <string name="what_to_look_for">What is to be found</string>
     <string name="item1">Satellite</string>

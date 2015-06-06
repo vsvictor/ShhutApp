@@ -61,7 +61,7 @@ public abstract class GesturesMapView extends MapView {
                     //CameraUpdate update = CameraUpdateFactory.newLatLngZoom(mapNewTarget, map.getCameraPosition().zoom);
                     //tryUpdateCamera(update, 0);
 
-                    onPostScroll(target, mapNewTarget);
+                    onPostScroll( target, mapNewTarget);
                     return true;
                 }
 
@@ -91,7 +91,7 @@ public abstract class GesturesMapView extends MapView {
                 }
                 @Override
                 public void onLongPress(MotionEvent e) {
-                    if(e.getPointerCount()>1) return;
+                    if(e.getPointerCount()>1 || e.getEventTime()<3000) return;
                     GoogleMap map = getMap();
                     Point p = new Point((int) e.getX(), (int) e.getY());
                     LatLng l = map.getProjection().fromScreenLocation(p);
@@ -194,8 +194,8 @@ public abstract class GesturesMapView extends MapView {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        if (mScaleGestureDetector != null) mScaleGestureDetector.onTouchEvent(event);
-        if (mGestureDetector != null) mGestureDetector.onTouchEvent(event);
+        if (mScaleGestureDetector != null && event.getPointerCount()>1) mScaleGestureDetector.onTouchEvent(event);
+        if (mGestureDetector != null && event.getPointerCount() == 1) mGestureDetector.onTouchEvent(event);
         return super.onInterceptTouchEvent(event);
 /*        if(mScaleGestureDetector != null && event.getPointerCount()>1) return mScaleGestureDetector.onTouchEvent(event);
         else if(mGestureDetector != null) return mGestureDetector.onTouchEvent(event);

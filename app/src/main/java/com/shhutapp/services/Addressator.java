@@ -55,8 +55,8 @@ public class Addressator extends Service{
 	}
 	@Override
 	public int onStartCommand(final Intent intent, int flags, int startID) {
-		 WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
-		 if(!wifiManager.isWifiEnabled()) return Service.START_NOT_STICKY;
+		//WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
+		//if(!wifiManager.isWifiEnabled()) return Service.START_NOT_STICKY;
 		name = intent.getExtras().getString("name");
 		lat = intent.getExtras().getDouble("lat");
 		lon = intent.getExtras().getDouble("long");
@@ -139,7 +139,23 @@ public class Addressator extends Service{
 				obj.put("radius", Math.abs(radius));
 				obj.put("street", street);
 				obj.put("status_code", 1);
-			} catch (JSONException e1) {
+			}
+			catch (NullPointerException e1){
+				e1.printStackTrace();
+				try {
+					if(obj == null) obj = new JSONObject();
+					obj.put("name", name);
+					obj.put("lat", lat);
+					obj.put("long", lon);
+					obj.put("city", " ");
+					obj.put("radius", Math.abs(radius));
+					obj.put("street", " ");
+					obj.put("status_code", -1);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+			catch (JSONException e1) {
 				e1.printStackTrace();
 				try {
 					if(obj == null) obj = new JSONObject();

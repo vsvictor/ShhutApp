@@ -188,4 +188,70 @@
             android:scaleType="fitXY" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/rlMapError"
+        android:background="@drawable/rect_map_gray"
+        android:layout_centerInParent="true"
+        android:layout_width="@dimen/map_card_error_wight"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:layout_width="@dimen/map_card_error_circle"
+            android:layout_height="@dimen/map_card_error_circle"
+            android:id="@+id/rlMapErrorLogo"
+            android:layout_marginLeft="@dimen/map_card_error_circle_left"
+            android:layout_marginRight="@dimen/map_card_error_circle_left"
+            android:layout_centerVertical="true"
+            android:background="@drawable/circle_blue">
+
+            <ImageView
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/logo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvMapError"
+            android:layout_toRightOf="@id/rlMapErrorLogo"
+            android:textColor="@color/black"
+            android:text="@string/error"
+            android:textSize="16sp"
+            android:layout_marginTop="@dimen/map_card_error_circle_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tvMapErrorText"
+            android:layout_toRightOf="@id/rlMapErrorLogo"
+            android:textColor="@color/gray"
+            android:text="@string/not_address"
+            android:textSize="14sp"
+            android:layout_below="@+id/tvMapError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tvMapErrorClose"
+            android:textColor="@color/red_light"
+            android:text="@string/close"
+            android:textSize="16sp"
+            android:layout_below="@+id/tvMapErrorText"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/map_card_error_circle_left"
+            android:layout_marginBottom="@dimen/map_card_error_circle_top"
+            android:layout_marginTop="@dimen/map_card_error_circle_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:layout_below="@+id/tvMapErrorClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </RelativeLayout>
+
+    </RelativeLayout>
+
 </RelativeLayout>

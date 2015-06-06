@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.OkCancelListener;
-import com.shhutapp.Settings;
+import com.shhutapp.AppSettings;
 import com.shhutapp.fragments.CardList;
 import com.shhutapp.fragments.Header;
 import com.shhutapp.R;

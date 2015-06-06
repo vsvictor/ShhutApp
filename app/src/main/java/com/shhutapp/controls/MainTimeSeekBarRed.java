@@ -105,6 +105,7 @@ public class MainTimeSeekBarRed extends ImageView{
     }
     @Override
     public boolean onTouchEvent(MotionEvent event){
+        if(!isEnabled()) return true;
         if(isStop) return getSecond().onTouchEvent(event);
         ev = event;
         switch (event.getAction()){
@@ -134,6 +135,15 @@ public class MainTimeSeekBarRed extends ImageView{
         int step = Math.round(width/diriv);
         Paint p = new Paint();
         Paint e = new Paint();
+
+        if(isEnabled()){
+            dis = MainActivity.getMainActivity().getResources().getColor(R.color.geoscale_red_disable);
+            en = MainActivity.getMainActivity().getResources().getColor(R.color.geoscale_red_enable);
+        }
+        else{
+            dis = Color.LTGRAY;
+            en = Color.LTGRAY;
+        }
         p.setColor(dis);
         e.setColor(en);
 
@@ -157,7 +167,14 @@ public class MainTimeSeekBarRed extends ImageView{
         if(thumb != null){
             if(offset>width) offset=width;
             if(offset<0) offset = 0;
-            canvas.drawBitmap(thumb, offset, (height/2)-fourty, p);
+            if(isEnabled()) {
+                canvas.drawBitmap(thumb, offset, (height / 2) - fourty, p);
+            }
+            else{
+                Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.thumb_full_gray);
+                Bitmap thumb_gray = Bitmap.createScaledBitmap(b, (int)Convertor.convertDpToPixel(18,context), (int)Convertor.convertDpToPixel(18,context), false);
+                canvas.drawBitmap(thumb_gray, offset, (height / 2) - fourty, p);
+            }
         }
         invalidate();
         if(onChange != null) onChange.onTimeChanged(offsetToTime(minus, Math.round(offset)));

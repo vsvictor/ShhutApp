@@ -2,6 +2,7 @@ package com.shhutapp.services;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -28,6 +29,7 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.text.TextUtils;
+import android.util.Log;
 
 public class Locator extends Service{
 	private static final String TAG = "Locator";
@@ -41,8 +43,8 @@ public class Locator extends Service{
 		super.onCreate();
 		logger = createLogger();
 		if(!Locator.isLocationEnabled(MainActivity.getMainActivity())) return;
+        criteria = new Criteria();
     	locationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
-    	criteria = new Criteria();
     	provider = locationManager.getBestProvider(criteria, true);
     	logger.info(TAG+": provider: "+provider);
     	loc = locationManager.getLastKnownLocation(provider);
@@ -57,23 +59,40 @@ public class Locator extends Service{
 	}
 	@Override
 	public int onStartCommand(final Intent intent, int flags, int startID) {
+        int accuracy = intent.getExtras().getInt("accuracy");
 		if(!Locator.isLocationEnabled(MainActivity.getMainActivity())) return Service.START_NOT_STICKY;
     	criteria = new Criteria();
-    	provider = locationManager.getBestProvider(criteria, true);
-    	logger.info(TAG+": provider onStartComment: "+provider);
+		criteria.setAccuracy(accuracy);
+		criteria.setAltitudeRequired(false);
+		criteria.setBearingRequired(false);
+		criteria.setSpeedRequired(false);
+		criteria.setCostAllowed(true);
+		criteria.setPowerRequirement(Criteria.POWER_HIGH);
+
+        List<String> prov = locationManager.getProviders(criteria, true);
+        for(String curr: prov){
+            Log.i("Providers", curr);
+        }
+
+
+        provider = locationManager.getBestProvider(criteria, true);
+		Log.i("Provider", "Provider: "+provider);
+		logger.info(TAG+": provider onStartComment: "+provider);
     	loc = locationManager.getLastKnownLocation(provider);
     	if(loc == null){
     		loc = new Location(provider);
     		loc.setLatitude(0);
     		loc.setLongitude(0);
     	}
-    	logger.info(TAG+": OnStartCommand location: ("+String.valueOf(loc.getLatitude())+":"+String.valueOf(loc.getLatitude())+")");
+    	logger.info(TAG+": OnStartCommand location: ("+String.valueOf(loc.getLatitude())+":"+String.valueOf(loc.getLongitude())+")");
 		Intent res = new Intent(Actions.Location);
 		JSONObject obj = new JSONObject();
 		try {
 			obj.put("lat", loc.getLatitude());
 			obj.put("lon", loc.getLongitude());
-			obj.put("status_code", 1);
+			if(loc.getLatitude() == 0 && loc.getLongitude() == 0) obj.put("status_code", -1);
+            else if(prov.size()==0) obj.put("status_code", -2);
+			else obj.put("status_code", 1);
 			logger.info(TAG+": result obj: "+obj.toString());
 		} catch (JSONException e) {
 			e.printStackTrace();

@@ -173,10 +173,14 @@ public class Area {
         return new LatLng(center.latitude, center.longitude + radiusAngle);
     }
     public boolean inArea(LatLng geo){
-        //Log.i("Distance","Distance: "+(SphericalUtil.computeDistanceBetween(center, toRadiusLatLng())-SphericalUtil.computeDistanceBetween(center,geo)));
+        /*Log.i("Distance","Distance: "+
+                Math.abs(SphericalUtil.computeDistanceBetween(center, toRadiusLatLng())-
+                        SphericalUtil.computeDistanceBetween(center,geo))+
+        " Radius:"+getRadius()+" Center: ("+getCenter().latitude+":"+getCenter().longitude+")");*/
         double dist1 = Math.abs(SphericalUtil.computeDistanceBetween(center, toRadiusLatLng()));
         double dist2 = Math.abs(SphericalUtil.computeDistanceBetween(center,geo));
-        return dist1>dist2;
+        //Log.i("Distance","Radius: "+dist1+" center-point: "+dist2);
+        return (dist1>dist2);
     }
     public void addCenter(GoogleMap map, Bitmap bitmap){
         if(bitmap == null) return;
@@ -206,6 +210,7 @@ public class Area {
         if(bitmap == null || unit <= 0) return;
         int height = (int)(r*unit);
         int width = (int)(height*0.6785714f);
+        if(height<=0 || width<=0 ) return;
         //Log.i("Bitmap:", "R=" + r + " H=" + height + " W=" + width);
         Bitmap bit = Bitmap.createScaledBitmap(bitmap,2*width,2*height,false);
         addCenter(map, bit);
@@ -266,10 +271,13 @@ public class Area {
         gen.setBackground(background);
         String sValue = String.valueOf((int)getRadius());
         Bitmap bitmap = gen.makeIcon(sValue+" m", color, 16);
-        sizeMarker = map.addMarker(new MarkerOptions()
-                .position(pos)
-                .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
-                .draggable(false));
+
+        if(bitmap.getWidth()<getRadiusInPixel(map)) {
+            sizeMarker = map.addMarker(new MarkerOptions()
+                    .position(pos)
+                    .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+                    .draggable(false));
+        }
     }
     public void removeSize(){
         if(sizeMarker != null) sizeMarker.remove();

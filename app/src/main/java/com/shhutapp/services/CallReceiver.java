@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
-import com.shhutapp.Settings;
+import com.shhutapp.AppSettings;
 import com.shhutapp.data.Card;
 import com.shhutapp.data.CardType;
 import com.android.internal.telephony.ITelephony;
@@ -41,7 +41,7 @@ public class CallReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		sended = false;
 		String phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-		Settings set = new Settings(context);
+		AppSettings set = new AppSettings(context);
 		incomingCall = true;
 		if(MainActivity.getMainActivity().isDream()){
 			boolean call = false;

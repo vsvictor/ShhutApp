@@ -3,12 +3,15 @@ package com.shhutapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -57,7 +60,7 @@ public class MainActivity extends ActionBarActivity {
 
     private SMSCard selected_sms;
     private WhiteListCard selectetd_whitelist;
-    private Settings settings;
+    private AppSettings settings;
     private MainPage mpage;
 
     @Override
@@ -65,7 +68,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.main);
-
+        turnGPSOn();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -80,12 +83,14 @@ public class MainActivity extends ActionBarActivity {
         inf = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         dbHelper = new DBHelper(this);
         db = dbHelper.getWritableDatabase();
-        if(isNetwork()) {
-            startService(new Intent(this, Locator.class));
+/*        if(isNetwork()) {
+            Intent intent = new Intent(this, Locator.class);
+            intent.putExtra("accuracy", settings.getDefaultAccuracy());
+            startService(intent);
             startService(new Intent(this, Finder.class));
-        }
+        }*/
         startService(new Intent(this, Carder.class));
-        settings = new Settings(this);
+        settings = new AppSettings(this);
         if (savedInstanceState == null) {
             header = new Header(this);
             getSupportFragmentManager().beginTransaction().add(R.id.header, header).commit();
@@ -126,6 +131,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onStop(){
         super.onStop();
+        turnGPSOff();
 //        AppEventsLogger.deactivateApp(this);
     }
 
@@ -213,7 +219,7 @@ public class MainActivity extends ActionBarActivity {
     public DBHelper getDBHelper(){
         return dbHelper;
     }
-    public Settings getSettings(){
+    public AppSettings getSettings(){
         return settings;
     }
 
@@ -256,5 +262,35 @@ public class MainActivity extends ActionBarActivity {
                     haveConnectedMobile = true;
         }
         return haveConnectedWifi || haveConnectedMobile;
+    }
+    public void turnGPSOn()
+    {
+        Intent intent = new Intent("android.location.GPS_ENABLED_CHANGE");
+        intent.putExtra("enabled", true);
+        this.sendBroadcast(intent);
+
+        String provider = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+        if(!provider.contains("gps")){ //if gps is disabled
+            final Intent poke = new Intent();
+            poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
+            poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
+            poke.setData(Uri.parse("3"));
+            this.sendBroadcast(poke);
+        }
+    }
+    public void turnGPSOff()
+    {
+        Intent intent = new Intent("android.location.GPS_ENABLED_CHANGE");
+        intent.putExtra("enabled", false);
+        this.sendBroadcast(intent);
+
+        String provider = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+        if(provider.contains("gps")){ //if gps is enabled
+            final Intent poke = new Intent();
+            poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
+            poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
+            poke.setData(Uri.parse("3"));
+            this.sendBroadcast(poke);
+        }
     }
 }

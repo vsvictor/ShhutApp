@@ -14,6 +14,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,6 +87,9 @@ public class Map extends BaseFragments{
     private int centerX;
     private int centerY;
     private Point pCenter;
+    private TextView tvMapError;
+    private RelativeLayout rlMapError;
+    private TextView tvMapErrorClose;
 
     public Map(){
         super(MainActivity.getMainActivity());
@@ -119,7 +123,7 @@ public class Map extends BaseFragments{
         return rView;
     }
     @Override
-    public void onViewCreated(View view, Bundle saved) {
+    public void onViewCreated(View view, final Bundle saved) {
         super.onViewCreated(view, saved);
         getMainActivity().getHeader().setOnNextListener(new OnNextListener() {
             @Override
@@ -130,6 +134,7 @@ public class Map extends BaseFragments{
                     public void onSnapshotReady(Bitmap bitmap) {
                         int wInPic = (int) Convertor.convertDpToPixel(350, getMainActivity());
                         int hInPic = (int) getMainActivity().getResources().getDimension(R.dimen.map_card_view_height);
+                        pCenter = zv.getPointPressed();
                         Bitmap bPrev = Bitmap.createBitmap(bitmap, 0, pCenter.y - hInPic / 2, wInPic, hInPic);
                         Bitmap bp = makeTransparent(bPrev, 50);
                         ContentValues row = new ContentValues();
@@ -139,12 +144,13 @@ public class Map extends BaseFragments{
                         Bundle b = new Bundle();
                         b.putString("number", zv.getManager().getLast().getName());
                         b.putString("photo", Convertor.BitmapToBase64(bp));
+                        b.putString("address", tvMapAddress.getText().toString());
                         ar.setArguments(b);
                         getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.areaPage, ar).commit();
                     }
                 };
                 zv.getMap().clear();
-                zv.getMap().snapshot(cb, bp);
+                zv.getMap().snapshot(cb);
             }
         });
 
@@ -157,7 +163,20 @@ public class Map extends BaseFragments{
         rlMyLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                act.startService(new Intent(MainActivity.getMainActivity(), Locator.class));
+                Intent intent = new Intent(MainActivity.getMainActivity(), Locator.class);
+                intent.putExtra("accuracy", getMainActivity().getSettings().getDefaultAccuracy());
+                act.startService(intent);
+            }
+        });
+        ivMapUpdate = (ImageView) rView.findViewById(R.id.ivUpdateMap);
+        ivMapUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("VMap", "Refresh...");
+                MapsInitializer.initialize(act);
+                zv.onCreate(saved);
+                zv.onResume();
+                Log.i("VMap", "Refreshed");
             }
         });
         rlMapAddress = (RelativeLayout) rView.findViewById(R.id.rlMapAddress);
@@ -226,6 +245,16 @@ public class Map extends BaseFragments{
             @Override
             public void onClick(View v) {
                 //zv.getMap().
+            }
+        });
+        tvMapError = (TextView) rView.findViewById(R.id.tvMapErrorText);
+        rlMapError = (RelativeLayout) rView.findViewById(R.id.rlMapError);
+        rlMapError.setVisibility(View.INVISIBLE);
+        tvMapErrorClose = (TextView) rView.findViewById(R.id.tvMapErrorClose);
+        tvMapErrorClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rlMapError.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -301,6 +330,11 @@ public class Map extends BaseFragments{
         IntentFilter filterFinder = new IntentFilter();
         filterFinder.addAction(Actions.Finder);
         act.registerReceiver(finder, filterFinder);
+
+        IntentFilter filterFling = new IntentFilter();
+        filterFling.addAction("fling");
+        act.registerReceiver(fling, filterFling);
+
     }
     @Override
     public void onPause(){
@@ -308,10 +342,12 @@ public class Map extends BaseFragments{
         act.unregisterReceiver(brMyLocation);
         act.unregisterReceiver(addressator);
         act.unregisterReceiver(finder);
+        act.unregisterReceiver(fling);
     }
     private BroadcastReceiver brMyLocation = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            int status = 0;
             String command = intent.getExtras().getString("command");
             if(command != null) {
                 JSONObject obj = null;
@@ -319,19 +355,31 @@ public class Map extends BaseFragments{
                     obj = new JSONObject(command);
                     lat = obj.getDouble("lat");
                     lon = obj.getDouble("lon");
+                    status = obj.getInt("status_code");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                CameraPosition pos = new CameraPosition.Builder().target(new LatLng(lat,lon)).zoom(16).build();
-                zv.getMap().animateCamera(CameraUpdateFactory.newCameraPosition(pos));
+                if(status == 1) {
+                    Log.i("Location", "Lantitude: " + lat + " Longitude: " + lon);
+                    CameraPosition pos = new CameraPosition.Builder().target(new LatLng(lat, lon)).zoom(16).build();
+                    zv.getMap().animateCamera(CameraUpdateFactory.newCameraPosition(pos));
+                }
+                else if(status == -1){
+                    tvMapError.setText(getMainActivity().getResources().getString(R.string.not_location));
+                    rlMapError.setVisibility(View.VISIBLE);
+                }
+                else if(status == -2){
+                    tvMapError.setText(getMainActivity().getResources().getString(R.string.not_source));
+                    rlMapError.setVisibility(View.VISIBLE);
+                }
             }
         }
     };
     private BroadcastReceiver addressator = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            int status = 0;
             String command = intent.getExtras().getString("command");
-
             if(command == null) return;
             JSONObject result = null;
             try {
@@ -351,6 +399,7 @@ public class Map extends BaseFragments{
                 lat = result.getDouble("lat");
                 lon = result.getDouble("long");
                 radius = result.getDouble("radius");
+                status = result.getInt("status_code");
                 row.put("name", name);
                 row.put("lat", lat);
                 row.put("long", lon);
@@ -361,12 +410,18 @@ public class Map extends BaseFragments{
                 e.printStackTrace();
             }
             //String[] cols = {"name","lat","long","city","street","radius"};
-            String[] args = {name};
-            Cursor c = act.getDB().query("locations", null, "name=?", args, null, null, null);
-            if(c.moveToFirst()) act.getDB().update("locations", row, "name=?", args);
-            else act.getDB().insert("locations", null, row);
-            tvMapAddress.setText(street);
-            rlMapAddress.setVisibility(View.VISIBLE);
+            if(status == 1) {
+                String[] args = {name};
+                Cursor c = act.getDB().query("locations", null, "name=?", args, null, null, null);
+                if (c.moveToFirst()) act.getDB().update("locations", row, "name=?", args);
+                else act.getDB().insert("locations", null, row);
+                tvMapAddress.setText(street);
+                rlMapAddress.setVisibility(View.VISIBLE);
+            }
+            else if(status == -1){
+                tvMapError.setText(getMainActivity().getResources().getString(R.string.not_address));
+                rlMapError.setVisibility(View.VISIBLE);
+            }
             getMainActivity().getHeader().setVisibleNext(true);
         }
     };
@@ -400,6 +455,14 @@ public class Map extends BaseFragments{
 
         }
     };
+    BroadcastReceiver fling= new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            rlMapAddress.setVisibility(View.INVISIBLE);
+            getMainActivity().getHeader().setVisibleNext(false);
+        }
+    };
+
     private class MapAddressAdapter extends FilteredAdapter {
 
         public MapAddressAdapter(Context context, BaseObjectList list) {

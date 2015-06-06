@@ -2,11 +2,12 @@ package com.shhutapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Criteria;
 
-public class Settings {
+public class AppSettings {
 	private Context context;
 	private SharedPreferences sh;
-	public Settings(Context context){
+	public AppSettings(Context context){
 		this.context = context;
 		sh = context.getSharedPreferences("shhutapp", context.MODE_PRIVATE);
 	}
@@ -50,5 +51,6 @@ public class Settings {
 	public boolean getDefaultVibtare(){
 		return sh.getBoolean("vibrate", true);
 	}
+	public int getDefaultAccuracy(){ return  sh.getInt("accuracy", Criteria.ACCURACY_MEDIUM);}
 	public SharedPreferences getSharedPreferences(){return sh;}
 }

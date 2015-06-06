@@ -36,7 +36,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/map_card_view_logo_top"
                     android:layout_width="@dimen/map_card_view_logo_width"
-                    android:layout_height="@dimen/map_card_view_logo_height">
+                    android:layout_height="@dimen/map_card_view_logo_height"
+                    android:id="@+id/rlMapLogo">
 
                     <ImageView
                         android:id="@+id/ivCardLogo"
@@ -44,13 +45,17 @@
                         android:scaleType="fitXY"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
-                    <TextView
-                        android:layout_below="@id/ivCardLogo"
-                        android:text="Address"
-                        android:layout_centerHorizontal="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
                 </RelativeLayout>
+                <TextView
+                    android:id="@+id/tvMapAddress"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/rlMapLogo"
+                    android:text="Address"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:visibility="visible" />
 
             </RelativeLayout>
 
