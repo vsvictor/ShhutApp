@@ -6,6 +6,8 @@ import com.shhutapp.utils.DateTimeOperator;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import java.util.Date;
+
 public class GeoCard extends IntStringPair{
 	private Context context;
 	private CardType type;
@@ -17,6 +19,7 @@ public class GeoCard extends IntStringPair{
 	private double lon;
 	private double radius;
 	private Bitmap background;
+	private int minutes;
 
 	public GeoCard(){
 		super(-1, "");
@@ -44,7 +47,7 @@ public class GeoCard extends IntStringPair{
 		}
 		else if(actType == 3){
 			//result = context.getResources().getString(R.string.first_from_grand)+" "+DateTimeOperator.toDateTime(actTime, "HH:mm");
-			result = context.getResources().getString(R.string.first_from_grand)+" "+DateTimeOperator.dateToTimeString(DateTimeOperator.toDateTime(actTime, "HH:mm"));
+			result = context.getResources().getString(R.string.first_from_grand)+" "+DateTimeOperator.dateToTimeString(DateTimeOperator.toDateTime(minutes*60*1000, "HH:mm"));
 		}
 		else{
 			result = " ";
@@ -73,5 +76,12 @@ public class GeoCard extends IntStringPair{
 	}
 	public Bitmap getBackground(){
 		return this.background;
+	}
+	public void setMinutes(int iMin){
+		minutes = iMin;
+	}
+	public int getMinutes(){
+		return this.minutes;
+
 	}
 }

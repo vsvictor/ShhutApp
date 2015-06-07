@@ -57,11 +57,11 @@ public abstract class GesturesMapView extends MapView {
                     Point screenPoint = map.getProjection().toScreenLocation(target);
                     Point newPoint = new Point(screenPoint.x + (int)distanceX, screenPoint.y + (int)distanceY);
                     LatLng mapNewTarget = map.getProjection().fromScreenLocation(newPoint);
-
                     //CameraUpdate update = CameraUpdateFactory.newLatLngZoom(mapNewTarget, map.getCameraPosition().zoom);
                     //tryUpdateCamera(update, 0);
-
-                    onPostScroll( target, mapNewTarget);
+                    LatLng l1 = map.getProjection().fromScreenLocation(new Point((int)e1.getX(),(int)e1.getY()));
+                    LatLng l2 = map.getProjection().fromScreenLocation(new Point((int)e2.getX(),(int)e2.getY()));
+                    onPostScroll(target, mapNewTarget, l1, l2);
                     return true;
                 }
 
@@ -203,7 +203,7 @@ public abstract class GesturesMapView extends MapView {
         else return super.onInterceptTouchEvent(event);*/
     }
 
-    public abstract void onPostScroll(LatLng source, LatLng target);
+    public abstract void onPostScroll(LatLng source, LatLng target, LatLng begin, LatLng end);
     public abstract void onPostFling(LatLng source, LatLng target, int animateTime);
     public abstract void onPostScale(LatLng source, double sourceZoom, LatLng target, double targetZoom);
     public abstract void onPostLongPress(LatLng targer);

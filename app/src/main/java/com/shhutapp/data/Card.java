@@ -17,7 +17,9 @@ public class Card extends IntStringPair {
 	public QueitCard dream;
 	public SMSCard sms;
 	public WhiteListCard wl;
-	
+
+	private int minutes;
+
 	public Card(){
 		super(-1,"");
 		this.idLoc = -1;
@@ -90,5 +92,11 @@ public class Card extends IntStringPair {
 	public boolean inWhiteList(String number){
 		if(this.wl == null) return false;
 		else return this.wl.inList(number);
+	}
+	public void setMinutes(int min){
+		this.minutes = min;
+	}
+	public int getMinutes(){
+		return this.minutes;
 	}
 }

@@ -191,7 +191,7 @@ public class Area {
         " Radius:"+getRadius()+" Center: ("+getCenter().latitude+":"+getCenter().longitude+")");*/
         double dist1 = Math.abs(SphericalUtil.computeDistanceBetween(center, toRadiusLatLng()));
         double dist2 = Math.abs(SphericalUtil.computeDistanceBetween(center,geo));
-        //Log.i("Distance","Radius: "+dist1+" center-point: "+dist2);
+        //Log.i("Distance","Radius: "+dist1+" center-point: ");
         return (dist1>dist2);
     }
     public void addCenter(GoogleMap map, Bitmap bitmap){

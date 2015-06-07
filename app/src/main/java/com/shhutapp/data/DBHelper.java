@@ -100,7 +100,8 @@ public class DBHelper extends SQLiteOpenHelper{
 				+ "idGeo integer,"
 				+ "idDream integer,"
 				+ "idWhiteList integer,"
-				+ "idMessage integer" + ");";
+				+ "idMessage integer,"
+				+ "time integer"+");";
 		db.execSQL(command);
 	}
 	@Override
@@ -108,7 +109,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	}
 	public BaseObjectList loadGeoCards(){
 		BaseObjectList list = new BaseObjectList();
-		Cursor cur = act.getDB().rawQuery("Select cards.id, locations.name , locations.street,  cards.idActivate,  activations.time, locations.background, locations.lat, locations.long, locations.radius From cards, locations, activations Where cards.idGeo=locations.id and cards.idActivate=activations.id", null);
+		Cursor cur = act.getDB().rawQuery("Select cards.id, locations.name , locations.street,  cards.idActivate,  activations.time, locations.background, locations.lat, locations.long, locations.radius, cards.time From cards, locations, activations Where cards.idGeo=locations.id and cards.idActivate=activations.id", null);
 		if(cur.moveToFirst()){
 			do{
 				GeoCard card = new GeoCard(this.act);
@@ -120,6 +121,7 @@ public class DBHelper extends SQLiteOpenHelper{
 				card.setLantitude(cur.getDouble(6));
 				card.setLongitude(cur.getDouble(7));
 				card.setRadius(cur.getDouble(8));
+				card.setMinutes(cur.getInt(9));
 				String s = cur.getString(5);
 				Bitmap b = Convertor.Base64ToBitmap(s);
 				card.setBackground(b);

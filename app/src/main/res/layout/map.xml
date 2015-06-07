@@ -153,7 +153,8 @@
         android:layout_below="@+id/rlMapSearchBack"
         android:layout_marginTop="@dimen/map_update_top"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/map_update_height">
+        android:layout_height="@dimen/map_update_height"
+        android:visibility="invisible">
         <ImageView
             android:src="@drawable/update_map"
             android:scaleType="fitXY"

@@ -69,33 +69,19 @@ public class ExMapView extends GesturesMapView implements OnMapReadyCallback{
         return getMap().getProjection().toScreenLocation(manager.getLast().getCenter());
     }
     @Override
-    public void onPostScroll(LatLng source, LatLng target) {
-/*        Area ar = manager.find(source);
-        if(ar != null){
-            double dist = Math.abs(SphericalUtil.computeDistanceBetween(source,target));
-            double old = ar.getRadius();
-            double dist1 = Math.abs(SphericalUtil.computeDistanceBetween(ar.getCenter(), source));
-            double dist2 = Math.abs(SphericalUtil.computeDistanceBetween(ar.getCenter(), target));
-            if(dist1<dist2) ar.setRadius(old + dist);
-            else ar.setRadius(old - dist);
-            if(ar.getRadius()<=5) {manager.clear(ar);manager.removeArea(ar);}
-            else ar.reDraw(getMap());
-        }
-        else{
-            CameraUpdate update = CameraUpdateFactory.newLatLngZoom(target, getMap().getCameraPosition().zoom);
-            tryUpdateCamera(update, 0);
-        }*/
-        if(manager.getLast()!= null && manager.getLast().inArea(source)){
-            double dist = Math.abs(SphericalUtil.computeDistanceBetween(source,target));
+    public void onPostScroll(LatLng source, LatLng target, LatLng begin, LatLng end) {
+        double new_radius;
+        if(manager.getLast()!= null && manager.getLast().inArea(begin)){
+            double dist = (Math.abs(SphericalUtil.computeDistanceBetween(begin,end)))/10;
             double old = manager.getLast().getRadius();
-            double dist1 = Math.abs(SphericalUtil.computeDistanceBetween(manager.getLast().getCenter(), source));
-            double dist2 = Math.abs(SphericalUtil.computeDistanceBetween(manager.getLast().getCenter(), target));
-            if(dist1<dist2) manager.getLast().setRadius(old + dist);
-            else manager.getLast().setRadius(old - dist);
+            double dist1 = Math.abs(SphericalUtil.computeDistanceBetween(manager.getLast().getCenter(), begin));
+            double dist2 = Math.abs(SphericalUtil.computeDistanceBetween(manager.getLast().getCenter(), end));
+            if(dist1<dist2) new_radius = old + dist;
+            else new_radius = old - dist;
+            double recom = manager.checkRadius(manager.getLast(), new_radius);
+            manager.getLast().setRadius(recom);
             manager.getLast().reDraw(getMap());
-            if(manager.getLast().getRadius()<=5) {manager.clear(manager.getLast());manager.removeArea(manager.getLast());}
-            //else manager.getLast().reDraw(getMap());
-            //manager.getLast().reDraw(getMap());
+            if(manager.getLast().getRadius()<=5) {manager.clear(manager.getLast());manager.removeArea(manager.getLast(), MainActivity.getMainActivity().getDB());}
        }
         else{
             CameraUpdate update = CameraUpdateFactory.newLatLngZoom(target, getMap().getCameraPosition().zoom);
@@ -107,7 +93,7 @@ public class ExMapView extends GesturesMapView implements OnMapReadyCallback{
         for(Area ar: manager.getAreas()){
             if(ar.inArea(source)){
                 manager.clear(ar);
-                manager.removeArea(ar);
+                manager.removeArea(ar, MainActivity.getMainActivity().getDB());
                 enableAdd=true;
                 context.sendBroadcast(new Intent("fling"));
                 return;

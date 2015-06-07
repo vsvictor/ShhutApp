@@ -74,7 +74,8 @@ public class AreaCard extends BasePage {
     private ImageView ivGeocardWLOn;
     private ImageView ivGeocardMessageOff;
     private ImageView ivGeocardMessageOn;
-
+    private int hours;
+    private int min;
     public AreaCard(){
         super(MainActivity.getMainActivity());
     }
@@ -139,12 +140,15 @@ public class AreaCard extends BasePage {
 
                 cv.put("name", locName);
                 cv.put("idGeo", idLoc);
-                cv.put("idDream", -1);
-                cv.put("idWhiteList", -1);
+                if(getMainActivity().getQueitCard() != null)
+                    cv.put("idDream", getMainActivity().getQueitCard().getID());
+                if(getMainActivity().getWhiteList()!=null)
+                    cv.put("idWhiteList", getMainActivity().getWhiteList().getID());
                 if (getMainActivity().getSMS() != null) {
                     cv.put("idMessage", getMainActivity().getSMS().getID());
                     getMainActivity().clearSMS();
                 } else cv.put("idMessage", -1);
+                cv.put("time",(hours*60+min));
                 getMainActivity().getDB().insert("cards", null, cv);
                 BasePage page = getMainActivity().createPageFromID(BasePage.Pages.mainPage);
 
@@ -174,6 +178,7 @@ public class AreaCard extends BasePage {
             public void onTimeChanged(int minutes) {
                 int h = minutes / 60;
                 int m = minutes - (h * 60);
+                hours = h;
                 tvActHours.setText(String.valueOf(h));
             }
         });
@@ -181,6 +186,7 @@ public class AreaCard extends BasePage {
             @Override
             public void onTimeChanged(int minutes) {
                 tvActMinutes.setText(String.valueOf(minutes));
+                min = minutes;
             }
         });
         ivGeocardQuietOff = (ImageView) rootView.findViewById(R.id.ivGeocardQuietOff);
