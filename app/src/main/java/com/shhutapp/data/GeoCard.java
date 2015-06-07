@@ -4,6 +4,7 @@ import com.shhutapp.R;
 import com.shhutapp.utils.DateTimeOperator;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 public class GeoCard extends IntStringPair{
 	private Context context;
@@ -15,6 +16,8 @@ public class GeoCard extends IntStringPair{
 	private double lat;
 	private double lon;
 	private double radius;
+	private Bitmap background;
+
 	public GeoCard(){
 		super(-1, "");
 		this.type = CardType.Geo;
@@ -65,4 +68,10 @@ public class GeoCard extends IntStringPair{
 	public double getLongitude(){return this.lon;}
 	public void setRadius(double radius){this.radius = radius;}
 	public double getRadius(){return this.radius;}
+	public void setBackground(Bitmap b){
+		this.background = b;
+	}
+	public Bitmap getBackground(){
+		return this.background;
+	}
 }

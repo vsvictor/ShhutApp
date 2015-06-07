@@ -79,6 +79,7 @@ public abstract class BasePage extends Fragment {
         public static final int dreamPage = 4;
         public static final int settingsPage = 5;
         public static final int areaPage = 6;
+        public static final int areaCard = 7;
     }
     public BasePage getPrev(){
         return prev;

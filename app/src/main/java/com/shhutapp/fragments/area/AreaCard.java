@@ -27,8 +27,14 @@ import com.shhutapp.controls.SecondTimeSeekBarRed;
 import com.shhutapp.data.Card;
 import com.shhutapp.data.CardType;
 import com.shhutapp.fragments.BaseFragments;
+import com.shhutapp.fragments.OnBackListener;
+import com.shhutapp.fragments.OnCancelListener;
 import com.shhutapp.fragments.OnOkListener;
 import com.shhutapp.pages.BasePage;
+import com.shhutapp.pages.MainPage;
+import com.shhutapp.pages.MessagePage;
+import com.shhutapp.pages.QueitTimePage;
+import com.shhutapp.pages.WhiteListPage;
 import com.shhutapp.utils.Convertor;
 import com.shhutapp.utils.DateTimeOperator;
 
@@ -41,8 +47,9 @@ import java.util.Date;
 /**
  * Created by victor on 03.06.15.
  */
-public class AreaCard extends BaseFragments {
+public class AreaCard extends BasePage {
     private BasePage page;
+    public static AreaCard instance;
     private MainTimeSeekBarRed mainScale;
     private SecondTimeSeekBarRed secondScale;
     private RelativeLayout rlMapMap;
@@ -60,6 +67,13 @@ public class AreaCard extends BaseFragments {
     private boolean checked;
     private ImageView ivGeocardQuietOn;
     private ImageView ivGeocardQuietOff;
+    private RelativeLayout rlGeocardQueit;
+    private RelativeLayout rlGeocardWhiteList;
+    private RelativeLayout rlGeocardMessage;
+    private ImageView ivGeocardWLOff;
+    private ImageView ivGeocardWLOn;
+    private ImageView ivGeocardMessageOff;
+    private ImageView ivGeocardMessageOn;
 
     public AreaCard(){
         super(MainActivity.getMainActivity());
@@ -74,22 +88,40 @@ public class AreaCard extends BaseFragments {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         locName = getArguments().getString("name");
         String ph = getArguments().getString("photo");
         Bitmap bp = Convertor.Base64ToBitmap(ph);
         address = getArguments().getString("address");
         dr = new BitmapDrawable(bp);
+        //getMainActivity().clearSMS();
+        //getMainActivity().clearWhiteList();
+        //getMainActivity().clearQueitCard();
     }
+
+    @Override
+    public int getID() {
+        return Pages.areaCard;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inf, ViewGroup container, Bundle savedInstanceState) {
-        rView = inf.inflate(R.layout.map_card, container, false);
-        return rView;
+        rootView = inf.inflate(R.layout.map_card, container, false);
+        return rootView;
     }
     @Override
     public void onViewCreated(View view, Bundle saved) {
         super.onViewCreated(view, saved);
         getMainActivity().getHeader().setVisibleNext(false);
         getMainActivity().getHeader().setVisibleOk(true);
+        getMainActivity().getHeader().setOnCancelListener(new OnCancelListener() {
+            @Override
+            public void onCancel() {
+                MainPage mp = new MainPage(act);
+                getMainActivity().getSupportFragmentManager().beginTransaction().remove(getCurrent()).commit();
+                getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, mp).commit();
+            }
+        });
         getMainActivity().getHeader().setOnOkListener(new OnOkListener() {
             @Override
             public void onOk() {
@@ -100,7 +132,7 @@ public class AreaCard extends BaseFragments {
                 if (c.moveToFirst()) idLoc = c.getInt(0);
                 ContentValues cv = new ContentValues();
 
-                if (!cbOnOff)cv.put("idActivate", 1);
+                if (cbOnOff)cv.put("idActivate", 1);
                 else cv.put("idActivate", 3);
 
                 cv.put("type", Card.cardTypeToId(CardType.Geo));
@@ -121,22 +153,22 @@ public class AreaCard extends BaseFragments {
             }
         });
         //rlMapMap = (RelativeLayout) rView.findViewById(R.id.rlMapMap);
-        tvMapAddress = (TextView) rView.findViewById(R.id.tvMapAddress);
+        tvMapAddress = (TextView) rootView.findViewById(R.id.tvMapAddress);
         tvMapAddress.setText(address);
-        ivMapMap = (ImageView) rView.findViewById(R.id.ivMapMap);
+        ivMapMap = (ImageView) rootView.findViewById(R.id.ivMapMap);
         ivMapMap.setImageDrawable(dr);
         //rlMapMap.setBackground(dr);
-        mainScale = (MainTimeSeekBarRed) rView.findViewById(R.id.sbGeocardActivationMain);
+        mainScale = (MainTimeSeekBarRed) rootView.findViewById(R.id.sbGeocardActivationMain);
         mainScale.setThumb(R.drawable.thumb_full_red);
-        secondScale = (SecondTimeSeekBarRed) rView.findViewById(R.id.sbGeocardActivationSecond);
+        secondScale = (SecondTimeSeekBarRed) rootView.findViewById(R.id.sbGeocardActivationSecond);
         secondScale.setThumb(R.drawable.thumb_red_center);
         secondScale.setBeginTrack(R.drawable.thumb_red_left, (int) Convertor.convertDpToPixel(8, getMainActivity()), (int) Convertor.convertDpToPixel(18, getMainActivity()));
         secondScale.setEndTrack(R.drawable.thumb_red_right, (int) Convertor.convertDpToPixel(8, getMainActivity()), (int) Convertor.convertDpToPixel(18, getMainActivity()));
         secondScale.setScroll(false);
         mainScale.setSecond(secondScale);
         secondScale .setMain(mainScale);
-        tvActHours = (TextView) rView.findViewById(R.id.tvActHours);
-        tvActMinutes = (TextView) rView.findViewById(R.id.tvActMinutes);
+        tvActHours = (TextView) rootView.findViewById(R.id.tvActHours);
+        tvActMinutes = (TextView) rootView.findViewById(R.id.tvActMinutes);
         mainScale.setOnChangeListener(new OnTimeChanged() {
             @Override
             public void onTimeChanged(int minutes) {
@@ -151,13 +183,16 @@ public class AreaCard extends BaseFragments {
                 tvActMinutes.setText(String.valueOf(minutes));
             }
         });
-        ivGeocardQuietOff = (ImageView) rView.findViewById(R.id.ivGeocardQuietOff);
-        ivGeocardQuietOn = (ImageView) rView.findViewById(R.id.ivGeocardQueitOn);
-        ivCBOn = (ImageView) rView.findViewById(R.id.ivGeocardCBOn);
+        ivGeocardQuietOff = (ImageView) rootView.findViewById(R.id.ivGeocardQuietOff);
+        ivGeocardQuietOn = (ImageView) rootView.findViewById(R.id.ivGeocardQueitOn);
+        rlGeocardQueit = (RelativeLayout) rootView.findViewById(R.id.rlGeoCardQueit);
+        rlGeocardWhiteList = (RelativeLayout) rootView.findViewById(R.id.rlGeoCardWhiteList);
+        rlGeocardMessage = (RelativeLayout) rootView.findViewById(R.id.rlGeoCardMessages);
+        ivCBOn = (ImageView) rootView.findViewById(R.id.ivGeocardCBOn);
         ivCBOn.setVisibility(cbOnOff?View.VISIBLE:View.INVISIBLE);
-        ivCBOff = (ImageView) rView.findViewById(R.id.ivGeocardCBOff);
+        ivCBOff = (ImageView) rootView.findViewById(R.id.ivGeocardCBOff);
         ivCBOff.setVisibility(cbOnOff?View.INVISIBLE:View.VISIBLE);
-        rlCBOnOff = (RelativeLayout) rView.findViewById(R.id.rlGeocardCB);
+        rlCBOnOff = (RelativeLayout) rootView.findViewById(R.id.rlGeocardCB);
         rlCBOnOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,5 +209,104 @@ public class AreaCard extends BaseFragments {
                 ivGeocardQuietOn.setAlpha(cbOnOff ? 56 : 255);
             }
         });
+        rlGeocardQueit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!cbOnOff) {
+                    QueitTimePage page = new QueitTimePage(MainActivity.getMainActivity(), instance);
+                    Bundle args = new Bundle();
+                    args.putInt("back", Pages.areaCard);
+                    page.setArguments(args);
+                    getMainActivity().getSupportFragmentManager().beginTransaction().remove(getCurrent()).commit();
+                    getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, page).commit();
+                }
+            }
+        });
+        ivGeocardWLOff = (ImageView) rootView.findViewById(R.id.ivGeocardWLOff);
+        ivGeocardWLOn = (ImageView) rootView.findViewById(R.id.ivGeocardWLOn);
+        rlGeocardWhiteList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WhiteListPage wlp = new WhiteListPage(getMainActivity(), instance);
+                Bundle args = new Bundle();
+                args.putInt("back", getID());
+                args.putBoolean("isRadio", true);
+                wlp.setArguments(args);
+                getMainActivity().getSupportFragmentManager().beginTransaction().hide(instance).add(R.id.container, wlp).commit();
+            }
+        });
+        ivGeocardMessageOff = (ImageView) rootView.findViewById(R.id.ivGeocardMsgOff);
+        ivGeocardMessageOn = (ImageView) rootView.findViewById(R.id.ivGeocardMsgOn);
+        rlGeocardMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MessagePage mp = new MessagePage(getMainActivity(), instance);
+                Bundle args = new Bundle();
+                args.putInt("back", getID());
+                args.putBoolean("isRadio", true);
+                mp.setArguments(args);
+                getMainActivity().getSupportFragmentManager().beginTransaction().hide(instance).add(R.id.container, mp).commit();
+            }
+        });
+
+    }
+    public void onHiddenChanged(boolean hidden){
+        super.onHiddenChanged(hidden);
+        if(!hidden) {
+            getMainActivity().getHeader().setInvisibleAll();
+            getMainActivity().getHeader().setVisibleCancel(true);
+            getMainActivity().getHeader().setVisibleOk(true);
+            getMainActivity().getHeader().setTextHeader(locName);
+            getMainActivity().getHeader().setOnOkListener(new OnOkListener() {
+                @Override
+                public void onOk() {
+                    int idLoc = -1;
+                    String[] cols = {"id"};
+                    String[] args = {locName};
+                    Cursor c = getMainActivity().getDB().query("locations", cols, "name=?", args, null, null, null);
+                    if (c.moveToFirst()) idLoc = c.getInt(0);
+                    ContentValues cv = new ContentValues();
+                    if (cbOnOff) cv.put("idActivate", 1);
+                    else cv.put("idActivate", 3);
+                    cv.put("type", Card.cardTypeToId(CardType.Geo));
+                    cv.put("name", locName);
+                    cv.put("idGeo", idLoc);
+                    cv.put("idDream", -1);
+                    cv.put("idWhiteList", -1);
+                    if (getMainActivity().getSMS() != null) {
+                        cv.put("idMessage", getMainActivity().getSMS().getID());
+                        getMainActivity().clearSMS();
+                    } else cv.put("idMessage", -1);
+                    getMainActivity().getDB().insert("cards", null, cv);
+                    BasePage page = getMainActivity().createPageFromID(BasePage.Pages.mainPage);
+                    getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, page).commit();
+                }
+            });
+            if(getMainActivity().getQueitCard() != null){
+                ivGeocardQuietOff.setVisibility(View.INVISIBLE);
+                ivGeocardQuietOn.setVisibility(View.VISIBLE);
+            }
+            else{
+                ivGeocardQuietOff.setVisibility(View.VISIBLE);
+                ivGeocardQuietOn.setVisibility(View.INVISIBLE);
+            }
+            if(getMainActivity().getWhiteList() != null){
+                ivGeocardWLOff.setVisibility(View.INVISIBLE);
+                ivGeocardWLOn.setVisibility(View.VISIBLE);
+            }
+            else{
+                ivGeocardWLOff.setVisibility(View.VISIBLE);
+                ivGeocardWLOn.setVisibility(View.INVISIBLE);
+            }
+            if(getMainActivity().getSMS() != null){
+                ivGeocardMessageOff.setVisibility(View.INVISIBLE);
+                ivGeocardMessageOn.setVisibility(View.VISIBLE);
+            }
+            else{
+                ivGeocardMessageOff.setVisibility(View.VISIBLE);
+                ivGeocardMessageOn.setVisibility(View.INVISIBLE);
+            }
+
+        }
     }
 }

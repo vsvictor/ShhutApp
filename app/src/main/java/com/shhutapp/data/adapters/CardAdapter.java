@@ -3,6 +3,7 @@ package com.shhutapp.data.adapters;
 import com.shhutapp.MainActivity;
 import com.shhutapp.data.BaseObjectList;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,7 +26,7 @@ public class CardAdapter extends FilteredAdapter{
     public View getView(int position, View view, ViewGroup parent) {
         GeoCard card = (GeoCard) getData().get(position);
         view = this.getInflater().inflate(R.layout.card_list_item, null);
-
+        view.setBackground(new BitmapDrawable(card.getBackground()));
         ImageView ivHere = (ImageView) view.findViewById(R.id.ivHere);
         ImageView ivHours = (ImageView) view.findViewById(R.id.ivHours);
         RelativeLayout rlWhite = (RelativeLayout) view.findViewById(R.id.rlWhiteListSymbol);
@@ -50,4 +51,10 @@ public class CardAdapter extends FilteredAdapter{
         tvActivation.setText(card.getActivationName());
         return view;
     }
+    public void notifyDataSetUpdated(){
+        list = MainActivity.getMainActivity().getDBHelper().loadGeoCards();
+        data = list;
+        super.notifyDataSetChanged();
+    }
+
 }

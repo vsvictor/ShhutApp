@@ -42,6 +42,16 @@ public class QueitTimePage extends BasePage {
         qt_days = new QueitTimeDays(getMainActivity(), this);
         days = new boolean[7];
     }
+    public QueitTimePage(MainActivity act, BasePage prev){
+        super(act);
+        qt_list = new QueitTimeList(getMainActivity(),this);
+        qt_scale = new QueitTimeScale(getMainActivity(), this);
+        qt_control = new QueitTimeControlPanel(getMainActivity(), this);
+        qt_days = new QueitTimeDays(getMainActivity(), this);
+        days = new boolean[7];
+        this.prev = prev;
+    }
+
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         instance = this;

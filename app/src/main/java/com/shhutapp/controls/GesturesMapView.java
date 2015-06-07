@@ -69,6 +69,7 @@ public abstract class GesturesMapView extends MapView {
                 public boolean onFling (MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                     if(e1.getPointerCount()>1 || e2.getPointerCount()>1) return false;
                     if (mIsInAnimation) return false;
+
                     GoogleMap map = getMap();
                     double zoom = map.getCameraPosition().zoom;
                     if (zoom < MIN_ZOOM_FOR_FLING)

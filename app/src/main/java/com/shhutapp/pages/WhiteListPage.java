@@ -70,11 +70,12 @@ public class WhiteListPage extends BasePage{
         else{
             fragmentManager().beginTransaction().
                     add(R.id.whitelistPage, whitelistList).
-                    add(R.id.whitelistPage, empty).
+                    //add(R.id.whitelistPage, empty).
                     commit();
         }
         return rootView;
     }
+
     public void onViewCreated(View view, Bundle saved){
         super.onViewCreated(view, saved);
         header.setHeight(56);
@@ -117,6 +118,24 @@ public class WhiteListPage extends BasePage{
             @Override
             public void onSelected() {
             }
+        });
+        empty.setOnMessageListListener(new MessageListListener() {
+            @Override
+            public void onAdd() {
+                header.setInvisibleAll();
+                header.setVisibleCancel(true);
+                Bundle b = new Bundle();
+                b.putBoolean("isArgs", false);
+                b.putInt("count", 0);
+                whitelistNew.setArguments(b);
+                fragmentManager().beginTransaction().remove(whitelistList).remove(empty).add(R.id.whitelistPage, whitelistNew).commit();
+            }
+            @Override
+            public void onDelete() {}
+            @Override
+            public void onEdit(int id) {}
+            @Override
+            public void onSelected() {}
         });
     }
     @Override

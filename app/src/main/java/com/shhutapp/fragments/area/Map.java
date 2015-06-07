@@ -139,6 +139,9 @@ public class Map extends BaseFragments{
                         Bitmap bp = makeTransparent(bPrev, 50);
                         ContentValues row = new ContentValues();
                         row.put("background", Convertor.BitmapToBase64(bp));
+                        //row.put("lat", zv.getManager().getLast().getCenter().latitude);
+                        //row.put("long", zv.getManager().getLast().getCenter().latitude);
+                        row.put("radius",zv.getManager().getLast().getRadius());
                         getMainActivity().getDB().update("locations", row, "name=?", new String[]{zv.getManager().getLast().getName()});
                         AreaName ar = new AreaName(getMainActivity(), page);
                         Bundle b = new Bundle();
@@ -159,6 +162,7 @@ public class Map extends BaseFragments{
         zv.onCreate(saved);
         zv.onResume();
         zv.getMap().getUiSettings().setAllGesturesEnabled(false);
+        //zv.getManager().load(getMainActivity().getDBHelper());
         rlMyLocation = (RelativeLayout) rView.findViewById(R.id.rlMyLocation);
         rlMyLocation.setOnClickListener(new View.OnClickListener() {
             @Override

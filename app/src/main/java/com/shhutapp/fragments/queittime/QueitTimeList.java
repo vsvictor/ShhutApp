@@ -78,12 +78,19 @@ public class QueitTimeList extends BaseFragments {
         header.setOnBackListener(new OnBackListener() {
             @Override
             public void onBack() {
-                BasePage p = getMainActivity().createPageFromID(page.getPrevID());
-                Bundle args = new Bundle();
-                args.putInt("back", p.getID());
-                p.setArguments(args);
-                getMainActivity().getSupportFragmentManager().beginTransaction().remove(page.getCurrent()).commit();
-                getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, p).commit();
+                if(page.getPrevID() == BasePage.Pages.mainPage) {
+                    getMainActivity().getHeader().setVisibleBack(false);
+                    BasePage p = getMainActivity().createPageFromID(page.getPrevID());
+                    Bundle args = new Bundle();
+                    args.putInt("back", p.getID());
+                    p.setArguments(args);
+                    getMainActivity().getSupportFragmentManager().beginTransaction().remove(page.getCurrent()).commit();
+                    getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, p).commit();
+                }
+                else{
+                    getMainActivity().getSupportFragmentManager().beginTransaction().remove(page.getCurrent()).commit();
+                    getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, page.getPrev()).commit();
+                }
             }
         });
 
@@ -91,6 +98,7 @@ public class QueitTimeList extends BaseFragments {
 
         rlQueitTimeData = (RelativeLayout) rView.findViewById(R.id.rlQueitTimeData);
         rlQueitTimeEmpty = (RelativeLayout) rView.findViewById(R.id.rlQueitTimeEmpty);
+
         ivButton = (ImageView) rView.findViewById(R.id.ivQueitTimeAllMessage);
         rlAddButton = (RelativeLayout) rView.findViewById(R.id.rlQueitAddButton);
         rlAddButton.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +147,8 @@ public class QueitTimeList extends BaseFragments {
 /*              int id = ((WhiteListCard) ((QueitTimeAdapter) swQueitTime.getAdapter()).getData().get(position)).getID();
                 listener.onEdit(id);
                 adapter.notifyDataSetUpdated();*/
+                QueitCard card = (QueitCard) ((QueitTimeAdapter) swQueitTime.getAdapter()).getData().get(position);
+                getMainActivity().selectQueitCard(card);
             }
 
             @Override
@@ -158,8 +168,15 @@ public class QueitTimeList extends BaseFragments {
     public void onResume(){
         super.onResume();
         showEmpty(getMainActivity().isQueitTimeEmpty());
-        rlQueitTimeEmpty.setVisibility(isEmpty ? View.VISIBLE : View.INVISIBLE);
-        rlQueitTimeData.setVisibility(!isEmpty ? View.VISIBLE : View.INVISIBLE);
+
+        if(isEmpty){
+            rlQueitTimeEmpty.setVisibility(View.VISIBLE);
+            rlQueitTimeData.setVisibility(View.INVISIBLE);
+        }
+        else {
+            rlQueitTimeEmpty.setVisibility(View.INVISIBLE);
+            rlQueitTimeData.setVisibility(View.VISIBLE);
+        }
         ivButton.setVisibility(isEmpty ? View.VISIBLE : View.INVISIBLE);
 
         adapter.notifyDataSetUpdated();

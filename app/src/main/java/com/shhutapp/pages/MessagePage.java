@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
+import com.shhutapp.fragments.area.AreaCard;
 import com.shhutapp.fragments.messages.MessageEmpty;
 import com.shhutapp.fragments.Header;
 import com.shhutapp.fragments.messages.MessageList;
@@ -16,6 +17,7 @@ import com.shhutapp.fragments.messages.MessageNew;
 import com.shhutapp.fragments.messages.MessageScale;
 import com.shhutapp.fragments.OnBackListener;
 import com.shhutapp.fragments.OnCancelListener;
+import com.shhutapp.geo.Area;
 
 public class MessagePage extends BasePage {
 
@@ -98,6 +100,17 @@ public class MessagePage extends BasePage {
                                 commit();
                         break;
                     }
+                    case Pages.areaCard:{
+                        getMainActivity().getHeader().setVisibleBack(false);
+                        getMainActivity().getHeader().setVisibleCancel(true);
+
+                        getMainActivity().getSupportFragmentManager().beginTransaction().
+                                remove(getCurrent()).
+                                show(AreaCard.instance).
+                                commit();
+                        break;
+                    }
+
                 }
             }
         });

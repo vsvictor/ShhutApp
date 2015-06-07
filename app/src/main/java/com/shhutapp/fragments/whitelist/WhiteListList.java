@@ -20,6 +20,7 @@ import com.shhutapp.data.WhiteListCard;
 import com.shhutapp.fragments.BaseFragments;
 import com.shhutapp.fragments.Header;
 import com.shhutapp.fragments.OnBackListener;
+import com.shhutapp.fragments.area.AreaCard;
 import com.shhutapp.fragments.messages.MessageListListener;
 import com.shhutapp.pages.BasePage;
 import com.shhutapp.pages.QueitTimePage;
@@ -55,7 +56,7 @@ public class WhiteListList extends BaseFragments {
         this.page = page;
         header = getMainActivity().getHeader();
     }
-
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         boolean isRadio = false;
@@ -158,9 +159,18 @@ public class WhiteListList extends BaseFragments {
         super.onResume();
         //adapter.notifyDataSetUpdated();
         showEmpty(getMainActivity().isWhiteListEmpty());
-        rlWhiteListEmpty.setVisibility(isEmpty ? View.VISIBLE : View.INVISIBLE);
-        rlWhiteListData.setVisibility(!isEmpty ? View.VISIBLE : View.INVISIBLE);
-        ivButton.setVisibility(isEmpty ? View.VISIBLE : View.INVISIBLE);
+
+        if(isEmpty) {
+            rlWhiteListEmpty.setVisibility(View.VISIBLE);
+            rlWhiteListData.setVisibility(View.INVISIBLE);
+            ivButton.setVisibility(View.VISIBLE);
+        }
+        else{
+            rlWhiteListEmpty.setVisibility(View.INVISIBLE);
+            rlWhiteListData.setVisibility(View.VISIBLE);
+            ivButton.setVisibility(View.INVISIBLE);
+        }
+
         header.setTextHeader(getMainActivity().getResources().getString(R.string.whitelist));
         header.setInvisibleAll();
         header.setVisibleBack(true);
@@ -180,6 +190,13 @@ public class WhiteListList extends BaseFragments {
                         getMainActivity().getSupportFragmentManager().beginTransaction().remove(page.getCurrent()).show(QueitTimePage.instance).commit();
                         break;
                     }
+                    case BasePage.Pages.areaCard:{
+                        getMainActivity().getHeader().setVisibleBack(false);
+                        getMainActivity().getHeader().setVisibleCancel(true);
+                        getMainActivity().getSupportFragmentManager().beginTransaction().remove(page.getCurrent()).show(AreaCard.instance).commit();
+                        break;
+                    }
+
                 }
             }
         });

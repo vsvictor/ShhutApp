@@ -108,7 +108,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	}
 	public BaseObjectList loadGeoCards(){
 		BaseObjectList list = new BaseObjectList();
-		Cursor cur = act.getDB().rawQuery("Select cards.id, locations.name , locations.street,  cards.idActivate,  activations.time From cards, locations, activations Where cards.idGeo=locations.id and cards.idActivate=activations.id", null);
+		Cursor cur = act.getDB().rawQuery("Select cards.id, locations.name , locations.street,  cards.idActivate,  activations.time, locations.background, locations.lat, locations.long, locations.radius From cards, locations, activations Where cards.idGeo=locations.id and cards.idActivate=activations.id", null);
 		if(cur.moveToFirst()){
 			do{
 				GeoCard card = new GeoCard(this.act);
@@ -117,6 +117,12 @@ public class DBHelper extends SQLiteOpenHelper{
 				card.setAddress(cur.getString(2));
 				card.setTypeActivation(cur.getInt(3));
 				card.setTimeActivation(cur.getLong(4));
+				card.setLantitude(cur.getDouble(6));
+				card.setLongitude(cur.getDouble(7));
+				card.setRadius(cur.getDouble(8));
+				String s = cur.getString(5);
+				Bitmap b = Convertor.Base64ToBitmap(s);
+				card.setBackground(b);
 				list.add(card);
 			}while(cur.moveToNext());
 		}
@@ -162,6 +168,11 @@ public class DBHelper extends SQLiteOpenHelper{
 		}
 		return list;
 	}
+	public void deleteGeoCard(long loc){
+		act.getDB().delete("locations", "id=?", new String[]{String.valueOf(loc)});
+		act.getDB().delete("cards", "idGeo=?", new String[]{String.valueOf(loc)});
+	}
+
 	public void deleteMessage(long id){
 		String[] args = {String.valueOf(id)};
 		act.getDB().delete("sms", "id=?", args);
@@ -173,8 +184,10 @@ public class DBHelper extends SQLiteOpenHelper{
 	}
 	public void deleteQueitCard(long id){
 		String[] args = {String.valueOf(id)};
-		act.getDB().delete("quieties", "id=?", args);
-		act.getDB().delete("cards", "idDream=?", args);
+		Cursor c = act.getDB().query("cards", null, "id=?", new String[]{String.valueOf(id)},null, null, null);
+		if(c.moveToFirst()) act.getDB().delete("quieties", "id=?", new String[]{String.valueOf(c.getInt(5))});
+		act.getDB().delete("cards", "id=?", args);
+		//act.getDB().delete("quieties", "id=?", args);
 	}
 
 	public BaseObjectList loadWhiteLists(){

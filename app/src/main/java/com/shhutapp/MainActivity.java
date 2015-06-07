@@ -26,10 +26,13 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.shhutapp.data.QueitCard;
 import com.shhutapp.data.SMSCard;
 import com.shhutapp.data.WhiteListCard;
 import com.shhutapp.fragments.Header;
+import com.shhutapp.fragments.area.AreaCard;
 import com.shhutapp.help.Help;
+import com.shhutapp.pages.AreaPage;
 import com.shhutapp.pages.BasePage;
 import com.shhutapp.pages.MainPage;
 import com.shhutapp.data.DBHelper;
@@ -60,6 +63,7 @@ public class MainActivity extends ActionBarActivity {
 
     private SMSCard selected_sms;
     private WhiteListCard selectetd_whitelist;
+    private QueitCard selected_queit_card;
     private AppSettings settings;
     private MainPage mpage;
 
@@ -96,11 +100,11 @@ public class MainActivity extends ActionBarActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.header, header).commit();
             mpage = new MainPage(this);
             getSupportFragmentManager().beginTransaction().add(R.id.container, mpage).commit();
-            if(false){
-            //if(settings.isFirst()){
+            //if(true){
+            if(settings.isFirst()){
                 Help help = new Help(this);
                 getSupportFragmentManager().beginTransaction().add(R.id.main, help).commitAllowingStateLoss();
-
+                settings.setFirst(false);
             }
         }
         clearSMS();
@@ -162,6 +166,14 @@ public class MainActivity extends ActionBarActivity {
                 page = new QueitTimePage(this);
                 break;
             }
+            case BasePage.Pages.areaPage:{
+                page = new AreaPage(this);
+                break;
+            }
+            case BasePage.Pages.areaCard:{
+                page = new AreaCard(this);
+                break;
+            }
 
             default:{
                 page = null;
@@ -180,25 +192,25 @@ public class MainActivity extends ActionBarActivity {
     public boolean isCardListEmty(){
         Cursor c = getDB().query("cards", null, null, null, null, null, null);
         if(c.moveToFirst()) isCardListEmty = false;
-        else isCardListEmty = false;
+        else isCardListEmty = true;
         return  isCardListEmty;
     }
     public boolean isMessageListEmpty(){
         Cursor c = getDB().query("sms", null, null, null, null, null, null);
         if(c.moveToFirst()) isMessageListEmpty = false;
-        else isMessageListEmpty = false;
+        else isMessageListEmpty = true;
         return isMessageListEmpty;
     }
     public boolean isWhiteListEmpty(){
         Cursor c = getDB().query("white_list", null, null, null, null, null, null);
         if(c.moveToFirst()) isWhiteListEmpty = false;
-        else isWhiteListEmpty = false;
+        else isWhiteListEmpty = true;
         return isWhiteListEmpty;
     }
     public boolean isQueitTimeEmpty(){
         Cursor c = getDB().query("quieties", null, null, null, null, null, null);
         if(c.moveToFirst()) isQueitTimeEmpty = false;
-        else isQueitTimeEmpty = false;
+        else isQueitTimeEmpty = true;
         return isQueitTimeEmpty;
     }
     @Override
@@ -240,6 +252,15 @@ public class MainActivity extends ActionBarActivity {
     }
     public void clearWhiteList(){
         this.selectetd_whitelist = null;
+    }
+    public void selectQueitCard(QueitCard card){
+        this.selected_queit_card = new QueitCard(card.getID(), card.getName());
+    }
+    public QueitCard getQueitCard(){
+        return selected_queit_card;
+    }
+    public void clearQueitCard(){
+        this.selected_queit_card = null;
     }
     public void setDream(boolean b){
         isDream = b;

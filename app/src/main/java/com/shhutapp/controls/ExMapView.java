@@ -6,12 +6,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapLoadedCallback;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
@@ -23,11 +25,12 @@ import com.shhutapp.geo.AreaManager;
 import com.shhutapp.services.Addressator;
 
 import java.util.Iterator;
+import java.util.logging.LogRecord;
 
 /**
  * Created by victor on 04.06.15.
  */
-public class ExMapView extends GesturesMapView {
+public class ExMapView extends GesturesMapView implements OnMapReadyCallback{
     private Context context;
     private AreaManager manager;
     private boolean enableAdd;
@@ -36,24 +39,28 @@ public class ExMapView extends GesturesMapView {
         this.context = context;
         manager = new AreaManager(this.getMap());
         enableAdd = true;
+        this.getMapAsync(this);
     }
     public ExMapView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         manager = new AreaManager(this.getMap());
         enableAdd = true;
+        this.getMapAsync(this);
     }
     public ExMapView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.context = context;
         manager = new AreaManager(this.getMap());
         enableAdd = true;
+        this.getMapAsync(this);
     }
     public ExMapView(Context context, GoogleMapOptions options) {
         super(context, options);
         this.context = context;
         manager = new AreaManager(this.getMap());
         enableAdd = true;
+        this.getMapAsync(this);
     }
     public AreaManager getManager(){
         return manager;
@@ -63,27 +70,33 @@ public class ExMapView extends GesturesMapView {
     }
     @Override
     public void onPostScroll(LatLng source, LatLng target) {
+/*        Area ar = manager.find(source);
+        if(ar != null){
+            double dist = Math.abs(SphericalUtil.computeDistanceBetween(source,target));
+            double old = ar.getRadius();
+            double dist1 = Math.abs(SphericalUtil.computeDistanceBetween(ar.getCenter(), source));
+            double dist2 = Math.abs(SphericalUtil.computeDistanceBetween(ar.getCenter(), target));
+            if(dist1<dist2) ar.setRadius(old + dist);
+            else ar.setRadius(old - dist);
+            if(ar.getRadius()<=5) {manager.clear(ar);manager.removeArea(ar);}
+            else ar.reDraw(getMap());
+        }
+        else{
+            CameraUpdate update = CameraUpdateFactory.newLatLngZoom(target, getMap().getCameraPosition().zoom);
+            tryUpdateCamera(update, 0);
+        }*/
         if(manager.getLast()!= null && manager.getLast().inArea(source)){
-
             double dist = Math.abs(SphericalUtil.computeDistanceBetween(source,target));
             double old = manager.getLast().getRadius();
             double dist1 = Math.abs(SphericalUtil.computeDistanceBetween(manager.getLast().getCenter(), source));
             double dist2 = Math.abs(SphericalUtil.computeDistanceBetween(manager.getLast().getCenter(), target));
             if(dist1<dist2) manager.getLast().setRadius(old + dist);
             else manager.getLast().setRadius(old - dist);
-            if(manager.getLast().getRadius()<=5) {manager.clear(manager.getLast());manager.removeArea(manager.getLast());}
-            else manager.getLast().reDraw(getMap());
-
-/*
-            Log.i("Radius", "Old radius:m " + manager.getLast().getRadius());
-            double dist = Math.abs(SphericalUtil.computeDistanceBetween(manager.getLast().getCenter(), target));
-            manager.getLast().setRadius(dist);
-            Log.i("Radius", "New radius:m " + manager.getLast().getRadius());
             manager.getLast().reDraw(getMap());
-*/
-
-            //Log.i("Radius", "Old radius:m " + old + " New radius:m " + manager.getLast().getRadius()+"Distance:m "+dist);
-        }
+            if(manager.getLast().getRadius()<=5) {manager.clear(manager.getLast());manager.removeArea(manager.getLast());}
+            //else manager.getLast().reDraw(getMap());
+            //manager.getLast().reDraw(getMap());
+       }
         else{
             CameraUpdate update = CameraUpdateFactory.newLatLngZoom(target, getMap().getCameraPosition().zoom);
             tryUpdateCamera(update, 0);
@@ -108,6 +121,7 @@ public class ExMapView extends GesturesMapView {
     public void onPostScale(LatLng source, double sourceZoom, LatLng target, double targetZoom) {
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(target, (float) targetZoom);
         tryUpdateCamera(update, 0);
+        getManager().reDrawAll();
     }
     @Override
     public void onPostLongPress(LatLng targer){
@@ -148,5 +162,10 @@ public class ExMapView extends GesturesMapView {
     }
     @Override
     public void onPostSingleTapUp(LatLng target) {
+    }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        getManager().setMap(googleMap);
+        getManager().load(MainActivity.getMainActivity().getDBHelper());
     }
 }

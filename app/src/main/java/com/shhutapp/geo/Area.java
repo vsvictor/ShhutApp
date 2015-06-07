@@ -58,9 +58,11 @@ public class Area {
     private Polyline arrowMarker;
     private Marker sizeMarker;
     private Marker addressMarker;
+    private Marker nameMarker;
+    private int nameColor;
+    private Drawable nameBackground;
 
     public boolean isDrawed;
-
 
 
     public Area(Context context){
@@ -96,7 +98,10 @@ public class Area {
         return center.equals(ar.center) && this.radius == ar.radius;
     }
     public void draw(GoogleMap map){
-        circle = map.addCircle(new CircleOptions()
+        Log.i("Circle: ", "Center:" + center + " Radius " + radius + " Colors: " + this.strokeWidth + " " + this.strokeColor + " " + this.fillColor);
+        GoogleMap gp = map;
+
+        circle = gp.addCircle(new CircleOptions()
                 .center(center)
                 .radius(radius)
                 .strokeWidth(this.strokeWidth)
@@ -127,6 +132,11 @@ public class Area {
             removeSize();
             addSize(map, sizeBackground, sizeColor);
         }
+        if(nameMarker != null){
+            Log.i("NameMarker", "Rebuild");
+            removeName();
+            addName(map,nameBackground,nameColor);
+        }
     }
     public void clear(){
         if(circle != null) circle.remove();
@@ -134,6 +144,7 @@ public class Area {
         if(radiusMarker != null) removeRadius();
         if(arrowMarker != null) removeArrow();
         if(sizeMarker != null) removeSize();
+        if(nameMarker != null) removeName();
         isDrawed = false;
     }
     public boolean isDrawed(){
@@ -169,8 +180,9 @@ public class Area {
         return this.name;
     }
     public LatLng toRadiusLatLng() {
-        double radiusAngle = Math.toDegrees(radius / EARTH_RADIUS) / Math.cos(Math.toRadians(center.latitude));
-        return new LatLng(center.latitude, center.longitude + radiusAngle);
+        //double radiusAngle = Math.toDegrees(radius / EARTH_RADIUS) / Math.cos(Math.toRadians(center.latitude));
+        //return new LatLng(center.latitude, center.longitude + radiusAngle);
+        return SphericalUtil.computeOffset(getCenter(),getRadius(),90);
     }
     public boolean inArea(LatLng geo){
         /*Log.i("Distance","Distance: "+
@@ -212,7 +224,7 @@ public class Area {
         int width = (int)(height*0.6785714f);
         if(height<=0 || width<=0 ) return;
         //Log.i("Bitmap:", "R=" + r + " H=" + height + " W=" + width);
-        Bitmap bit = Bitmap.createScaledBitmap(bitmap,2*width,2*height,false);
+        Bitmap bit = Bitmap.createScaledBitmap(bitmap, 2 * width, 2 * height, false);
         addCenter(map, bit);
         centerBitmap = bitmap;
         fCenter = unit;
@@ -263,6 +275,36 @@ public class Area {
             addRadius(map, radiusBitmap);
         }
     }
+    public void addName(GoogleMap map, Drawable background, int color){
+        nameColor = color;
+        nameBackground = background;
+        //LatLng pos = SphericalUtil.computeOffset(getCenter(), getRadius()/2, 90);
+
+        ExIconGenerator gen = new ExIconGenerator(context);
+        gen.setBackground(background);
+        String sValue = getName();
+        Bitmap bitmap = gen.makeIcon(sValue, color, 16);
+        int w = bitmap.getWidth();
+        int r = (getRadiusInPixel(map)*2);
+        Log.i("NameMarker", "Width bitmap: "+w+" radius in pixels: "+r);
+        //if(w<r) {
+            nameMarker = map.addMarker(new MarkerOptions()
+                    .position(getCenter())
+                    .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+                    .anchor(0.5f,0.5f)
+                    .draggable(false));
+        //}
+    }
+    public void removeName(){
+        if(nameMarker != null) nameMarker.remove();
+    }
+    public void rebuildName(GoogleMap map){
+        if(nameMarker != null) {
+            removeName();
+            addName(map, nameBackground, nameColor);
+        }
+    }
+
     public void addSize(GoogleMap map, Drawable background, int color){
         sizeColor = color;
         sizeBackground = background;

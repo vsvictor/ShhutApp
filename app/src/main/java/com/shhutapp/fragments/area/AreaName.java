@@ -74,7 +74,7 @@ public class AreaName extends BaseFragments {
                     b.putString("address", address);
                     ac.setArguments(b);
                     getMainActivity().getHeader().setTextHeader(edMessage.getText().toString());
-                    getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.areaPage, ac).commit();
+                    getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, ac).commit();
                 }
                 else setError(true);
             }

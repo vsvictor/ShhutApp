@@ -8,8 +8,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
+import com.fortysevendeg.swipelistview.SwipeListView;
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
+import com.shhutapp.data.BaseObjectList;
+import com.shhutapp.data.GeoCard;
+import com.shhutapp.data.QueitCard;
+import com.shhutapp.data.adapters.CardAdapter;
 import com.shhutapp.pages.AreaPage;
 import com.shhutapp.pages.BasePage;
 
@@ -19,6 +25,8 @@ public class CardList extends  BaseFragments {
     private RelativeLayout rlCardListData;
     private RelativeLayout rlAddLocation;
     private boolean isEmpty;
+    private SwipeListView lvCardList;
+
     public CardList(){
         super();
         rView = null;
@@ -49,11 +57,20 @@ public class CardList extends  BaseFragments {
     @Override
     public void onViewCreated(View view, Bundle saved) {
         super.onViewCreated(view, saved);
-        showEmpty(getMainActivity().isCardListEmty());
+        boolean bob = getMainActivity().isCardListEmty();
+        showEmpty(bob);
         rlCardListEmpty = (RelativeLayout) rView.findViewById(R.id.rlCardListEmpty);
         rlCardListData  = (RelativeLayout) rView.findViewById(R.id.rlCardListData);
-        rlCardListEmpty.setVisibility(!isEmpty?View.VISIBLE:View.INVISIBLE);
-        rlCardListData.setVisibility(isEmpty?View.VISIBLE:View.INVISIBLE);
+
+        if(isEmpty){
+            rlCardListEmpty.setVisibility(View.VISIBLE);
+            rlCardListData.setVisibility(View.INVISIBLE);
+        }
+        else {
+            rlCardListEmpty.setVisibility(View.INVISIBLE);
+            rlCardListData.setVisibility(View.VISIBLE);
+        }
+
         rlAddLocation = (RelativeLayout) rView.findViewById(R.id.rlAddLocation);
         rlAddLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +84,63 @@ public class CardList extends  BaseFragments {
 
             }
         });
+        BaseObjectList list = getMainActivity().getDBHelper().loadGeoCards();
+        final CardAdapter adapter = new CardAdapter(getMainActivity(),list);
+        lvCardList = (SwipeListView) rView.findViewById(R.id.lvCardList);
+        lvCardList.setAdapter(adapter);
+        lvCardList.setSwipeListViewListener(new BaseSwipeListViewListener() {
+            @Override
+            public void onOpened(int position, boolean toRight) {
+                View v = (View) lvCardList.getChildAt(position - lvCardList.getFirstVisiblePosition());
+                RelativeLayout llBack = (RelativeLayout) v.findViewById(R.id.card_list_item_back);
+                llBack.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onClosed(int position, boolean fromRight) {
+                View v = (View) lvCardList.getChildAt(position - lvCardList.getFirstVisiblePosition());
+                RelativeLayout llBack = (RelativeLayout) v.findViewById(R.id.card_list_item_back);
+                llBack.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onListChanged() {
+            }
+
+            @Override
+            public void onMove(int position, float x) {
+            }
+
+            @Override
+            public void onStartOpen(int position, int action, boolean right) {
+                lvCardList.closeOpenedItems();
+            }
+
+            @Override
+            public void onStartClose(int position, boolean right) {
+            }
+
+            @Override
+            public void onClickFrontView(int position) {
+/*              int id = ((WhiteListCard) ((QueitTimeAdapter) swQueitTime.getAdapter()).getData().get(position)).getID();
+                listener.onEdit(id);
+                adapter.notifyDataSetUpdated();*/
+                GeoCard card = (GeoCard) ((CardAdapter) lvCardList.getAdapter()).getData().get(position);
+                //getMainActivity().selectQueitCard(card);
+            }
+
+            @Override
+            public void onClickBackView(int position) {
+                GeoCard c = ((GeoCard) ((CardAdapter) lvCardList.getAdapter()).getData().get(position));
+                act.getDBHelper().deleteGeoCard(c.getID());
+                adapter.notifyDataSetUpdated();
+            }
+
+            @Override
+            public void onDismiss(int[] reverseSortedPositions) {
+            }
+        });
+
     }
     public void showEmpty(boolean isCardListEmpty){
         isEmpty = isCardListEmpty;

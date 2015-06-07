@@ -43,8 +43,8 @@
             android:layout_marginLeft="@dimen/white_list_contacts_familiar_all_left"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:src="@drawable/add_contact"
-            android:scaleType="fitXY" />
+            android:src="@drawable/add_contact_all"
+            android:layout_alignParentEnd="false" />
         <ImageView
             android:layout_width="@dimen/white_list_contacts_familiar_add_width"
             android:layout_height="@dimen/white_list_contacts_familiar_add_height"

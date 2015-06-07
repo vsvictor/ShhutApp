@@ -34,6 +34,7 @@ public class AreaPage extends BasePage{
         super.onCreate(savedInstanceState);
         instance = this;
     }
+
     @Override
     public View onCreateView(LayoutInflater inf, ViewGroup container, Bundle savedInstanceState) {
         ma = new Map(getMainActivity(), this);

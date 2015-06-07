@@ -114,7 +114,8 @@
             android:layout_marginRight="@dimen/queittime_scale_right"
             style="@style/QueitTieBarStyle"
             android:progressDrawable="@null"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:layout_alignParentBottom="true" />
         <com.shhutapp.controls.SecondTimeSeekBar
             android:layout_width="@dimen/queittime_scale_seek_width"
             android:layout_height="@dimen/main_scale_seek_height"
@@ -125,7 +126,8 @@
             style="@style/QueitTieBarStyle"
             android:progressDrawable="@null"
             android:visibility="invisible"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:layout_alignParentBottom="true" />
 
     </RelativeLayout>
 </RelativeLayout>
