@@ -41,7 +41,6 @@ public class HelpQuietHours extends BaseFragments {
             public void onClick(View v) {
                 hwl = new HelpWhiteList();
                 getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main,hwl).commit();
-
             }
         });
     }

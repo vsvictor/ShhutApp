@@ -40,7 +40,6 @@ public class HelpMessage extends BaseFragments {
             public void onClick(View v) {
                 hl = new HelpLocation();
                 getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main, hl).commit();
-
             }
         });
     }

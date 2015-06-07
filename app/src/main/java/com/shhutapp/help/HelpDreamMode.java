@@ -41,7 +41,6 @@ public class HelpDreamMode extends BaseFragments {
             public void onClick(View v) {
                 hqh = new HelpQuietHours();
                 getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main,hqh).commit();
-
             }
         });
     }

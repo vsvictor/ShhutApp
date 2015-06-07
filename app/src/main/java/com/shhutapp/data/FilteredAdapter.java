@@ -9,7 +9,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 
 public abstract class FilteredAdapter extends BaseAdapter implements Filterable{
-	
+
 	protected ValueFilter filter;
 	protected BaseObjectList data;
 	protected BaseObjectList list;
@@ -23,14 +23,14 @@ public abstract class FilteredAdapter extends BaseAdapter implements Filterable{
 		this.list = list;
 		context = null;
 		inflater = null;
-	}	
+	}
 	public FilteredAdapter(Context context, BaseObjectList list) {
 		count = list.size();
 		this.data = list;
 		this.list = list;
 		this.context = context;
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}	
+	}
 	public LayoutInflater getInflater(){
 		return inflater;
 	}
@@ -62,7 +62,6 @@ public abstract class FilteredAdapter extends BaseAdapter implements Filterable{
 	}
 	public void resetFilter(){
 		if(filter != null) filter.reset();
-		
 	}
 	public Context getContext(){return this.context;}
 	private class ValueFilter extends Filter{

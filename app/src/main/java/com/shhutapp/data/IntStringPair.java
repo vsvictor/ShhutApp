@@ -3,7 +3,7 @@ package com.shhutapp.data;
 public class IntStringPair implements BaseObject{
 	protected int id;
 	protected String name;
-	
+
 	public IntStringPair(){
 		id = 0;
 		name = "";

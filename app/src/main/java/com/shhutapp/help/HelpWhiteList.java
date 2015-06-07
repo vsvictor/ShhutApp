@@ -40,7 +40,6 @@ public class HelpWhiteList extends BaseFragments {
             public void onClick(View v) {
                 hm = new HelpMessage();
                 getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main, hm).commit();
-
             }
         });
     }

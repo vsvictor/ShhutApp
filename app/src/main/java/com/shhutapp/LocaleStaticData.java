@@ -12,7 +12,7 @@ import android.location.Address;
 import android.location.Geocoder;
 
 public class LocaleStaticData {
-	
+
 	@SuppressLint("NewApi")
 	public static LatLng CoodinateFromName(Context context, String country, String city){
 		LatLng result = null;
