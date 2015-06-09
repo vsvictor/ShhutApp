@@ -4,10 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,22 +13,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
-import com.fortysevendeg.swipelistview.SwipeListView;
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
-import com.shhutapp.data.SMSCard;
+import com.shhutapp.controls.TransportedLayout;
 import com.shhutapp.fragments.BaseFragments;
-import com.shhutapp.fragments.OnTextEntered;
 import com.shhutapp.pages.BasePage;
 import com.shhutapp.utils.Convertor;
 import com.shhutapp.utils.DateTimeOperator;
 
-import org.w3c.dom.Text;
-
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -57,6 +49,8 @@ public class DreamMain extends BaseFragments {
     private Timer timer;
     private Date beg;
     private Date curr;
+    private RelativeLayout rlDreamBackground;
+    private TransportedLayout ivDreamBack;
 
     public DreamMain(){
         super(MainActivity.getMainActivity());
@@ -80,15 +74,19 @@ public class DreamMain extends BaseFragments {
     public void onViewCreated(View view, Bundle saved) {
         super.onViewCreated(view, saved);
         getMainActivity().getHeader().setHeight(0);
-        int w = (int)Convertor.convertDpToPixel(360, act);
-        int h = (int)Convertor.convertDpToPixel(640, act);
-        Bitmap bm = BitmapFactory.decodeResource(getMainActivity().getResources(), R.drawable.dream_background);
-        Bitmap bs = Bitmap.createScaledBitmap(bm, w, h, false);
         beg = Calendar.getInstance().getTime();
-        dr = new BitmapDrawable(bs);
-        rlDreamFilter = (RelativeLayout) rView.findViewById(R.id.rlDreamFilter);
-        rlDreamFilter.setBackground(dr);
-        rlDreamFilter.setAlpha(0.25f);
+
+        Bitmap b = BitmapFactory.decodeResource(getMainActivity().getResources(), R.drawable.dream_background);
+        int w = (int) Convertor.convertDpToPixel(480, getMainActivity());
+        int h = (int) Convertor.convertDpToPixel(800, getMainActivity());
+        Bitmap bitmap = Bitmap.createScaledBitmap(b,w,h,false);
+        Drawable dr = new BitmapDrawable(bitmap);
+        rlDreamBackground = (RelativeLayout) rView.findViewById(R.id.rlDreamBackground);
+        rlDreamBackground.setBackground(dr);
+
+        TransportedLayout rw = (TransportedLayout) rView.findViewById(R.id.ivDreamBack);
+        rw.invalidate();
+
         ivDreamWL = (ImageView) rView.findViewById(R.id.rlDreamWL);
         ivDreamMsg = (ImageView) rView.findViewById(R.id.rlDreamMsg);
         tvDreamBeginValue = (TextView) rView.findViewById(R.id.tvDreamBeginValue);

@@ -68,14 +68,14 @@ public class MessagePage extends BasePage {
                 if (act.isMessageListEmpty()) {
                     fragmentManager().beginTransaction().
                             remove(newMessage).
-                            add(R.id.messagePage, scale).
-                            add(R.id.messagePage, messagesList).
+                            add(R.id.messagePage, scale).commit();
+                    fragmentManager().beginTransaction().add(R.id.messagePage, messagesList).
                             commit();
                 } else {
                     fragmentManager().beginTransaction().
                             remove(newMessage).
-                            add(R.id.messagePage, messagesList).
-                            add(R.id.messagePage, empty).
+                            add(R.id.messagePage, messagesList).commit();
+                    fragmentManager().beginTransaction().add(R.id.messagePage, empty).
                             commit();
                 }
             }

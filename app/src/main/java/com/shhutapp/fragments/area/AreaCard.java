@@ -151,7 +151,6 @@ public class AreaCard extends BasePage {
                 cv.put("time",(hours*60+min));
                 getMainActivity().getDB().insert("cards", null, cv);
                 BasePage page = getMainActivity().createPageFromID(BasePage.Pages.mainPage);
-
                 //getMainActivity().getSupportFragmentManager().beginTransaction().remove(page).commit();
                 getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, page).commit();
             }

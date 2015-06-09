@@ -58,21 +58,21 @@ public class MainActivity extends ActionBarActivity {
 
     private DBHelper dbHelper;
     private SQLiteDatabase db;
-    private  Header header;
+    public static Header header;
     private RelativeLayout actionBar;
 
     private SMSCard selected_sms;
     private WhiteListCard selectetd_whitelist;
     private QueitCard selected_queit_card;
     private AppSettings settings;
-    private MainPage mpage;
+    public static MainPage mpage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.main);
-        turnGPSOn();
+        //turnGPSOn();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -97,7 +97,7 @@ public class MainActivity extends ActionBarActivity {
         settings = new AppSettings(this);
         if (savedInstanceState == null) {
             header = new Header(this);
-            getSupportFragmentManager().beginTransaction().add(R.id.header, header).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.header, header,"nodelete").commit();
             mpage = new MainPage(this);
             getSupportFragmentManager().beginTransaction().add(R.id.container, mpage).commit();
             //if(true){
@@ -107,6 +107,8 @@ public class MainActivity extends ActionBarActivity {
                 settings.setFirst(false);
             }
         }
+        clearQueitCard();
+        clearWhiteList();
         clearSMS();
     }
     @Override
@@ -126,16 +128,16 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onResume(){
         super.onResume();
-        String sw = String.valueOf(Convertor.convertPixelsToDp(480, this));
-        String sh = String.valueOf(Convertor.convertPixelsToDp(800, this));
-        Log.i("Size", sw + "х" + sh);
+        //String sw = String.valueOf(Convertor.convertPixelsToDp(480, this));
+        //String sh = String.valueOf(Convertor.convertPixelsToDp(800, this));
+        //Log.i("Size", sw + "х" + sh);
         //Toast.makeText(this, sw+"х"+sh, Toast.LENGTH_LONG);
 //        AppEventsLogger.activateApp(this);
     }
     @Override
     public void onStop(){
         super.onStop();
-        turnGPSOff();
+        //turnGPSOff();
 //        AppEventsLogger.deactivateApp(this);
     }
 
@@ -268,6 +270,7 @@ public class MainActivity extends ActionBarActivity {
     public static boolean isDream(){
         return isDream;
     }
+
     private boolean isNetwork(){
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;

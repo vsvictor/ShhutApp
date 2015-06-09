@@ -4,25 +4,23 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
-import com.shhutapp.fragments.CardList;
-import com.shhutapp.fragments.MainControlPanel;
-import com.shhutapp.fragments.OnBackListener;
-import com.shhutapp.fragments.OnCancelListener;
-import com.shhutapp.fragments.Scale;
+import com.shhutapp.controls.OnStopLister;
+import com.shhutapp.controls.TransportedLayout;
 import com.shhutapp.fragments.dream.DreamMain;
-import com.shhutapp.fragments.dream.OnExitListener;
-import com.shhutapp.fragments.messages.MessageEmpty;
-import com.shhutapp.fragments.messages.MessageList;
-import com.shhutapp.fragments.messages.MessageListListener;
-import com.shhutapp.fragments.messages.MessageNew;
-import com.shhutapp.fragments.messages.MessageScale;
+
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by victor on 22.05.15.
@@ -58,13 +56,44 @@ public class DreamPage extends BasePage {
     }
     public void onViewCreated(View view, Bundle saved) {
         super.onViewCreated(view, saved);
-        rootView.setOnClickListener(new View.OnClickListener() {
+        final int h = view.getMeasuredHeight();
+        rootView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                getMainActivity().setDream(false);
-                BasePage page = getMainActivity().createPageFromID(prevID);
-                getMainActivity().getSupportFragmentManager().beginTransaction().remove(getCurrent()).commit();
-                getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.header, getMainActivity().getHeader()).replace(R.id.container, page).commit();
+            public boolean onTouch(View v, MotionEvent event) {
+                final TransportedLayout tr = (TransportedLayout) rootView.findViewById(R.id.ivDreamBack);
+                tr.setMaxRadius(800);
+                tr.setCenter(new Point((int) event.getX(), (int) event.getY()));
+                final Timer t = new Timer();
+/*                tr.setOnStopListener(new OnStopLister() {
+                    @Override
+                    public void onStop() {
+                        t.cancel();
+                        getMainActivity().setDream(false);
+                        MainActivity.mpage = new MainPage(getMainActivity());
+                        getMainActivity().getSupportFragmentManager().beginTransaction().show(getMainActivity().getHeader()).commitAllowingStateLoss();
+                        getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, getMainActivity().getMainPage()).commitAllowingStateLoss();
+                    }
+                });*/
+                t.scheduleAtFixedRate(new TimerTask() {
+                    @Override
+                    public void run() {
+                        getMainActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tr.addRadius();
+                                if(tr.getRadius()>tr.getMaxRadius()){
+                                    t.cancel();
+                                    getMainActivity().setDream(false);
+                                    getMainActivity().getSupportFragmentManager().beginTransaction().show(getMainActivity().getHeader()).commitAllowingStateLoss();
+                                    getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, getMainActivity().getMainPage()).commitAllowingStateLoss();
+                                }
+                                else tr.invalidate();
+                            }
+                        });
+                    }
+                },0,5);
+
+                return true;
             }
         });
         getMainActivity().setDream(true);

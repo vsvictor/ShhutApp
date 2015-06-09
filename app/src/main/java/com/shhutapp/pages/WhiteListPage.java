@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
 import com.shhutapp.fragments.Header;
+import com.shhutapp.fragments.OnBackListener;
+import com.shhutapp.fragments.area.AreaCard;
 import com.shhutapp.fragments.messages.MessageListListener;
 import com.shhutapp.fragments.whitelist.WhiteListAppCont;
 import com.shhutapp.fragments.whitelist.WhiteListApplications;
@@ -141,6 +143,34 @@ public class WhiteListPage extends BasePage{
     @Override
     public void onResume(){
         super.onResume();
+        header.setTextHeader(getMainActivity().getResources().getString(R.string.whitelist));
+        header.setInvisibleAll();
+        header.setVisibleBack(true);
+        header.setOnBackListener(new OnBackListener() {
+            @Override
+            public void onBack() {
+                switch (prevID) {
+                    case BasePage.Pages.mainPage: {
+                        BasePage p = getMainActivity().createPageFromID(prevID);
+                        getMainActivity().getSupportFragmentManager().beginTransaction().remove(getCurrent()).commit();
+                        getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, p).commit();
+                        break;
+                    }
+                    case BasePage.Pages.queitTimePage: {
+                        getMainActivity().getHeader().setVisibleBack(false);
+                        getMainActivity().getHeader().setVisibleCancel(true);
+                        getMainActivity().getSupportFragmentManager().beginTransaction().remove(getCurrent()).show(QueitTimePage.instance).commit();
+                        break;
+                    }
+                    case BasePage.Pages.areaCard: {
+                        getMainActivity().getHeader().setVisibleBack(false);
+                        getMainActivity().getHeader().setVisibleCancel(true);
+                        getMainActivity().getSupportFragmentManager().beginTransaction().remove(getCurrent()).show(AreaCard.instance).commit();
+                        break;
+                    }
+                }
+            }
+        });
     }
     public WhiteListNew getWhitelistNew(){
         return whitelistNew;

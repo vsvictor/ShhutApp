@@ -6,7 +6,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/card_list_height"
-        android:id="@+id/rlCardListEmpty">
+        android:id="@+id/rlCardListEmpty"
+        android:visibility="invisible">
     <RelativeLayout
         android:layout_width="@dimen/card_list_piccenter_width"
         android:layout_height="@dimen/card_list_piccenter_height"
@@ -37,14 +38,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rlCardListData">
+        android:id="@+id/rlCardListData"
+        android:visibility="visible">
 
         <com.fortysevendeg.swipelistview.SwipeListView
             xmlns:swipe="http://schemas.android.com/apk/res-auto"
             android:id="@+id/lvCardList"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:dividerHeight="0dp"
+            android:dividerHeight="8dp"
             android:listSelector="#00000000"
             swipe:swipeActionLeft="reveal"
             swipe:swipeActionRight="reveal"
@@ -54,7 +56,11 @@
             swipe:swipeFrontView="@+id/card_list_item_front"
             swipe:swipeMode="left"
             swipe:swipeOffsetLeft="328dp"
-            swipe:swipeOffsetRight="0dp" />
+            swipe:swipeOffsetRight="0dp"
+            android:divider="@null"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp" />
     </RelativeLayout>
 
     <RelativeLayout

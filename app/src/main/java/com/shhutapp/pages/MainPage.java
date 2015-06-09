@@ -44,16 +44,20 @@ public class MainPage extends BasePage {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            fragmentManager().beginTransaction().add(R.id.mainPage, scale).commit();
+            fragmentManager().beginTransaction().add(R.id.mainPage, panel).commit();
+            fragmentManager().beginTransaction().add(R.id.mainPage, okcancel).commit();
+            fragmentManager().beginTransaction().add(R.id.mainPage, cardList).commit();
+            fragmentManager().beginTransaction().hide(okcancel).commit();
+        }catch (IllegalStateException e){
+        }
+
     }
 
     public View onCreateView(LayoutInflater inf, ViewGroup container, Bundle savedInstanceState) {
         rootView = inf.inflate(R.layout.main_page, container, false);
 
-        fragmentManager().beginTransaction().add(R.id.mainPage, scale).commit();
-        fragmentManager().beginTransaction().add(R.id.mainPage, panel).commit();
-        fragmentManager().beginTransaction().add(R.id.mainPage, okcancel).commit();
-        fragmentManager().beginTransaction().add(R.id.mainPage, cardList).commit();
-        fragmentManager().beginTransaction().hide(okcancel).commit();
         return rootView;
     }
 
@@ -65,9 +69,9 @@ public class MainPage extends BasePage {
         header.setLeftText(16);
         header.setTextHeader(getMainActivity().getResources().getString(R.string.app_name));
         header.setVisibleMenu(true);
-        if(!header.isAdded()){
-            fragmentManager().beginTransaction().add(R.id.mainPage, header).commit();
-        }
+        //if(!header.isAdded()){
+        //    fragmentManager().beginTransaction().add(R.id.header, header).commit();
+        //}
         scale.setHeight(82);
         panel.setHeight(72);
         panel.setOnMainControlPanelListener(new MainControlPanelListener() {
@@ -77,8 +81,9 @@ public class MainPage extends BasePage {
                 Bundle args = new Bundle();
                 args.putInt("back", getID());
                 dp.setArguments(args);
-                getMainActivity().getSupportFragmentManager().beginTransaction().remove(getCurrent()).remove(header).commit();
-                getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, dp).commit();
+                getMainActivity().getSupportFragmentManager().beginTransaction().hide(header).commit();
+                getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, dp).commit();
+                //MainActivity.mpage = null;
             }
 
             @Override
@@ -140,6 +145,17 @@ public class MainPage extends BasePage {
             }
         });
         cardList.showEmpty(getMainActivity().isCardListEmty());
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        fragmentManager().beginTransaction().
+                remove(scale).
+                remove(panel).
+                remove(okcancel).
+                remove(cardList).
+                remove(okcancel).
+                commit();
     }
     public CardList getCardList(){
         return cardList;
