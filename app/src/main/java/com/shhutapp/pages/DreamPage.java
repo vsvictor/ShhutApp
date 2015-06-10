@@ -135,7 +135,8 @@ public class DreamPage extends BasePage {
                     break;
                 }
                 case 3: {
-                    msgCounter++;
+                    int count = intent.getExtras().getStringArrayList("messages").size();
+                    msgCounter += count;
                     break;
                 }
             }

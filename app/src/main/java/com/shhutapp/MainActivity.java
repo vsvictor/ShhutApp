@@ -39,9 +39,11 @@ import com.shhutapp.data.DBHelper;
 import com.shhutapp.pages.MessagePage;
 import com.shhutapp.pages.QueitTimePage;
 import com.shhutapp.pages.WhiteListPage;
+import com.shhutapp.services.CallReceiver;
 import com.shhutapp.services.Carder;
 import com.shhutapp.services.Finder;
 import com.shhutapp.services.Locator;
+import com.shhutapp.services.MessageReceiver;
 import com.shhutapp.utils.Convertor;
 
 import java.util.List;
@@ -66,6 +68,9 @@ public class MainActivity extends ActionBarActivity {
     private QueitCard selected_queit_card;
     private AppSettings settings;
     public static MainPage mpage;
+
+    private CallReceiver calls;
+    private MessageReceiver mess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +115,9 @@ public class MainActivity extends ActionBarActivity {
         clearQueitCard();
         clearWhiteList();
         clearSMS();
+
+        calls = new CallReceiver();
+        mess = new MessageReceiver();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -128,17 +136,20 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onResume(){
         super.onResume();
-        //String sw = String.valueOf(Convertor.convertPixelsToDp(480, this));
-        //String sh = String.valueOf(Convertor.convertPixelsToDp(800, this));
-        //Log.i("Size", sw + "х" + sh);
-        //Toast.makeText(this, sw+"х"+sh, Toast.LENGTH_LONG);
-//        AppEventsLogger.activateApp(this);
+        IntentFilter callsFilter = new IntentFilter();
+        callsFilter.addAction(Actions.Call);
+        callsFilter.addAction(Actions.OutCall);
+        registerReceiver(calls, callsFilter);
+        IntentFilter msgFilter = new IntentFilter();
+        msgFilter.addAction(Actions.Messages);
+        registerReceiver(mess,msgFilter);
     }
     @Override
     public void onStop(){
         super.onStop();
         //turnGPSOff();
-//        AppEventsLogger.deactivateApp(this);
+        unregisterReceiver(calls);
+        unregisterReceiver(mess);
     }
 
     /*
