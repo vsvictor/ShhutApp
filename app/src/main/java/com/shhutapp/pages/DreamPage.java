@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,11 +13,9 @@ import android.view.ViewGroup;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
-import com.shhutapp.controls.OnStopLister;
-import com.shhutapp.controls.TransportedLayout;
+import com.shhutapp.controls.TransportedLayoutCircle;
 import com.shhutapp.fragments.dream.DreamMain;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -60,7 +57,7 @@ public class DreamPage extends BasePage {
         rootView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                final TransportedLayout tr = (TransportedLayout) rootView.findViewById(R.id.ivDreamBack);
+                final TransportedLayoutCircle tr = (TransportedLayoutCircle) rootView.findViewById(R.id.ivDreamBack);
                 tr.setMaxRadius(800);
                 tr.setCenter(new Point((int) event.getX(), (int) event.getY()));
                 final Timer t = new Timer();

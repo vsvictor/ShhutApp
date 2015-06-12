@@ -44,15 +44,6 @@ public class MainPage extends BasePage {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            fragmentManager().beginTransaction().add(R.id.mainPage, scale).commit();
-            fragmentManager().beginTransaction().add(R.id.mainPage, panel).commit();
-            fragmentManager().beginTransaction().add(R.id.mainPage, okcancel).commit();
-            fragmentManager().beginTransaction().add(R.id.mainPage, cardList).commit();
-            fragmentManager().beginTransaction().hide(okcancel).commit();
-        }catch (IllegalStateException e){
-        }
-
     }
 
     public View onCreateView(LayoutInflater inf, ViewGroup container, Bundle savedInstanceState) {
@@ -72,6 +63,15 @@ public class MainPage extends BasePage {
         //if(!header.isAdded()){
         //    fragmentManager().beginTransaction().add(R.id.header, header).commit();
         //}
+        try {
+            fragmentManager().beginTransaction().add(R.id.mainPage, scale).commit();
+            fragmentManager().beginTransaction().add(R.id.mainPage, panel).commit();
+            fragmentManager().beginTransaction().add(R.id.mainPage, okcancel).commit();
+            fragmentManager().beginTransaction().add(R.id.mainPage, cardList).commit();
+            fragmentManager().beginTransaction().hide(okcancel).commit();
+        }catch (IllegalStateException e){
+        }
+
         scale.setHeight(82);
         panel.setHeight(72);
         panel.setOnMainControlPanelListener(new MainControlPanelListener() {

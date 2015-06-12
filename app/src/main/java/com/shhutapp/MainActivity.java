@@ -39,11 +39,13 @@ import com.shhutapp.data.DBHelper;
 import com.shhutapp.pages.MessagePage;
 import com.shhutapp.pages.QueitTimePage;
 import com.shhutapp.pages.WhiteListPage;
+import com.shhutapp.services.AppReceiver;
 import com.shhutapp.services.CallReceiver;
 import com.shhutapp.services.Carder;
 import com.shhutapp.services.Finder;
 import com.shhutapp.services.Locator;
 import com.shhutapp.services.MessageReceiver;
+import com.shhutapp.start.StartHelp;
 import com.shhutapp.utils.Convertor;
 
 import java.util.List;
@@ -71,7 +73,7 @@ public class MainActivity extends ActionBarActivity {
 
     private CallReceiver calls;
     private MessageReceiver mess;
-
+    private AppReceiver apps;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,9 +107,9 @@ public class MainActivity extends ActionBarActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.header, header,"nodelete").commit();
             mpage = new MainPage(this);
             getSupportFragmentManager().beginTransaction().add(R.id.container, mpage).commit();
-            //if(true){
-            if(settings.isFirst()){
-                Help help = new Help(this);
+            if(true){
+            //if(settings.isFirst()){
+                StartHelp help = new StartHelp(this);//Help(this);
                 getSupportFragmentManager().beginTransaction().add(R.id.main, help).commitAllowingStateLoss();
                 settings.setFirst(false);
             }
@@ -118,6 +120,7 @@ public class MainActivity extends ActionBarActivity {
 
         calls = new CallReceiver();
         mess = new MessageReceiver();
+        apps = new AppReceiver();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -142,7 +145,11 @@ public class MainActivity extends ActionBarActivity {
         registerReceiver(calls, callsFilter);
         IntentFilter msgFilter = new IntentFilter();
         msgFilter.addAction(Actions.Messages);
-        registerReceiver(mess,msgFilter);
+        registerReceiver(mess, msgFilter);
+        IntentFilter appFilter = new IntentFilter();
+        appFilter.addAction(Actions.NotifiReceive);
+        appFilter.addAction(Actions.NotifiRegistration);
+        registerReceiver(apps,appFilter);
     }
     @Override
     public void onStop(){
@@ -150,6 +157,7 @@ public class MainActivity extends ActionBarActivity {
         //turnGPSOff();
         unregisterReceiver(calls);
         unregisterReceiver(mess);
+        unregisterReceiver(apps);
     }
 
     /*

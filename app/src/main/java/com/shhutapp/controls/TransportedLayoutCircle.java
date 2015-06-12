@@ -28,7 +28,7 @@ import com.shhutapp.utils.Convertor;
 /**
  * Created by victor on 08.06.15.
  */
-public class TransportedLayout extends ImageView {
+public class TransportedLayoutCircle extends ImageView {
     private Context context;
     //private int lLeft, lTop, lRight, lBottom;
     public boolean start;
@@ -38,27 +38,29 @@ public class TransportedLayout extends ImageView {
     private int ll,lt,lr,lb;
     private OnStopLister listener;
     private int maxRadius;
-
-    public TransportedLayout(Context context) {
+    private int background_color = Color.argb(192,0,0,0);
+    private int draw = -1;
+    private boolean isLarge;
+    public TransportedLayoutCircle(Context context) {
         super(context);
         this.context= context;
         center = new Point(0,0);
         radius = 0;
     }
-    public TransportedLayout(Context context, AttributeSet attrs) {
+    public TransportedLayoutCircle(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context= context;
         center = new Point(0,0);
         radius = 0;
     }
-    public TransportedLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TransportedLayoutCircle(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context= context;
         center = new Point(0,0);
         radius = 0;
     }
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public TransportedLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TransportedLayoutCircle(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         this.context= context;
         center = new Point(0,0);
@@ -68,41 +70,49 @@ public class TransportedLayout extends ImageView {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom){
         super.onLayout(changed, left, top, right, bottom);
         ll = left;lt=top;lr=right;lb=bottom;
-        Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.dream_background);
-        bitmap = Bitmap.createScaledBitmap(b,lr,lb,false);
+        if(this.draw != -1) {
+            Bitmap b = BitmapFactory.decodeResource(context.getResources(), this.draw);
+            if(b.getWidth()>lr || b.getHeight() > lb) {
+                bitmap = Bitmap.createScaledBitmap(b, lr, lb, false);
+                isLarge = true;
+            }
+            else{
+                int r = getRadius();
+                bitmap = Bitmap.createScaledBitmap(b, r,r, false);
+                isLarge = false;
+            }
+        }
     }
     @SuppressLint("NewApi")
     @Override
     protected void onDraw(Canvas scanvas) {
         super.onDraw(scanvas);
+            if (center.x != 0 && center.y != 0 && radius != 0 && bitmap != null) {
+                Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(output);
 
-        if(center.x!=0 && center.y!=0 && radius!=0) {
-            Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(output);
+                final Paint paint = new Paint();
+                final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+                paint.setAntiAlias(true);
+                canvas.drawARGB(0, 0, 0, 0);
+                paint.setColor(Color.BLACK);
+                canvas.drawCircle(center.x, center.y, radius, paint);
 
-            final Paint paint = new Paint();
-            final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-            paint.setAntiAlias(true);
-            canvas.drawARGB(0, 0, 0, 0);
-            paint.setColor(Color.BLACK);
-            canvas.drawCircle(center.x, center.y, radius, paint);
+                paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+                canvas.drawBitmap(bitmap, rect, rect, paint);
 
-            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-            canvas.drawBitmap(bitmap, rect, rect, paint);
-
-            scanvas.drawARGB(192, 0, 0, 0);
-            scanvas.drawBitmap(output, 0, 0, new Paint());
-        }
-        else {
-            scanvas.drawARGB(192,0,0,0);
-        }
+                scanvas.drawColor(background_color);
+                scanvas.drawBitmap(output, 0, 0, new Paint());
+            } else {
+                scanvas.drawColor(background_color);
+            }
     }
 
-/*
+
     public void setRadius(int radius){
         this.radius = radius;
     }
-*/
+
     public int getRadius(){
         return radius;
     }
@@ -133,5 +143,12 @@ public class TransportedLayout extends ImageView {
     }
     public void setOnStopListener(OnStopLister listener){
         this.listener =listener;
+    }
+    public void setBack(int color){
+        this.background_color = color;
+    }
+    public void setBitmap(int resourceDrawable){
+        this.draw = resourceDrawable;
+        invalidate();
     }
 }

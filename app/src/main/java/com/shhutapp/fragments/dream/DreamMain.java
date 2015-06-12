@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
-import com.shhutapp.controls.TransportedLayout;
+import com.shhutapp.controls.TransportedLayoutCircle;
 import com.shhutapp.fragments.BaseFragments;
 import com.shhutapp.pages.BasePage;
 import com.shhutapp.utils.Convertor;
@@ -50,7 +50,7 @@ public class DreamMain extends BaseFragments {
     private Date beg;
     private Date curr;
     private RelativeLayout rlDreamBackground;
-    private TransportedLayout ivDreamBack;
+    private TransportedLayoutCircle ivDreamBack;
 
     public DreamMain(){
         super(MainActivity.getMainActivity());
@@ -84,7 +84,8 @@ public class DreamMain extends BaseFragments {
         rlDreamBackground = (RelativeLayout) rView.findViewById(R.id.rlDreamBackground);
         rlDreamBackground.setBackground(dr);
 
-        TransportedLayout rw = (TransportedLayout) rView.findViewById(R.id.ivDreamBack);
+        TransportedLayoutCircle rw = (TransportedLayoutCircle) rView.findViewById(R.id.ivDreamBack);
+        rw.setBitmap(R.drawable.dream_background);
         rw.invalidate();
 
         ivDreamWL = (ImageView) rView.findViewById(R.id.rlDreamWL);

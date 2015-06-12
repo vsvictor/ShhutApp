@@ -51,8 +51,8 @@ public class Carder extends Service{
 		isStarted = true;
 		dbHelper = new DBHelper(this);
 		db = dbHelper.getReadableDatabase();
-		logger = createLogger();
-		logger.info("Carder created");
+		//logger = createLogger();
+		//logger.info("Carder created");
 		cont = loadContacts();
 	}
 	@Override
@@ -60,7 +60,7 @@ public class Carder extends Service{
 		final Thread th = new Thread(new Runnable(){
 			@Override
 			public void run() {
-				logger.info("Carder state:"+String.valueOf(isStarted));
+				//logger.info("Carder state:"+String.valueOf(isStarted));
 				
 				while(isStarted){
 					activeCards.clear();

@@ -12,7 +12,7 @@
     </RelativeLayout>
 
 
-    <com.shhutapp.controls.TransportedLayout
+    <com.shhutapp.controls.TransportedLayoutCircle
         android:id="@+id/ivDreamBack"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
