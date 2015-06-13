@@ -33,44 +33,33 @@ import java.util.zip.Checksum;
 /**
  * Created by victor on 08.06.15.
  */
-public class AlphaTearCircle extends ImageView {
+public class AlphaTearRectRounted extends ImageView {
     private Context context;
-    //private int lLeft, lTop, lRight, lBottom;
     public boolean start;
-    private int radius;
-    private Point center;
-    private int ll,lt,lr,lb;
-    private OnStopLister listener;
-    private int maxRadius;
-    private int background_color = Color.argb(153,0,0,0);
-    private int draw = -1;
-    private boolean isLarge;
+    private int background_color = Color.argb(192,0,0,0);
+    private Point position;
     private Bitmap bitmap;
 
-    public AlphaTearCircle(Context context) {
+    public AlphaTearRectRounted(Context context) {
         super(context);
         this.context= context;
-        center = new Point(0,0);
-        radius = 0;
+        position = new Point(0,0);
     }
-    public AlphaTearCircle(Context context, AttributeSet attrs) {
+    public AlphaTearRectRounted(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context= context;
-        center = new Point(0,0);
-        radius = 0;
+        position = new Point(0,0);
     }
-    public AlphaTearCircle(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AlphaTearRectRounted(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context= context;
-        center = new Point(0,0);
-        radius = 0;
+        position = new Point(0,0);
     }
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public AlphaTearCircle(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public AlphaTearRectRounted(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         this.context= context;
-        center = new Point(0,0);
-        radius = 0;
+        position = new Point(0,0);
     }
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom){
@@ -80,7 +69,7 @@ public class AlphaTearCircle extends ImageView {
     @Override
     protected void onDraw(Canvas scanvas) {
         super.onDraw(scanvas);
-        if (center.x != 0 && center.y != 0 && radius != 0 && bitmap != null) {
+        if (position.x != 0 && position.y != 0 && bitmap != null) {
             Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(output);
 
@@ -88,55 +77,19 @@ public class AlphaTearCircle extends ImageView {
             final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
             paint.setAntiAlias(true);
             canvas.drawARGB(0, 0, 0, 0);
-            //paint.setColor(Color.BLACK);
-            canvas.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, radius, paint);
+            paint.setColor(Color.BLACK);
+            canvas.drawRoundRect(0, 0, getWidth(), getHeight(), 10, 10, paint);
 
             paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
             canvas.drawBitmap(bitmap, rect, rect, paint);
 
             scanvas.drawColor(background_color);
-            scanvas.drawBitmap(output, center.x, center.y, new Paint());
+            scanvas.drawBitmap(output, position.x, position.y, new Paint());
         } else {
             scanvas.drawColor(background_color);
         }
     }
 
-
-    public void setRadius(int radius){
-        this.radius = radius;
-    }
-
-    public int getRadius(){
-        return radius;
-    }
-    public int getMaxRadius(){
-        return maxRadius;
-    }
-    public void addRadius(final int step){
-        if(radius>maxRadius) {
-            this.listener.onStop();
-            return;
-        }
-        radius += step;
-    }
-
-    public void addRadius(){
-        if(radius>maxRadius) {
-            if(this.listener!= null) this.listener.onStop();
-            return;
-        }
-        radius++;
-    }
-
-    public void setCenter(Point center){
-        this.center = center;
-    }
-    public void setMaxRadius(int max){
-        this.maxRadius = max;
-    }
-    public void setOnStopListener(OnStopLister listener){
-        this.listener =listener;
-    }
     public void setBack(int color){
         this.background_color = color;
     }
@@ -145,4 +98,6 @@ public class AlphaTearCircle extends ImageView {
         invalidate();
     }
 
+    public void setPosition(Point point) {
+    }
 }

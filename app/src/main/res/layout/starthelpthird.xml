@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/starthelp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.shhutapp.controls.AlphaTearCircle
+        android:id="@+id/rlHelp3Background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.shhutapp.controls.AlphaTearCircle>
+    <RelativeLayout
+        android:background="@drawable/help_back_3"
+        android:layout_width="@dimen/help3_width"
+        android:layout_height="@dimen/help3_height"
+        android:layout_marginTop="@dimen/help3_top"
+        android:layout_marginLeft="@dimen/help3_left"
+        android:id="@+id/rlHelpThird">
+        <TextView
+            android:id="@+id/tvHelpThird"
+            android:text="@string/help3_header"
+            android:textSize="@dimen/congrat_text_size"
+            android:textColor="@color/congrat_text_color"
+            android:layout_marginTop="@dimen/congrat_top"
+            android:layout_marginLeft="@dimen/congrat_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:lineSpacingExtra="5dp"
+            android:layout_below="@+id/tvHelpThird"
+            android:text="@string/help3_text"
+            android:textSize="@dimen/congrat_text_text_size"
+            android:textColor="@color/congrat_text_color"
+            android:layout_marginTop="@dimen/congrat_top"
+            android:layout_marginLeft="@dimen/congrat_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvHelp3Text" />
+        <TextView
+            android:text="@string/proceed"
+            android:layout_marginRight="@dimen/proceed_right"
+            android:layout_marginBottom="@dimen/proceed_bottom"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvProceed3"
+            android:textColor="@color/help_proceed_color"
+            android:textSize="@dimen/proceed_text_size" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/circles_top"
+        android:layout_below="@+id/rlHelpThird"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="27dp"
+            android:layout_height="27dp">
+            <ImageView
+                android:layout_centerInParent="true"
+                android:src="@drawable/circle_on_help_gray"
+                android:layout_width="12dp"
+                android:layout_height="12dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="27dp"
+            android:layout_height="27dp">
+            <ImageView
+                android:layout_centerInParent="true"
+                android:src="@drawable/circle_on_help_blue"
+                android:layout_width="12dp"
+                android:layout_height="12dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="27dp"
+            android:layout_height="27dp">
+            <ImageView
+                android:layout_centerInParent="true"
+                android:src="@drawable/circle_on_help_gray"
+                android:layout_width="12dp"
+                android:layout_height="12dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="27dp"
+            android:layout_height="27dp">
+            <ImageView
+                android:layout_centerInParent="true"
+                android:src="@drawable/circle_on_help_gray"
+                android:layout_width="12dp"
+                android:layout_height="12dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="27dp"
+            android:layout_height="27dp">
+            <ImageView
+                android:layout_centerInParent="true"
+                android:src="@drawable/circle_on_help_gray"
+                android:layout_width="12dp"
+                android:layout_height="12dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="27dp"
+            android:layout_height="27dp">
+            <ImageView
+                android:layout_centerInParent="true"
+                android:src="@drawable/circle_on_help_gray"
+                android:layout_width="12dp"
+                android:layout_height="12dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="27dp"
+            android:layout_height="27dp">
+            <ImageView
+                android:layout_centerInParent="true"
+                android:src="@drawable/circle_on_help_gray"
+                android:layout_width="12dp"
+                android:layout_height="12dp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

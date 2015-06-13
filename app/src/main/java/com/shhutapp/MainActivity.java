@@ -45,7 +45,9 @@ import com.shhutapp.services.Carder;
 import com.shhutapp.services.Finder;
 import com.shhutapp.services.Locator;
 import com.shhutapp.services.MessageReceiver;
-import com.shhutapp.start.StartHelp;
+import com.shhutapp.start.StartHelpEighth;
+import com.shhutapp.start.StartHelpFirst;
+import com.shhutapp.start.StartHelpSeventh;
 import com.shhutapp.utils.Convertor;
 
 import java.util.List;
@@ -59,6 +61,8 @@ public class MainActivity extends ActionBarActivity {
     private boolean isQueitTimeEmpty;
 
     private static boolean isDream;
+
+    private boolean helpInStart = true;
 
     private DBHelper dbHelper;
     private SQLiteDatabase db;
@@ -107,9 +111,10 @@ public class MainActivity extends ActionBarActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.header, header,"nodelete").commit();
             mpage = new MainPage(this);
             getSupportFragmentManager().beginTransaction().add(R.id.container, mpage).commit();
-            if(true){
-            //if(settings.isFirst()){
-                StartHelp help = new StartHelp(this);//Help(this);
+            //if(true){
+            if(settings.isFirst()){
+                setHelpInStart(true);
+                StartHelpFirst help = new StartHelpFirst(this);//Help(this);
                 getSupportFragmentManager().beginTransaction().add(R.id.main, help).commitAllowingStateLoss();
                 settings.setFirst(false);
             }
@@ -335,5 +340,11 @@ public class MainActivity extends ActionBarActivity {
             poke.setData(Uri.parse("3"));
             this.sendBroadcast(poke);
         }
+    }
+    public void setHelpInStart(boolean b){
+        this.helpInStart = b;
+    }
+    public boolean isHelpInStart(){
+        return helpInStart;
     }
 }

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="help_back_color">#99000000</color>
+    <color name="help_back_color_2">#FF484848</color>
+    <color name="help_proceed_color">@color/red_light</color>
+
+    <dimen name="circles_top">70dp</dimen>
+
+    <string name="proceed">CONTINUE</string>
+    <dimen name="proceed_right">24dp</dimen>
+    <dimen name="proceed_bottom">24dp</dimen>
+    <dimen name="proceed_text_size">14sp</dimen>
+
+    <dimen name="congrat_width">310dp</dimen>
+    <dimen name="congrat_height">206dp</dimen>
+    <dimen name="congrat_left">24dp</dimen>
+    <dimen name="congrat_top">24dp</dimen>
+    <dimen name="congrat_text_size">18sp</dimen>
+    <color name="congrat_text_color">#FF000000</color>
+    <string name="congrat">Congratulations!</string>
+
+    <dimen name="congrat_text_text_size">16sp</dimen>
+    <string name="congrat_text">You are the owner of an innovative instrument for management of calls and notifications.</string>
+
+    <dimen name="help2_width">310dp</dimen>
+    <dimen name="help2_height">191dp</dimen>
+    <dimen name="help2_top">225dp</dimen>
+    <dimen name="help2_left">25dp</dimen>
+    <string name="help2_header">Sleep mode</string>
+    <string name="help2_text">Switching on this mode prevents from\ndistracting you anyhow whatever you\nare occupied with.</string>
+
+    <dimen name="help3_width">310dp</dimen>
+    <dimen name="help3_height">171dp</dimen>
+    <dimen name="help3_top">225dp</dimen>
+    <dimen name="help3_left">25dp</dimen>
+    <string name="help3_header">Quiet hours</string>
+    <string name="help3_text">Plan the time during which no one can disturb you in advance.</string>
+
+
+    <dimen name="help4_width">310dp</dimen>
+    <dimen name="help4_height">190dp</dimen>
+    <dimen name="help4_top">225dp</dimen>
+    <dimen name="help4_left">25dp</dimen>
+    <string name="help4_header">White list</string>
+    <string name="help4_text">Make lists from contacts and applications for which you are accessible.</string>
+
+    <dimen name="help5_width">310dp</dimen>
+    <dimen name="help5_height">213dp</dimen>
+    <dimen name="help5_top">225dp</dimen>
+    <dimen name="help5_left">25dp</dimen>
+    <string name="help5_header">Messages</string>
+    <string name="help5_text">Do not make you other people be worried about\nyou! Create messages and attach you geolocation.</string>
+
+    <dimen name="help6_width">310dp</dimen>
+    <dimen name="help6_height">234dp</dimen>
+    <dimen name="help6_top">225dp</dimen>
+    <dimen name="help6_left">25dp</dimen>
+    <string name="help6_header">Location</string>
+    <string name="help6_text">Mark places combining the above listed functions and you will see the use of your device in a new way.</string>
+
+    <dimen name="help7_width">310dp</dimen>
+    <dimen name="help7_height">197dp</dimen>
+    <dimen name="help7_top">225dp</dimen>
+    <dimen name="help7_left">25dp</dimen>
+    <string name="help7_header">Time settings</string>
+    <string name="help7_text">Set the necessary time for each mode. To select minutes hold the slider.</string>
+
+    <dimen name="help8_width">310dp</dimen>
+    <dimen name="help8_height">214dp</dimen>
+    <dimen name="help8_top">250dp</dimen>
+    <dimen name="help8_left">25dp</dimen>
+
+    <dimen name="help8_pic_width">340dp</dimen>
+    <dimen name="help8_pic_height">225dp</dimen>
+    <dimen name="help8_pic_top">10dp</dimen>
+
+    <string name="help8_text">When switching off the sound\nthe window of quick application\nsettings. Also the work with ShhutApp\ncan be conducted through\na widget.</string>
+
+</resources>
