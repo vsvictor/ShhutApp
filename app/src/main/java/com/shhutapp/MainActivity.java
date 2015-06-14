@@ -78,6 +78,8 @@ public class MainActivity extends ActionBarActivity {
     private CallReceiver calls;
     private MessageReceiver mess;
     private AppReceiver apps;
+    private int old_statusbar_color;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,10 +87,12 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.main);
         //turnGPSOn();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+/*        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            old_statusbar_color = getWindow().getStatusBarColor();
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.blue_action_bar));
-        }
+        }*/
+        replaceStatusBarColor();
         act = this;
         //isCardListEmty = false;
         //isMessageListEmpty = false;
@@ -347,4 +351,19 @@ public class MainActivity extends ActionBarActivity {
     public boolean isHelpInStart(){
         return helpInStart;
     }
+    public void resumeStatusBarColor(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            old_statusbar_color = getWindow().getStatusBarColor();
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(old_statusbar_color);
+        }
+    }
+    public void replaceStatusBarColor(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            old_statusbar_color = getWindow().getStatusBarColor();
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.blue_action_bar));
+        }
+    }
+
 }

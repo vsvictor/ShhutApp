@@ -1,5 +1,6 @@
 package com.shhutapp.data;
 
+import java.util.Comparator;
 import java.util.Date;
 
 import com.shhutapp.MainActivity;
@@ -171,5 +172,29 @@ public class QueitCard extends IntStringPair{
 		int id = c.getInt(0);
 		Toast.makeText(MainActivity.getMainActivity(),String.valueOf(id),Toast.LENGTH_LONG).show();
 		return id>0;
+	}
+	public static class CompareBegin implements Comparable<QueitCard>, Comparator<BaseObject> {
+
+		private Date dateTime;
+
+		public Date getBegin() {
+			return getBegin();
+		}
+
+		public void setDateTime(Date datetime) {
+			this.dateTime = datetime;
+		}
+
+		@Override
+		public int compareTo(QueitCard o) {
+			return getBegin().compareTo(o.getBegin());
+		}
+
+		@Override
+		public int compare(BaseObject lhs, BaseObject rhs) {
+			QueitCard q1 = (QueitCard)lhs;
+			QueitCard q2 = (QueitCard)rhs;
+			return (int)(q2.getBegin().getTime()-q1.getBegin().getTime());
+		}
 	}
 }

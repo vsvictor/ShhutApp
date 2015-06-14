@@ -156,24 +156,28 @@ public class MainTimeSeekBarRed extends ImageView{
         }
         boolean isSmall = true;
         int beg = 1;
-        if(minus<0) beg=minus;
-        for(int i = beg;i<width;i++){
-            if(i%(step*tapCounter)==0){
-                if(isSmall) canvas.drawRect(i-2,line-fourty/2,i+2,line+fourty/2,p);
-                else canvas.drawRect(i-2,line-fourty,i+2,line+fourty,p);
-                isSmall = !isSmall;
+        if(isEnabled()) {
+            if (minus < 0) beg = minus;
+            for (int i = beg; i < width; i++) {
+                if (i % (step * tapCounter) == 0) {
+                    if (isSmall)
+                        canvas.drawRect(i - 2, line - fourty / 2, i + 2, line + fourty / 2, p);
+                    else canvas.drawRect(i - 2, line - fourty, i + 2, line + fourty, p);
+                    isSmall = !isSmall;
+                }
             }
         }
         if(thumb != null){
             if(offset>width) offset=width;
             if(offset<0) offset = 0;
             if(isEnabled()) {
-                canvas.drawBitmap(thumb, offset, (height / 2) - fourty, p);
+                canvas.drawBitmap(thumb, offset, (height / 2) - fourty, null);
             }
             else{
+                int hw = (int)Convertor.convertDpToPixel(12,context);
                 Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.thumb_full_gray);
-                Bitmap thumb_gray = Bitmap.createScaledBitmap(b, (int)Convertor.convertDpToPixel(18,context), (int)Convertor.convertDpToPixel(18,context), false);
-                canvas.drawBitmap(thumb_gray, offset, (height / 2) - fourty, p);
+                Bitmap thumb_gray = Bitmap.createScaledBitmap(b, hw,hw, false);
+                canvas.drawBitmap(thumb_gray, width/2, (height / 2)-thumb_gray.getHeight()/2, p);
             }
         }
         invalidate();

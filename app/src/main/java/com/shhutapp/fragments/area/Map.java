@@ -51,6 +51,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by victor on 01.06.15.
  */
@@ -129,7 +131,7 @@ public class Map extends BaseFragments{
             @Override
             public void onNext() {
                 Bitmap bp = Bitmap.createBitmap(zv.getWidth(), zv.getHeight(), Bitmap.Config.ARGB_8888);
-                GoogleMap.SnapshotReadyCallback cb = new GoogleMap.SnapshotReadyCallback() {
+                final GoogleMap.SnapshotReadyCallback cb = new GoogleMap.SnapshotReadyCallback() {
                     @Override
                     public void onSnapshotReady(Bitmap bitmap) {
                         int wInPic = (int) Convertor.convertDpToPixel(350, getMainActivity());
@@ -152,8 +154,16 @@ public class Map extends BaseFragments{
                         getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.areaPage, ar).commit();
                     }
                 };
+                zv.getManager().clearAll();
                 zv.getMap().clear();
-                zv.getMap().snapshot(cb);
+                zv.invalidate();
+                zv.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        zv.getMap().snapshot(cb);
+                    }
+                },100);
+
             }
         });
 
@@ -161,6 +171,7 @@ public class Map extends BaseFragments{
         MapsInitializer.initialize(act);
         zv.onCreate(saved);
         zv.onResume();
+        zv.getMap().setMapType(GoogleMap.MAP_TYPE_TERRAIN);
         zv.getMap().getUiSettings().setAllGesturesEnabled(false);
         //zv.getManager().load(getMainActivity().getDBHelper());
         rlMyLocation = (RelativeLayout) rView.findViewById(R.id.rlMyLocation);
@@ -274,6 +285,7 @@ public class Map extends BaseFragments{
         rlItems[1] = (RelativeLayout) rView.findViewById(R.id.item2);
         rlItems[2] = (RelativeLayout) rView.findViewById(R.id.item3);
         rlItems[3] = (RelativeLayout) rView.findViewById(R.id.item4);
+
         rlItems[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -318,8 +330,8 @@ public class Map extends BaseFragments{
             tvItems[i].setTextColor(Color.argb(255, 0,0,0));
         }
         rlMapMenu.setVisibility(isMenu?View.VISIBLE:View.INVISIBLE);
-        rlItems[selectedItem].setBackground(getMainActivity().getResources().getDrawable(R.drawable.rect_map_gray));
-        tvItems[selectedItem].setTextColor(Color.argb(255, 197, 17, 98));
+        if(zv.getMap().getMapType() == GoogleMap.MAP_TYPE_HYBRID) tvItems[0].setTextColor(Color.argb(255, 197, 17, 98));
+        else if(zv.getMap().getMapType() == GoogleMap.MAP_TYPE_TERRAIN)tvItems[1].setTextColor(Color.argb(255, 197, 17, 98));
     }
 
     @Override

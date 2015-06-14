@@ -132,6 +132,8 @@ public class ExMapView extends GesturesMapView implements OnMapReadyCallback{
         ar.addSize(getMap(), dr, Color.MAGENTA);
         ar.draw(getMap());
         ar.setName(String.valueOf(manager.getAreas().size()));
+        ar.setStrokeWidth(3);
+        ar.setStrokeColor(MainActivity.getMainActivity().getResources().getColor(R.color.blue_action_bar));
         enableAdd = false;
         Intent intent = new Intent(MainActivity.getMainActivity(), Addressator.class);
         intent.putExtra("name", ar.getName());

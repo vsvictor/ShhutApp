@@ -15,6 +15,7 @@ import com.shhutapp.R;
 import com.shhutapp.fragments.MainControlPanel;
 import com.shhutapp.fragments.MainControlPanelListener;
 import com.shhutapp.fragments.OkCancel;
+import com.shhutapp.fragments.OnDeleteCard;
 import com.shhutapp.fragments.OnMenuListener;
 import com.shhutapp.fragments.Scale;
 import com.shhutapp.utils.DateTimeOperator;
@@ -145,6 +146,12 @@ public class MainPage extends BasePage {
             }
         });
         cardList.showEmpty(getMainActivity().isCardListEmty());
+        cardList.setOnCardDeleteListener(new OnDeleteCard() {
+            @Override
+            public void onDeleteCard() {
+
+            }
+        });
     }
     @Override
     public void onPause(){

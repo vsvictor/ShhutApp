@@ -1,6 +1,7 @@
 package com.shhutapp.data.adapters;
 
 import com.shhutapp.MainActivity;
+import com.shhutapp.data.BaseObject;
 import com.shhutapp.data.BaseObjectList;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
@@ -56,5 +57,10 @@ public class CardAdapter extends FilteredAdapter{
         data = list;
         super.notifyDataSetChanged();
     }
-
+    public void delete(GeoCard card){
+        GeoCard obj = (GeoCard)getData().find(card.getID());
+        list.remove(obj);
+        data.remove(obj);
+        notifyDataSetChanged();
+    }
 }

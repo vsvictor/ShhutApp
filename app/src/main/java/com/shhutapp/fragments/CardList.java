@@ -26,6 +26,10 @@ public class CardList extends  BaseFragments {
     private RelativeLayout rlAddLocation;
     private boolean isEmpty;
     private SwipeListView lvCardList;
+    private OnDeleteCard listener;
+    private RelativeLayout rlCardDeletePanel;
+    private TextView tvCardName;
+    private TextView tvCardDeleteCancel;
 
     public CardList(){
         super();
@@ -91,16 +95,15 @@ public class CardList extends  BaseFragments {
         lvCardList.setSwipeListViewListener(new BaseSwipeListViewListener() {
             @Override
             public void onOpened(int position, boolean toRight) {
-                View v = (View) lvCardList.getChildAt(position - lvCardList.getFirstVisiblePosition());
-                RelativeLayout llBack = (RelativeLayout) v.findViewById(R.id.card_list_item_back);
-                llBack.setVisibility(View.VISIBLE);
+                GeoCard card = (GeoCard) ((CardAdapter) lvCardList.getAdapter()).getData().get(position);
+                tvCardName.setText(card.getName()+" "+getMainActivity().getResources().getString(R.string.deleted));
+                getMainActivity().getDBHelper().deleteGeoCard(card.getID());
+                adapter.notifyDataSetUpdated();
+                rlCardDeletePanel.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onClosed(int position, boolean fromRight) {
-                View v = (View) lvCardList.getChildAt(position - lvCardList.getFirstVisiblePosition());
-                RelativeLayout llBack = (RelativeLayout) v.findViewById(R.id.card_list_item_back);
-                llBack.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -113,7 +116,6 @@ public class CardList extends  BaseFragments {
 
             @Override
             public void onStartOpen(int position, int action, boolean right) {
-                lvCardList.closeOpenedItems();
             }
 
             @Override
@@ -122,27 +124,33 @@ public class CardList extends  BaseFragments {
 
             @Override
             public void onClickFrontView(int position) {
-/*              int id = ((WhiteListCard) ((QueitTimeAdapter) swQueitTime.getAdapter()).getData().get(position)).getID();
-                listener.onEdit(id);
-                adapter.notifyDataSetUpdated();*/
-                GeoCard card = (GeoCard) ((CardAdapter) lvCardList.getAdapter()).getData().get(position);
-                //getMainActivity().selectQueitCard(card);
             }
 
             @Override
             public void onClickBackView(int position) {
-                GeoCard c = ((GeoCard) ((CardAdapter) lvCardList.getAdapter()).getData().get(position));
-                act.getDBHelper().deleteGeoCard(c.getID());
-                adapter.notifyDataSetUpdated();
             }
 
             @Override
             public void onDismiss(int[] reverseSortedPositions) {
             }
         });
-
+        rlCardDeletePanel = (RelativeLayout) rView.findViewById(R.id.cardListDeletePanel);
+        rlCardDeletePanel.setVisibility(View.INVISIBLE);
+        tvCardName = (TextView) rView.findViewById(R.id.deletedCardName);
+        tvCardDeleteCancel = (TextView) rView.findViewById(R.id.deletedCancel);
+        tvCardDeleteCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getMainActivity().getDBHelper().unDelete();
+                adapter.notifyDataSetUpdated();
+                rlCardDeletePanel.setVisibility(View.INVISIBLE);
+            }
+        });
     }
     public void showEmpty(boolean isCardListEmpty){
         isEmpty = isCardListEmpty;
+    }
+    public void setOnCardDeleteListener(OnDeleteCard ll){
+        listener = ll;
     }
 }

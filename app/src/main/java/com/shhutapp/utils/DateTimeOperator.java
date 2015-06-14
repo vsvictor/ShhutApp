@@ -55,4 +55,11 @@ public class DateTimeOperator {
 		int ost = minutes-(hours*60);
 		return String.valueOf(hours)+" "+h+" "+String.valueOf(ost)+" "+m;
 	}
+
+	public static String minutesToTimeString(int minutes){
+		String s = null;
+		int h = minutes/60;
+		int min = minutes-(h*60);
+		return String.valueOf(h)+":"+String.valueOf(min);
+	}
 }

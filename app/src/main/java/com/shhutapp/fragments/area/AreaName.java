@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -104,6 +105,8 @@ public class AreaName extends BaseFragments {
         TextView tvError = (TextView) rView.findViewById(R.id.tvTextError);
         tvError.setText(getMainActivity().getResources().getString(R.string.area_name_error));
         setError(false);
+        ImageView ivNewLoc = (ImageView)rView.findViewById(R.id.ivMessageNewLocation);
+        ivNewLoc.setVisibility(View.INVISIBLE);
     }
 
     private boolean checkName(String s) {

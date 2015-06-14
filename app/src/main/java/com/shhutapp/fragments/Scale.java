@@ -100,10 +100,10 @@ public class Scale extends BaseFragments {
                 }
                 int h = minutes / 60;
                 int m = minutes - (h * 60);
+                tvHoursValue.setText(String.valueOf(h));
                 String sText = DateTimeOperator.minutesToString(minutes,
                         getMainActivity().getResources().getString(R.string.h),
                         getMainActivity().getResources().getString(R.string.min));
-                tvHoursValue.setText(String.valueOf(h));
                 //tvMinutesValue.setText(String.valueOf(m));
                 //tvBefore.setText(DateTimeOperator.dateToTimeString(Calendar.getInstance().getTime()));
             }

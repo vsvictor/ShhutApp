@@ -53,6 +53,7 @@ public class DreamPage extends BasePage {
     }
     public void onViewCreated(View view, Bundle saved) {
         super.onViewCreated(view, saved);
+        getMainActivity().resumeStatusBarColor();
         final int h = view.getMeasuredHeight();
         rootView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -80,6 +81,7 @@ public class DreamPage extends BasePage {
                                 tr.addRadius();
                                 if(tr.getRadius()>tr.getMaxRadius()){
                                     t.cancel();
+                                    getMainActivity().replaceStatusBarColor();
                                     getMainActivity().setDream(false);
                                     getMainActivity().getSupportFragmentManager().beginTransaction().show(getMainActivity().getHeader()).commitAllowingStateLoss();
                                     getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, getMainActivity().getMainPage()).commitAllowingStateLoss();

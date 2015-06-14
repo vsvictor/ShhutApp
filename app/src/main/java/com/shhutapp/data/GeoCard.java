@@ -48,6 +48,7 @@ public class GeoCard extends IntStringPair{
 		else if(actType == 3){
 			//result = context.getResources().getString(R.string.first_from_grand)+" "+DateTimeOperator.toDateTime(actTime, "HH:mm");
 			result = context.getResources().getString(R.string.first_from_grand)+" "+DateTimeOperator.dateToTimeString(DateTimeOperator.toDateTime(minutes*60*1000, "HH:mm"));
+			//result = context.getResources().getString(R.string.first_from_grand)+DateTimeOperator.minutesToTimeString(minutes);
 		}
 		else{
 			result = " ";

@@ -1,5 +1,6 @@
 package com.shhutapp.fragments.area;
 
+import android.content.ComponentCallbacks;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ import com.shhutapp.controls.OnTimeChanged;
 import com.shhutapp.controls.SecondTimeSeekBarRed;
 import com.shhutapp.data.Card;
 import com.shhutapp.data.CardType;
+import com.shhutapp.data.QueitCard;
 import com.shhutapp.fragments.BaseFragments;
 import com.shhutapp.fragments.OnBackListener;
 import com.shhutapp.fragments.OnCancelListener;
@@ -42,6 +45,7 @@ import org.apache.http.util.VersionInfo;
 import org.apache.log4j.chainsaw.Main;
 
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -76,6 +80,9 @@ public class AreaCard extends BasePage {
     private ImageView ivGeocardMessageOn;
     private int hours;
     private int min;
+    private TextView tvNearBegin;
+    private TextView tvNearEnd;
+
     public AreaCard(){
         super(MainActivity.getMainActivity());
     }
@@ -253,7 +260,19 @@ public class AreaCard extends BasePage {
                 getMainActivity().getSupportFragmentManager().beginTransaction().hide(instance).add(R.id.container, mp).commit();
             }
         });
-
+        tvNearBegin = (TextView) rootView.findViewById(R.id.tvNearBegin);
+        tvNearEnd = (TextView) rootView.findViewById(R.id.tvNearEnd);
+        QueitCard near = getMainActivity().getDBHelper().findNear();
+        if(near != null){
+            tvNearBegin.setVisibility(View.VISIBLE);
+            tvNearEnd.setVisibility(View.VISIBLE);
+            tvNearBegin.setText(DateTimeOperator.dateToTimeString(near.getBegin()));
+            tvNearEnd.setText(DateTimeOperator.dateToTimeString(near.getEnd()));
+        }
+        else{
+            tvNearBegin.setVisibility(View.INVISIBLE);
+            tvNearEnd.setVisibility(View.INVISIBLE);
+        }
     }
     public void onHiddenChanged(boolean hidden){
         super.onHiddenChanged(hidden);

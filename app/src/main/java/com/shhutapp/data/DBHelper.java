@@ -3,6 +3,9 @@ package com.shhutapp.data;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -21,9 +24,14 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper{
 	private MainActivity act;
+    private static GeoCard deletedGeo = null;
+    private static long deletedIdWhiteList;
+    private static long deletedIdQueitCard;
+    private static long deletedIdMessage;
 	public DBHelper(MainActivity act) {
 		super(act, "shutt", null, 1);
 		this.act = act;
@@ -156,6 +164,33 @@ public class DBHelper extends SQLiteOpenHelper{
 		}
 		return list;
 	}
+	public BaseObjectList loadQueitCardsOrderByTime(){
+		BaseObjectList list = new BaseObjectList();
+		Cursor cur = act.getDB().rawQuery("Select cards.id, quieties.begtime , quieties.endtime,  quieties.is1,  quieties.is2, quieties.is3, quieties.is4, quieties.is5, quieties.is6, quieties.is7, cards.idMessage From cards, quieties Where cards.idDream=quieties.id ORDER by quieties.begtime", null);
+		if(cur.moveToFirst()){
+			do{
+				QueitCard card = new QueitCard();
+				card.setID(cur.getInt(0));
+				card.setBegin(new Date(cur.getLong(1)));
+				card.setEnd(new Date(cur.getLong(2)));
+				boolean[] days = new boolean[7];
+				days[0] = (cur.getInt(3)==0?false:true);
+				days[1] = (cur.getInt(4)==0?false:true);
+				days[2] = (cur.getInt(5)==0?false:true);
+				days[3] = (cur.getInt(6)==0?false:true);
+				days[4] = (cur.getInt(7)==0?false:true);
+				days[5] = (cur.getInt(8)==0?false:true);
+				days[6] = (cur.getInt(9)==0?false:true);
+				card.setDays(days);
+				long idMessage = cur.getLong(10);
+				if(idMessage >= 0) card.setSMS(true);
+				else card.setSMS(false);
+				list.add(card);
+			}while(cur.moveToNext());
+		}
+		return list;
+	}
+
 	public BaseObjectList loadMessages(){
 		BaseObjectList list = new BaseObjectList();
 		Cursor c = act.getDB().query("sms", null, null, null, null, null, null);
@@ -171,10 +206,53 @@ public class DBHelper extends SQLiteOpenHelper{
 		return list;
 	}
 	public void deleteGeoCard(long loc){
-		act.getDB().delete("locations", "id=?", new String[]{String.valueOf(loc)});
-		act.getDB().delete("cards", "idGeo=?", new String[]{String.valueOf(loc)});
-	}
+        long l;
+        Cursor cur = act.getDB().rawQuery("Select cards.id, locations.name , locations.street,  cards.idActivate,  activations.time, locations.background, locations.lat, locations.long, locations.radius, cards.time, cards.idGeo, cards.idDream, cards.idWhiteList, cards.idMessage From cards, locations, activations Where cards.idGeo=locations.id and cards.idActivate=activations.id and cards.id=" + String.valueOf(loc), null);
+        if(cur.moveToFirst()){
+            deletedGeo = new GeoCard(this.act);
+            deletedGeo.setID(cur.getInt(0));
+            deletedGeo.setName(cur.getString(1));
+            deletedGeo.setAddress(cur.getString(2));
+            deletedGeo.setTypeActivation(cur.getInt(3));
+            deletedGeo.setTimeActivation(cur.getLong(4));
+            deletedGeo.setLantitude(cur.getDouble(6));
+            deletedGeo.setLongitude(cur.getDouble(7));
+            deletedGeo.setRadius(cur.getDouble(8));
+            deletedGeo.setMinutes(cur.getInt(9));
+            String s = cur.getString(5);
+            Bitmap b = Convertor.Base64ToBitmap(s);
+            deletedGeo.setBackground(b);
+            l = cur.getLong(10);
+            deletedIdQueitCard = cur.getLong(11);
+            deletedIdWhiteList = cur.getLong(12);
+            deletedIdMessage = cur.getLong(13);
 
+            act.getDB().delete("cards","id=?", new String[]{String.valueOf(loc)});
+            act.getDB().delete("locations","id=?", new String[]{String.valueOf(l)});
+        }
+	}
+    public void unDelete(){
+        ContentValues row = new ContentValues();
+        row.put("name", deletedGeo.getName());
+        row.put("city", "__");
+        row.put("street", deletedGeo.getAddress());
+        row.put("background", Convertor.BitmapToBase64(deletedGeo.getBackground()));
+        row.put("lat", deletedGeo.getLantitude());
+        row.put("long", deletedGeo.getLongitude());
+        row.put("radius", deletedGeo.getRadius());
+        long l = act.getDB().insert("locations",null, row);
+        row.clear();
+        row.put("type", 0);
+        row.put("name", deletedGeo.getName());
+        row.put("idActivate", deletedGeo.getTypeActivation());
+        row.put("idGeo",l);
+        row.put("idDream", deletedIdQueitCard);
+        row.put("idWhiteList", deletedIdWhiteList);
+        row.put("idMessage", deletedIdMessage);
+
+        row.put("time",deletedGeo.getTimeActivation());
+        act.getDB().insert("cards", null, row);
+    }
 	public void deleteMessage(long id){
 		String[] args = {String.valueOf(id)};
 		act.getDB().delete("sms", "id=?", args);
@@ -317,5 +395,23 @@ public class DBHelper extends SQLiteOpenHelper{
 			}while (c.moveToNext());
 		}
 		return res;
+	}
+	public QueitCard findNear(){
+		QueitCard res = new QueitCard();
+		QueitCard pr = null;
+		int i = 0;
+		BaseObjectList list = this.loadQueitCardsOrderByTime();
+		for(BaseObject q : list){
+			QueitCard card = (QueitCard) q;
+			Date curr = Calendar.getInstance().getTime();
+			String s = DateTimeOperator.dateToTimeString(curr);
+			Date dd = DateTimeOperator.toDateTime(s,"HH:ss");
+			Date dbeg = card.getBegin();
+			Log.i("Begin",dbeg.toString());
+			Log.i("Current",dd.toString());
+			if(dbeg.after(dd)) return card;
+			//else break;
+		}
+		return null;
 	}
 }

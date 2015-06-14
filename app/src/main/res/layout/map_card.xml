@@ -95,6 +95,26 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/rlGeoCardQueit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlQueitNear">
+            <TextView
+                android:id="@+id/tvNearBegin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white" />
+            <TextView
+                android:layout_below="@+id/tvNearBegin"
+                android:id="@+id/tvNearEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="@dimen/queittime_control_icon_width"
             android:layout_height="@dimen/queittime_control_icon_height"
             android:layout_centerVertical="true"
