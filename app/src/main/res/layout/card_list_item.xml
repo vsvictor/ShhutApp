@@ -9,14 +9,14 @@
         android:id="@+id/card_list_item_front"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
+<!--
         <ImageView
             android:id="@+id/ivGrayLine"
             android:layout_width="match_parent"
             android:layout_height="113dp"
             android:scaleType="fitXY"
             android:src="@drawable/card" />
-
+-->
         <TextView
             android:id="@+id/tvCardName"
             android:layout_width="wrap_content"
@@ -107,6 +107,26 @@
                 android:layout_toRightOf="@id/ivWhiteListSymbol"
                 android:text="TextView"
                 android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/item_onoff_witht"
+            android:layout_height="@dimen/item_onoff_height"
+            android:layout_alignParentRight="true"
+            android:id="@+id/rlGeoOnOff"
+            android:layout_marginTop="@dimen/item_onoff_top"
+            android:layout_marginRight="@dimen/item_onoff_right">
+            <ImageView
+                android:id="@+id/ivGeoOn"
+                android:src="@drawable/card_on"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/ivGeoOff"
+                android:src="@drawable/card_off"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </RelativeLayout>
 
     </RelativeLayout>

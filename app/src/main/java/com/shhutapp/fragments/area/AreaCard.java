@@ -156,6 +156,7 @@ public class AreaCard extends BasePage {
                     getMainActivity().clearSMS();
                 } else cv.put("idMessage", -1);
                 cv.put("time",(hours*60+min));
+                cv.put("onoff",1);
                 getMainActivity().getDB().insert("cards", null, cv);
                 BasePage page = getMainActivity().createPageFromID(BasePage.Pages.mainPage);
                 //getMainActivity().getSupportFragmentManager().beginTransaction().remove(page).commit();

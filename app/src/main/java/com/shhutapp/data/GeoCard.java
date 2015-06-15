@@ -3,7 +3,9 @@ package com.shhutapp.data;
 import com.shhutapp.R;
 import com.shhutapp.utils.DateTimeOperator;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 
 import java.util.Date;
@@ -20,16 +22,18 @@ public class GeoCard extends IntStringPair{
 	private double radius;
 	private Bitmap background;
 	private int minutes;
-
+	private boolean onoff;
 	public GeoCard(){
 		super(-1, "");
 		this.type = CardType.Geo;
 		context = null;
+		onoff = true;
 	}
 	public GeoCard(Context context){
 		super(-1, "");
 		this.type = CardType.Geo;
 		this.context = context;
+		onoff = true;
 	}
 
 	//public void setActivationName(String actName){this.actName = actName;}
@@ -84,5 +88,16 @@ public class GeoCard extends IntStringPair{
 	public int getMinutes(){
 		return this.minutes;
 
+	}
+	public void setOnoff(boolean val){
+		this.onoff = val;
+	}
+	public boolean isOn(){
+		return onoff;
+	}
+	public void updateOnOff(SQLiteDatabase db){
+		ContentValues row = new ContentValues();
+		row.put("onoff", this.onoff?1:0);
+		db.update("cards", row,"id=?",new String[]{String.valueOf(getID())});
 	}
 }

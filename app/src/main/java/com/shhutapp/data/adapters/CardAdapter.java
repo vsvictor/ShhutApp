@@ -17,6 +17,11 @@ import com.shhutapp.data.FilteredAdapter;
 import com.shhutapp.data.GeoCard;
 
 public class CardAdapter extends FilteredAdapter{
+    private ImageView ivOn;
+    private ImageView ivOff;
+    private GeoCard card;
+    private RelativeLayout rlOnOff;
+
     public CardAdapter(BaseObjectList list) {
         super(list);
     }
@@ -25,7 +30,7 @@ public class CardAdapter extends FilteredAdapter{
     }
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        GeoCard card = (GeoCard) getData().get(position);
+        card = (GeoCard) getData().get(position);
         view = this.getInflater().inflate(R.layout.card_list_item, null);
         view.setBackground(new BitmapDrawable(card.getBackground()));
         ImageView ivHere = (ImageView) view.findViewById(R.id.ivHere);
@@ -37,6 +42,19 @@ public class CardAdapter extends FilteredAdapter{
         TextView tvAddress = (TextView) view.findViewById(R.id.tvAddressText);
         tvAddress.setTypeface(Typeface.createFromAsset(MainActivity.getMainActivity().getAssets(), "fonts/Roboto-Regular.ttf"));
         tvAddress.setText(card.getAddress());
+        ivOn = (ImageView) view.findViewById(R.id.ivGeoOn);
+        ivOff = (ImageView) view.findViewById(R.id.ivGeoOff);
+        rlOnOff = (RelativeLayout) view.findViewById(R.id.rlGeoOnOff);
+        rlOnOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(card.isOn()) Off();
+                else On();
+                card.updateOnOff(MainActivity.getMainActivity().getDB());
+            }
+        });
+        if(card.isOn()) On();
+        else Off();
         if(card.getTypeActivation() == 1){
             ivHere.setVisibility(View.VISIBLE);
             ivHours.setVisibility(View.INVISIBLE);
@@ -51,6 +69,16 @@ public class CardAdapter extends FilteredAdapter{
         tvActivation.setTypeface(Typeface.createFromAsset(MainActivity.getMainActivity().getAssets(), "fonts/Roboto-Regular.ttf"));
         tvActivation.setText(card.getActivationName());
         return view;
+    }
+    private void On(){
+        ivOn.setVisibility(View.VISIBLE);
+        ivOff.setVisibility(View.INVISIBLE);
+        card.setOnoff(true);
+    }
+    private void Off(){
+        ivOn.setVisibility(View.INVISIBLE);
+        ivOff.setVisibility(View.VISIBLE);
+        card.setOnoff(false);
     }
     public void notifyDataSetUpdated(){
         list = MainActivity.getMainActivity().getDBHelper().loadGeoCards();

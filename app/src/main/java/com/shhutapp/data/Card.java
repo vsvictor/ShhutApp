@@ -19,6 +19,7 @@ public class Card extends IntStringPair {
 	public WhiteListCard wl;
 
 	private int minutes;
+	private boolean onoff;
 
 	public Card(){
 		super(-1,"");
@@ -30,6 +31,7 @@ public class Card extends IntStringPair {
 		dream = null;
 		sms = null;
 		wl = null;
+		onoff = true;
 	}
 	public void setType(CardType type){this.type = type;}
 	public CardType getType(){return this.type;}
@@ -87,6 +89,7 @@ public class Card extends IntStringPair {
 		cv.put("idDream", this.idQuiet);
 		cv.put("idWhiteList", this.idWhiteList);
 		cv.put("idMessage", this.idMessage);
+		cv.put("onoff", this.onoff?1:0);
 		db.insert("cards", null, cv);
 	}
 	public boolean inWhiteList(String number){
@@ -98,5 +101,11 @@ public class Card extends IntStringPair {
 	}
 	public int getMinutes(){
 		return this.minutes;
+	}
+	public void setOnOff(boolean val){
+		this.onoff = val;
+	}
+	public boolean isOn(){
+		return onoff;
 	}
 }

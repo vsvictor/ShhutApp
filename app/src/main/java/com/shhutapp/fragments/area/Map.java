@@ -139,7 +139,7 @@ public class Map extends BaseFragments{
                         int hInPic = (int) getMainActivity().getResources().getDimension(R.dimen.map_card_view_height);
                         pCenter = zv.getPointPressed();
                         Bitmap bPrev = Bitmap.createBitmap(bitmap, 0, pCenter.y - hInPic / 2, wInPic, hInPic);
-                        Bitmap bp = makeTransparent(bPrev, 50);
+                        Bitmap bp = makeTransparent(bPrev, 72);
                         ContentValues row = new ContentValues();
                         row.put("background", Convertor.BitmapToBase64(bp));
                         //row.put("lat", zv.getManager().getLast().getCenter().latitude);

@@ -80,6 +80,10 @@
     <dimen name="map_card_error_bottomtext_top">30dp</dimen>
     <dimen name="map_card_error_bottomtext_right">24dp</dimen>
 
+    <dimen name="item_onoff_witht">38dp</dimen>
+    <dimen name="item_onoff_height">20dp</dimen>
+    <dimen name="item_onoff_right">16dp</dimen>
+    <dimen name="item_onoff_top">32dp</dimen>
 
 
     <string name="select_area">Select the place</string>
