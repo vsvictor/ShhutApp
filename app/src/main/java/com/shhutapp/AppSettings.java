@@ -51,6 +51,6 @@ public class AppSettings {
 	public boolean getDefaultVibtare(){
 		return sh.getBoolean("vibrate", true);
 	}
-	public int getDefaultAccuracy(){ return  sh.getInt("accuracy", Criteria.ACCURACY_FINE);}
+	public int getDefaultAccuracy(){ return  sh.getInt("accuracy", Criteria.ACCURACY_MEDIUM);}
 	public SharedPreferences getSharedPreferences(){return sh;}
 }

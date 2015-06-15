@@ -87,9 +87,10 @@ public class AreaName extends BaseFragments {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(edMessage.getText().toString().length()>32){
+                if(edMessage.getText().toString().length()>23){
                     String ss= edMessage.getText().toString();
-                    edMessage.setText(ss.substring(0,31));
+                    edMessage.setText(ss.substring(0,23));
+                    edMessage.setSelection(edMessage.getText().length());
                 }
                 setError(false);
             }

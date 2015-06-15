@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -30,8 +31,11 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.shhutapp.Actions;
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
@@ -93,6 +97,7 @@ public class Map extends BaseFragments{
     private RelativeLayout rlMapError;
     private TextView tvMapErrorClose;
     private TextView tvMapErrorSettings;
+    private Marker my;
 
     public Map(){
         super(MainActivity.getMainActivity());
@@ -174,6 +179,7 @@ public class Map extends BaseFragments{
         zv.onResume();
         zv.getMap().setMapType(GoogleMap.MAP_TYPE_TERRAIN);
         zv.getMap().getUiSettings().setAllGesturesEnabled(false);
+
         //zv.getManager().load(getMainActivity().getDBHelper());
         rlMyLocation = (RelativeLayout) rView.findViewById(R.id.rlMyLocation);
         rlMyLocation.setOnClickListener(new View.OnClickListener() {
@@ -392,6 +398,11 @@ public class Map extends BaseFragments{
                     Log.i("Location", "Lantitude: " + lat + " Longitude: " + lon);
                     CameraPosition pos = new CameraPosition.Builder().target(new LatLng(lat, lon)).zoom(16).build();
                     zv.getMap().animateCamera(CameraUpdateFactory.newCameraPosition(pos));
+                    if(my != null) my.remove();
+                    Bitmap b = BitmapFactory.decodeResource(getMainActivity().getResources(), R.drawable.my);
+                    int r = (int)Convertor.convertDpToPixel(20,getMainActivity());
+                    Bitmap bb = Bitmap.createScaledBitmap(b, r, r, false);
+                    my = zv.getMap().addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(bb)).draggable(false).position(new LatLng(lat,lon)));
                 }
                 else if(status == -1){
                     //tvMapError.setText(getMainActivity().getResources().getString(R.string.not_location));
