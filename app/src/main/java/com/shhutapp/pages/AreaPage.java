@@ -45,6 +45,7 @@ public class AreaPage extends BasePage{
     public void onViewCreated(View view, Bundle saved) {
         super.onViewCreated(view, saved);
         getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.areaPage, ma).commit();
+        getMainActivity().getHeader().setInvisibleAll();
         getMainActivity().getHeader().setVisibleCancel(true);
         getMainActivity().getHeader().setVisibleMenu(false);
         getMainActivity().getHeader().setLeftText(74);

@@ -73,6 +73,14 @@
     <dimen name="map_card_error_circle_left">12dp</dimen>
     <dimen name="map_card_error_circle_top">12dp</dimen>
     <dimen name="map_card_error_circle_bottom">12dp</dimen>
+    <dimen name="map_card_error_toptext_top">24dp</dimen>
+    <dimen name="map_card_error_toptext_left">24dp</dimen>
+    <dimen name="map_card_error_middletext_top">20dp</dimen>
+    <dimen name="map_card_error_middletext_left">24dp</dimen>
+    <dimen name="map_card_error_bottomtext_top">30dp</dimen>
+    <dimen name="map_card_error_bottomtext_right">24dp</dimen>
+
+
 
     <string name="select_area">Select the place</string>
     <string name="what_to_look_for">What is to be found</string>

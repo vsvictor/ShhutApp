@@ -38,6 +38,7 @@ import com.shhutapp.pages.MainPage;
 import com.shhutapp.data.DBHelper;
 import com.shhutapp.pages.MessagePage;
 import com.shhutapp.pages.QueitTimePage;
+import com.shhutapp.pages.SettingsPage;
 import com.shhutapp.pages.WhiteListPage;
 import com.shhutapp.services.AppReceiver;
 import com.shhutapp.services.CallReceiver;
@@ -202,6 +203,10 @@ public class MainActivity extends ActionBarActivity {
             }
             case BasePage.Pages.areaCard:{
                 page = new AreaCard(this);
+                break;
+            }
+            case BasePage.Pages.settingsPage:{
+                page = new SettingsPage(this);
                 break;
             }
 

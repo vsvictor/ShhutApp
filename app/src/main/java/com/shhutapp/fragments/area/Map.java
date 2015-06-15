@@ -92,6 +92,7 @@ public class Map extends BaseFragments{
     private TextView tvMapError;
     private RelativeLayout rlMapError;
     private TextView tvMapErrorClose;
+    private TextView tvMapErrorSettings;
 
     public Map(){
         super(MainActivity.getMainActivity());
@@ -272,6 +273,18 @@ public class Map extends BaseFragments{
                 rlMapError.setVisibility(View.INVISIBLE);
             }
         });
+        tvMapErrorSettings = (TextView) rView.findViewById(R.id.tvMapErrorSettings);
+        tvMapErrorSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BasePage sett = getMainActivity().createPageFromID(BasePage.Pages.settingsPage);
+                Bundle b = new Bundle();
+                b.putInt("prevID", BasePage.Pages.areaPage);
+                sett.setArguments(b);
+                getMainActivity().getSupportFragmentManager().beginTransaction().remove(page).commit();
+                getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, sett).commit();
+            }
+        });
     }
 
     private void createMenu() {
@@ -381,7 +394,7 @@ public class Map extends BaseFragments{
                     zv.getMap().animateCamera(CameraUpdateFactory.newCameraPosition(pos));
                 }
                 else if(status == -1){
-                    tvMapError.setText(getMainActivity().getResources().getString(R.string.not_location));
+                    //tvMapError.setText(getMainActivity().getResources().getString(R.string.not_location));
                     rlMapError.setVisibility(View.VISIBLE);
                 }
                 else if(status == -2){
@@ -435,8 +448,8 @@ public class Map extends BaseFragments{
                 rlMapAddress.setVisibility(View.VISIBLE);
             }
             else if(status == -1){
-                tvMapError.setText(getMainActivity().getResources().getString(R.string.not_address));
-                rlMapError.setVisibility(View.VISIBLE);
+                //tvMapError.setText(getMainActivity().getResources().getString(R.string.not_address));
+                //rlMapError.setVisibility(View.VISIBLE);
             }
             getMainActivity().getHeader().setVisibleNext(true);
         }
@@ -478,7 +491,6 @@ public class Map extends BaseFragments{
             getMainActivity().getHeader().setVisibleNext(false);
         }
     };
-
     private class MapAddressAdapter extends FilteredAdapter {
 
         public MapAddressAdapter(Context context, BaseObjectList list) {

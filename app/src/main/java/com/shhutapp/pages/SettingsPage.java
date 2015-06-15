@@ -46,6 +46,11 @@ public class SettingsPage extends BasePage {
     }
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        try {
+            prevID = getArguments().getInt("prevID");
+        }catch (Exception e){
+            prevID = Pages.mainPage;
+        }
     }
     public View onCreateView(LayoutInflater inf, ViewGroup container, Bundle savedInstanceState) {
         rootView = inf.inflate(R.layout.settings_page, container, false);
@@ -75,6 +80,7 @@ public class SettingsPage extends BasePage {
             public void onBack() {
                 BasePage page = getMainActivity().createPageFromID(prevID);
                 getMainActivity().getSupportFragmentManager().beginTransaction().remove(getCurrent()).commit();
+
                 getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, page).commit();
             }
         });
