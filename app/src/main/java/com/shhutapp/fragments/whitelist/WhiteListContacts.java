@@ -76,7 +76,8 @@ public class WhiteListContacts extends BaseFragments {
                 b.putInt("id", id);
                 whitelistAddContact.setArguments(b);
                 getMainActivity().getSupportFragmentManager().beginTransaction().
-                        remove(getOwner()).
+                        addToBackStack(null).
+                        //remove(getOwner()).
                         remove(getIAm()).
                         add(R.id.whitelistPage, whitelistAddContact).
                         commit();
@@ -181,5 +182,6 @@ public class WhiteListContacts extends BaseFragments {
             ivUrgOff.setVisibility(View.VISIBLE);
             ivUrgOn.setVisibility(View.INVISIBLE);
         }
+        getMainActivity().getHeader().setVisibleCounter(false);
     }
 }

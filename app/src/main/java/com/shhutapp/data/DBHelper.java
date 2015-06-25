@@ -116,6 +116,51 @@ public class DBHelper extends SQLiteOpenHelper{
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 	}
+	public QueitCard loadQueitCard(int id){
+		QueitCard card = null;
+		Cursor cur = act.getDB().rawQuery("Select cards.id, quieties.begtime , quieties.endtime,  quieties.is1,  quieties.is2, quieties.is3, quieties.is4, quieties.is5, quieties.is6, quieties.is7, cards.idMessage From cards, quieties Where cards.idDream=quieties.id and cards.id="+String.valueOf(id), null);
+		if(cur.moveToFirst()){
+			card = new QueitCard();
+			card.setID(cur.getInt(0));
+			card.setBegin(new Date(cur.getLong(1)));
+			card.setEnd(new Date(cur.getLong(2)));
+			boolean[] days = new boolean[7];
+			days[0] = (cur.getInt(3)==0?false:true);
+			days[1] = (cur.getInt(4)==0?false:true);
+			days[2] = (cur.getInt(5)==0?false:true);
+			days[3] = (cur.getInt(6)==0?false:true);
+			days[4] = (cur.getInt(7)==0?false:true);
+			days[5] = (cur.getInt(8)==0?false:true);
+			days[6] = (cur.getInt(9)==0?false:true);
+			card.setDays(days);
+			long idMessage = cur.getLong(10);
+			if(idMessage >= 0) card.setSMS(true);
+			else card.setSMS(false);
+		}
+		return card;
+	}
+
+	public GeoCard loadGeoCard(long id){
+		Cursor cur = act.getDB().rawQuery("Select cards.id, locations.name , locations.street,  cards.idActivate,  activations.time, locations.background, locations.lat, locations.long, locations.radius, cards.time, cards.onoff From cards, locations, activations Where cards.id=? and cards.idGeo=locations.id and cards.idActivate=activations.id", new String[]{String.valueOf(id)});
+		GeoCard card = null;
+		if(cur.moveToFirst()){
+			card = new GeoCard(this.act);
+			card.setID(cur.getInt(0));
+			card.setName(cur.getString(1));
+			card.setAddress(cur.getString(2));
+			card.setTypeActivation(cur.getInt(3));
+			card.setTimeActivation(cur.getLong(4));
+			card.setLantitude(cur.getDouble(6));
+			card.setLongitude(cur.getDouble(7));
+			card.setRadius(cur.getDouble(8));
+			card.setMinutes(cur.getInt(9));
+			String s = cur.getString(5);
+			Bitmap b = Convertor.Base64ToBitmap(s);
+			card.setBackground(b);
+			card.setOnoff(cur.getInt(10)==1?true:false);
+		}
+		return card;
+	}
 	public BaseObjectList loadGeoCards(){
 		BaseObjectList list = new BaseObjectList();
 		Cursor cur = act.getDB().rawQuery("Select cards.id, locations.name , locations.street,  cards.idActivate,  activations.time, locations.background, locations.lat, locations.long, locations.radius, cards.time, cards.onoff From cards, locations, activations Where cards.idGeo=locations.id and cards.idActivate=activations.id", null);
@@ -288,6 +333,19 @@ public class DBHelper extends SQLiteOpenHelper{
 		}
 		return res;
 	}
+	public WhiteListCard loadWhiteLists(int id){
+		WhiteListCard card = null;
+		Cursor c  = act.getDB().query("white_list", null, "id=?", new String[]{String.valueOf(id)}, null, null, null);
+		if(c.moveToFirst()){
+			String name = c.getString(1);
+			card = new WhiteListCard(id, name);
+			card.setUnknown(c.getInt(2) == 1);
+			card.setOrganizations(c.getInt(3) == 1);
+			card.setUrgent(c.getInt(4) == 1);
+		}
+		return card;
+	}
+
 	public BaseObjectList loadContacts(int listID){
 		BaseObjectList res = new BaseObjectList();
 		Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;

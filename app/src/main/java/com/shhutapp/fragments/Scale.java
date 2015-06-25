@@ -77,14 +77,12 @@ public class Scale extends BaseFragments {
             @Override
             public void onTimeChanged(int minutes) {
                 minInFirst = minutes;
-                //Log.i("StartState:", String.valueOf(minutes));
                 if (minutes > 0) {
                     rlTimer.setVisibility(View.VISIBLE);
                     if (!showed) {
                         getMainActivity().getSupportFragmentManager().beginTransaction().
                                 show(page.getOkCancel()).
                                 commit();
-                        //Date d = Calendar.getInstance().getTime();
                         showed = true;
                     }
                     Date d = Calendar.getInstance().getTime();
@@ -104,8 +102,6 @@ public class Scale extends BaseFragments {
                 String sText = DateTimeOperator.minutesToString(minutes,
                         getMainActivity().getResources().getString(R.string.h),
                         getMainActivity().getResources().getString(R.string.min));
-                //tvMinutesValue.setText(String.valueOf(m));
-                //tvBefore.setText(DateTimeOperator.dateToTimeString(Calendar.getInstance().getTime()));
             }
         });
         msbSec = (SecondTimeSeekBar) rView.findViewById(R.id.msbSeconds);
@@ -118,12 +114,8 @@ public class Scale extends BaseFragments {
             @Override
             public void onTimeChanged(int minutes) {
                 int h = minInFirst / 60;
-                //Log.i("Hours", String.valueOf(h));
                 int t = (h * 60) + minutes;
-                //Log.i("Minutes", String.valueOf(minutes));
-                //Log.i("Time", String.valueOf(t));
                 msbBegin.setTime(t);
-                //Log.i("In Main", String.valueOf(t));
                 msbBegin.invalidate();
                 tvMinutesValue.setText(String.valueOf(minutes));
             }

@@ -156,7 +156,7 @@ public class MainTimeSeekBar extends ImageView{
         if(thumb != null){
             if(offset>width) offset=width;
             if(offset<0) offset = 0;
-            canvas.drawBitmap(thumb, offset, (height/2)-fourty, p);
+            canvas.drawBitmap(thumb, offset, (height/2)-fourty, e);
         }
         invalidate();
         if(onChange != null) onChange.onTimeChanged(offsetToTime(minus, Math.round(offset)));
@@ -181,16 +181,22 @@ public class MainTimeSeekBar extends ImageView{
         offset = 0;
     }
     public void setTime(int minutes){
-        float f = getMeasuredWidth();
-        float onemin = f/(float)180;
-        if((minutes*onemin)>getMeasuredWidth()){
+        float ff;
+        float f = getLayoutParams().width;//getMeasuredWidth();
+        float onemin = f/180f;
+        if((minutes*onemin)>(f-1)){
             int full = minutes/60;
             int min = minutes-(full*60);
-            minus = -Math.round(full*60*onemin);
-            offset = min*onemin;
+            int rr = full/3;
+            int tt = full-(rr*3);
+            minus = -Math.round(rr*180*onemin);
+            offset = onemin*(min+(tt*60));
+            int qwe = 1;
         }
         else {
-            offset = ((float)(minutes)*onemin);
+            ff = (float)(onemin*minutes);
+            minus = 0;
+            offset = ff;
         }
         invalidate();
     }

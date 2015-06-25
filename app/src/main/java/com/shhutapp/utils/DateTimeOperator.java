@@ -62,4 +62,10 @@ public class DateTimeOperator {
 		int min = minutes-(h*60);
 		return String.valueOf(h)+":"+String.valueOf(min);
 	}
+	public static int DateToMinutes(Date d){
+		int l = d.getHours();
+		int minute = d.getMinutes();
+		int res = l*60+minute;
+		return res;
+	}
 }

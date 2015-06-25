@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
+import com.shhutapp.data.WhiteListCard;
 import com.shhutapp.fragments.Header;
 import com.shhutapp.fragments.OnBackListener;
 import com.shhutapp.fragments.area.AreaCard;
@@ -66,13 +67,14 @@ public class WhiteListPage extends BasePage{
         rootView = inf.inflate(R.layout.whitelist_page, container, false);
         if(act.isWhiteListEmpty()) {
             fragmentManager().beginTransaction().
+                    addToBackStack(null).
                     add(R.id.whitelistPage, empty).
                     commit();
         }
         else{
             fragmentManager().beginTransaction().
+                    addToBackStack(null).
                     add(R.id.whitelistPage, whitelistList).
-                    //add(R.id.whitelistPage, empty).
                     commit();
         }
         return rootView;
@@ -94,7 +96,12 @@ public class WhiteListPage extends BasePage{
                 b.putBoolean("isArgs", false);
                 b.putInt("count", whitelistList.getCount());
                 whitelistNew.setArguments(b);
-                fragmentManager().beginTransaction().remove(whitelistList).remove(empty).add(R.id.whitelistPage, whitelistNew).commit();
+                fragmentManager().beginTransaction().
+                        addToBackStack(null).
+                        remove(whitelistList).
+                        remove(empty).
+                        add(R.id.whitelistPage, whitelistNew).
+                        commit();
             }
 
             @Override
@@ -111,6 +118,7 @@ public class WhiteListPage extends BasePage{
                 whitelistAppCont = new WhiteListAppCont(getMainActivity(), (WhiteListPage) getIAm());
                 whitelistAppCont.setArguments(b);
                 fragmentManager().beginTransaction().
+                        addToBackStack(null).
                         remove(whitelistList).
                         remove(empty).
                         add(R.id.whitelistPage, whitelistAppCont).
@@ -118,7 +126,9 @@ public class WhiteListPage extends BasePage{
             }
 
             @Override
-            public void onSelected() {
+            public void onSelected(int id) {
+                WhiteListCard wl = getMainActivity().getDBHelper().loadWhiteLists(id);
+                getMainActivity().selectWhiteList(wl);
             }
         });
         empty.setOnMessageListListener(new MessageListListener() {
@@ -130,14 +140,20 @@ public class WhiteListPage extends BasePage{
                 b.putBoolean("isArgs", false);
                 b.putInt("count", 0);
                 whitelistNew.setArguments(b);
-                fragmentManager().beginTransaction().remove(whitelistList).remove(empty).add(R.id.whitelistPage, whitelistNew).commit();
+                fragmentManager().beginTransaction().
+                        addToBackStack(null).
+                        remove(whitelistList).
+                        remove(empty).
+                        add(R.id.whitelistPage, whitelistNew).
+                        commit();
             }
             @Override
             public void onDelete() {}
             @Override
             public void onEdit(int id) {}
             @Override
-            public void onSelected() {}
+            public void onSelected(int id) {
+            }
         });
     }
     @Override
@@ -152,20 +168,34 @@ public class WhiteListPage extends BasePage{
                 switch (prevID) {
                     case BasePage.Pages.mainPage: {
                         BasePage p = getMainActivity().createPageFromID(prevID);
-                        getMainActivity().getSupportFragmentManager().beginTransaction().remove(getCurrent()).commit();
-                        getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, p).commit();
+                        getMainActivity().getSupportFragmentManager().beginTransaction().
+                                addToBackStack(null).
+                                remove(getCurrent()).
+                                add(R.id.container, p).
+                                commit();
+                        /*getMainActivity().getSupportFragmentManager().beginTransaction().
+                                add(R.id.container, p).
+                                commit();*/
                         break;
                     }
                     case BasePage.Pages.queitTimePage: {
                         getMainActivity().getHeader().setVisibleBack(false);
                         getMainActivity().getHeader().setVisibleCancel(true);
-                        getMainActivity().getSupportFragmentManager().beginTransaction().remove(getCurrent()).show(QueitTimePage.instance).commit();
+                        getMainActivity().getSupportFragmentManager().beginTransaction().
+                                addToBackStack(null).
+                                remove(getCurrent()).
+                                show(QueitTimePage.instance).
+                                commit();
                         break;
                     }
                     case BasePage.Pages.areaCard: {
                         getMainActivity().getHeader().setVisibleBack(false);
                         getMainActivity().getHeader().setVisibleCancel(true);
-                        getMainActivity().getSupportFragmentManager().beginTransaction().remove(getCurrent()).show(AreaCard.instance).commit();
+                        getMainActivity().getSupportFragmentManager().beginTransaction().
+                                addToBackStack(null).
+                                remove(getCurrent()).
+                                show(AreaCard.instance).
+                                commit();
                         break;
                     }
                 }

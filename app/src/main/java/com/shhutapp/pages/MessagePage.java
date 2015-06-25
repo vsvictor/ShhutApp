@@ -126,6 +126,7 @@ public class MessagePage extends BasePage {
                 b.putBoolean("isArgs", false);
                 newMessage.setArguments(b);
                 getMainActivity().getSupportFragmentManager().beginTransaction().
+                        addToBackStack(null).
                         remove(empty).
                         remove(messagesList).
                         add(R.id.messagePage, newMessage).
@@ -140,13 +141,14 @@ public class MessagePage extends BasePage {
                 header.setVisibleCancel(true);
                 //newMessage = new MessageNew(getMainActivity(), instance);
                 getMainActivity().getSupportFragmentManager().beginTransaction().
+                        addToBackStack(null).
                         remove(empty).
                         remove(messagesList).
                         add(R.id.messagePage, newMessage).
                         commit();
             }
             @Override
-            public void onSelected() {
+            public void onSelected(int id) {
             }
         });
     }
@@ -155,6 +157,7 @@ public class MessagePage extends BasePage {
         super.onResume();
         if(act.isMessageListEmpty()) {
             fragmentManager().beginTransaction().
+                    //addToBackStack(null).
                     add(R.id.messagePage, scale).
                     add(R.id.messagePage, messagesList).
                     commit();
@@ -162,6 +165,7 @@ public class MessagePage extends BasePage {
         else{
             Log.i("Resume", "Resumed");
             fragmentManager().beginTransaction().
+                    //addToBackStack(null).
                     add(R.id.messagePage, messagesList).
                     add(R.id.messagePage, empty).
                     commit();

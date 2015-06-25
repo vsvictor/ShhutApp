@@ -100,7 +100,7 @@ public class MainActivity extends ActionBarActivity {
         //isWhiteListEmpty = false;
         //isQueitTimeEmpty = false;
         actionBar = (RelativeLayout) this.findViewById(R.id.actionBar);
-        inf = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //inf = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         dbHelper = new DBHelper(this);
         db = dbHelper.getWritableDatabase();
 /*        if(isNetwork()) {
@@ -124,9 +124,9 @@ public class MainActivity extends ActionBarActivity {
                 settings.setFirst(false);
             }
         }
-        clearQueitCard();
-        clearWhiteList();
-        clearSMS();
+        //clearQueitCard();
+        //clearWhiteList();
+        //clearSMS();
 
         calls = new CallReceiver();
         mess = new MessageReceiver();

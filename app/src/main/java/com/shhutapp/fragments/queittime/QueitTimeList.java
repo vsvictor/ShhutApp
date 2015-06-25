@@ -38,6 +38,7 @@ public class QueitTimeList extends BaseFragments {
     private MessageListListener listener;
     private RelativeLayout rlQueitTimeData;
     private RelativeLayout rlQueitTimeEmpty;
+    private boolean isRadio;
 
     public QueitTimeList() {
         super();
@@ -55,6 +56,7 @@ public class QueitTimeList extends BaseFragments {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isRadio = false;
         list = act.getDBHelper().loadQueitCard();
         adapter = new QueitTimeAdapter(act, list);
     }
@@ -148,7 +150,12 @@ public class QueitTimeList extends BaseFragments {
                 listener.onEdit(id);
                 adapter.notifyDataSetUpdated();*/
                 QueitCard card = (QueitCard) ((QueitTimeAdapter) swQueitTime.getAdapter()).getData().get(position);
-                getMainActivity().selectQueitCard(card);
+                if(isRadio){
+                    getMainActivity().selectQueitCard(card);
+                }
+                else {
+                    listener.onEdit(card.getID());
+                }
             }
 
             @Override
@@ -188,6 +195,7 @@ public class QueitTimeList extends BaseFragments {
         listener = aListener;
     }
     public int getCount(){return adapter.getCount();}
+
     private class QueitTimeAdapter extends FilteredAdapter {
         private boolean isShow;
         public QueitTimeAdapter(Context context, BaseObjectList list) {
@@ -201,22 +209,31 @@ public class QueitTimeList extends BaseFragments {
             TextView tvDaysQueit = (TextView) view.findViewById(R.id.tvDaysQueit);
             tvTimeQueit.setText(card.timeToText());
             tvDaysQueit.setText(card.daysToText());
+
             ImageView ivDaysOff = (ImageView)view.findViewById(R.id.ivQueitTimeDaysOff);
             ImageView ivDaysOn = (ImageView)view.findViewById(R.id.ivQueitTimeDaysOn);
+
             ImageView ivWLOff = (ImageView)view.findViewById(R.id.ivQueitTimeWLOff);
             ImageView ivWLOn = (ImageView)view.findViewById(R.id.ivQueitTimeWLOn);
+
             ImageView ivMsgOff = (ImageView)view.findViewById(R.id.ivQueitTimeMsgOff);
             ImageView ivMsgOn = (ImageView)view.findViewById(R.id.ivQueitTimeMsgOn);
+
             ImageView ivCardOff = (ImageView)view.findViewById(R.id.ivQueitTimeOff);
             ImageView ivCardOn = (ImageView)view.findViewById(R.id.ivQueitTimeOn);
+
             ivDaysOff.setVisibility(card.isAllDays()?View.VISIBLE:View.INVISIBLE);
             ivDaysOn.setVisibility(!card.isAllDays()?View.VISIBLE:View.INVISIBLE);
+
             ivWLOff.setVisibility(card.isWhiteList(getMainActivity().getDB())?View.VISIBLE:View.INVISIBLE);
             ivWLOn.setVisibility(!card.isWhiteList(getMainActivity().getDB())?View.VISIBLE:View.INVISIBLE);
+
             ivMsgOff.setVisibility(card.isMessage(getMainActivity().getDB())?View.VISIBLE:View.INVISIBLE);
             ivMsgOn.setVisibility(!card.isMessage(getMainActivity().getDB())?View.VISIBLE:View.INVISIBLE);
+
             ivCardOff.setVisibility(!card.isOn()?View.VISIBLE:View.INVISIBLE);
             ivCardOn.setVisibility(card.isOn()?View.VISIBLE:View.INVISIBLE);
+
             return view;
         }
         public void notifyDataSetUpdated(){

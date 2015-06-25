@@ -37,25 +37,25 @@ public class Locator extends Service{
 	private String provider;
 	private Criteria criteria;
 	private Location loc;
-	private Logger logger;
+	//private Logger logger;
 	@Override
 	public void onCreate(){
 		super.onCreate();
-		logger = createLogger();
+		//logger = createLogger();
 		if(!Locator.isLocationEnabled(MainActivity.getMainActivity())) return;
         criteria = new Criteria();
     	locationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
     	provider = locationManager.getBestProvider(criteria, true);
-    	logger.info(TAG+": provider: "+provider);
+    	//logger.info(TAG+": provider: "+provider);
     	loc = locationManager.getLastKnownLocation(provider);
     	if(loc == null){
     		loc = new Location(provider);
     		loc.setLatitude(0);
     		loc.setLongitude(0);
     	}
-    	logger.info(TAG+": prev location: ("+String.valueOf(loc.getLatitude())+":"+String.valueOf(loc.getLatitude())+")");
+    	//logger.info(TAG+": prev location: ("+String.valueOf(loc.getLatitude())+":"+String.valueOf(loc.getLatitude())+")");
     	locationManager.requestLocationUpdates(provider, 1000*5, 10, listener);
-    	logger.info(TAG+": listener is set ");
+    	//logger.info(TAG+": listener is set ");
 	}
 	@Override
 	public int onStartCommand(final Intent intent, int flags, int startID) {
@@ -77,14 +77,14 @@ public class Locator extends Service{
 
         provider = locationManager.getBestProvider(criteria, true);
 		Log.i("Provider", "Provider: "+provider);
-		logger.info(TAG+": provider onStartComment: "+provider);
+		//logger.info(TAG+": provider onStartComment: "+provider);
     	loc = locationManager.getLastKnownLocation(provider);
     	if(loc == null){
     		loc = new Location(provider);
     		loc.setLatitude(0);
     		loc.setLongitude(0);
     	}
-    	logger.info(TAG+": OnStartCommand location: ("+String.valueOf(loc.getLatitude())+":"+String.valueOf(loc.getLongitude())+")");
+    	//logger.info(TAG+": OnStartCommand location: ("+String.valueOf(loc.getLatitude())+":"+String.valueOf(loc.getLongitude())+")");
 		Intent res = new Intent(Actions.Location);
 		JSONObject obj = new JSONObject();
 		try {
@@ -93,16 +93,16 @@ public class Locator extends Service{
 			if(loc.getLatitude() == 0 && loc.getLongitude() == 0) obj.put("status_code", -1);
             else if(prov.size()==0) obj.put("status_code", -2);
 			else obj.put("status_code", 1);
-			logger.info(TAG+": result obj: "+obj.toString());
+			//logger.info(TAG+": result obj: "+obj.toString());
 		} catch (JSONException e) {
 			e.printStackTrace();
-			logger.info(TAG+": result obj excaption: "+e.getMessage());
+			//logger.info(TAG+": result obj excaption: "+e.getMessage());
 		}
 		res.putExtra("name", Actions.Location);
 		res.putExtra("command", obj.toString());
 		sendBroadcast(res);
 		stopSelf();
-		logger.info(TAG+": intent sended");
+		//logger.info(TAG+": intent sended");
 		return Service.START_REDELIVER_INTENT;
 	}
 	private LocationListener listener = new LocationListener(){
@@ -111,7 +111,7 @@ public class Locator extends Service{
 		    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 		    locationManager.removeUpdates(this);
 		    loc = location;
-		    logger.info(TAG+": in listener onLocationChanged location: ("+String.valueOf(loc.getLatitude())+":"+String.valueOf(loc.getLatitude())+")");
+		    //logger.info(TAG+": in listener onLocationChanged location: ("+String.valueOf(loc.getLatitude())+":"+String.valueOf(loc.getLatitude())+")");
 		}
 		@Override
 		public void onProviderDisabled(String provider) {

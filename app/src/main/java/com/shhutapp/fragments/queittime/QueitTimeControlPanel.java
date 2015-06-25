@@ -26,7 +26,8 @@ public class QueitTimeControlPanel extends BaseFragments {
     private ImageView ivQueitTimeDaysOff;
     private ImageView ivQueitTimeMsgOn;
     private ImageView ivQueitTimeMsgOff;
-
+    private boolean isWhiteList;
+    private boolean isMessage;
     public QueitTimeControlPanel(){
         super();
         rView = null;
@@ -44,6 +45,13 @@ public class QueitTimeControlPanel extends BaseFragments {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        try {
+            isWhiteList = getArguments().getBoolean("isWhiteList");
+            isMessage = getArguments().getBoolean("isMessage");
+        }catch (Exception e){
+            getMainActivity().clearWhiteList();
+            getMainActivity().clearSMS();
+        }
     }
 
     @Override
@@ -91,7 +99,7 @@ public class QueitTimeControlPanel extends BaseFragments {
     public void onHiddenChanged(boolean hidden){
         super.onHiddenChanged(hidden);
         try {
-            if(getMainActivity().getWhiteList() != null){
+            if(getMainActivity().getWhiteList() != null || isWhiteList){
                 ivQueitTimeOn.setVisibility(View.VISIBLE);
                 ivQueitTimeOff.setVisibility(View.INVISIBLE);
             }
@@ -115,7 +123,7 @@ public class QueitTimeControlPanel extends BaseFragments {
         catch (NullPointerException e){
         }
         try {
-            if(getMainActivity().getSMS() != null){
+            if(getMainActivity().getSMS() != null || isMessage){
                 ivQueitTimeMsgOn.setVisibility(View.VISIBLE);
                 ivQueitTimeMsgOff.setVisibility(View.INVISIBLE);
             }

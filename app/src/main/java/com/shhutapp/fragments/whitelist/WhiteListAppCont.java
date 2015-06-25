@@ -2,6 +2,7 @@ package com.shhutapp.fragments.whitelist;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import com.shhutapp.fragments.BaseFragments;
 import com.shhutapp.fragments.Header;
 import com.shhutapp.fragments.OnBackListener;
 import com.shhutapp.pages.WhiteListPage;
-
+import android.support.v4.app.Fragment;
 /**
  * Created by victor on 16.05.15.
  */
@@ -85,11 +86,16 @@ public class WhiteListAppCont extends BaseFragments {
                 tvApplicationsText.setTextColor(Color.argb(127, 255, 255, 255));
                 rlContactsRed.setVisibility(View.VISIBLE);
                 rlApplicationsRed.setVisibility(View.INVISIBLE);
-                whitelistCont.setArguments(args);
+                try {
+                    whitelistCont.setArguments(args);
+                } catch (IllegalStateException e) {
+                }
                 getMainActivity().getSupportFragmentManager().beginTransaction().
-                        remove(whitelistApp).
+                        //addToBackStack(null).
+                                remove(whitelistApp).
                         add(R.id.whitelistPage, whitelistCont).
                         commit();
+                //white
             }
         });
         rlApplications.setOnClickListener(new View.OnClickListener() {
@@ -103,15 +109,21 @@ public class WhiteListAppCont extends BaseFragments {
                 tvApplicationsText.setTextColor(Color.argb(255, 255, 255, 255));
                 rlContactsRed.setVisibility(View.INVISIBLE);
                 rlApplicationsRed.setVisibility(View.VISIBLE);
-                whitelistApp.setArguments(args);
+                try {
+                    whitelistApp.setArguments(args);
+                } catch (IllegalStateException e) {
+                }
                 getMainActivity().getSupportFragmentManager().beginTransaction().
+                        //addToBackStack(null).
                         remove(whitelistCont).
                         add(R.id.whitelistPage, whitelistApp).
                         commit();
             }
         });
+        //if(whitelistCont != null) whitelistCont = new WhiteListContacts(getMainActivity(),page);
         whitelistCont.setArguments(args);
         getMainActivity().getSupportFragmentManager().beginTransaction().
+                //addToBackStack(null).
                 remove(whitelistApp).
                 add(R.id.whitelistPage, whitelistCont).
                 commit();
@@ -120,17 +132,16 @@ public class WhiteListAppCont extends BaseFragments {
         header.setOnBackListener(new OnBackListener() {
             @Override
             public void onBack() {
-                if (whitelistApp.isAdded()) {
-                    getMainActivity().getSupportFragmentManager().beginTransaction().
-                            remove(whitelistApp).
-                            commit();
-                }
-                if (whitelistCont.isAdded()) {
-                    getMainActivity().getSupportFragmentManager().beginTransaction().
-                            remove(whitelistCont).
-                            commit();
-                }
                 getMainActivity().getSupportFragmentManager().beginTransaction().
+                        //addToBackStack(null).
+                        remove(whitelistApp).
+                        commit();
+                getMainActivity().getSupportFragmentManager().beginTransaction().
+                        //addToBackStack(null).
+                        remove(whitelistCont).
+                        commit();
+                getMainActivity().getSupportFragmentManager().beginTransaction().
+                        //addToBackStack(null).
                         remove(getIAm()).
                         add(R.id.whitelistPage, page.getWhitelistList()).
                         commit();
@@ -140,5 +151,15 @@ public class WhiteListAppCont extends BaseFragments {
     @Override
     public void onResume(){
         super.onResume();
+        //getMainActivity().getHeader().setVisibleCounter(false);
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        getMainActivity().getSupportFragmentManager().beginTransaction().
+                remove(whitelistApp).
+                remove(whitelistCont).
+                commit();
+
     }
 }

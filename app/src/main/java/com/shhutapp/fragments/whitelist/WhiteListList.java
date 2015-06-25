@@ -43,6 +43,8 @@ public class WhiteListList extends BaseFragments {
     private SwipeListView swWhiteList;
     private MessageListListener listener;
     private int prevID;
+    private boolean isRadio;
+
     public WhiteListList() {
         super();
     }
@@ -59,7 +61,7 @@ public class WhiteListList extends BaseFragments {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        boolean isRadio = false;
+        isRadio = false;
         try{
             isRadio = getArguments().getBoolean("isRadio");
         }catch (NullPointerException e){
@@ -137,8 +139,13 @@ public class WhiteListList extends BaseFragments {
             @Override
             public void onClickFrontView(int position) {
                 int id = ((WhiteListCard) ((WhiteListAdapter) swWhiteList.getAdapter()).getData().get(position)).getID();
-                listener.onEdit(id);
-                adapter.notifyDataSetUpdated();
+                if(isRadio){
+                    listener.onEdit(id);
+                    adapter.notifyDataSetUpdated();
+                }
+                else{
+                    listener.onSelected(id);
+                }
             }
 
             @Override
@@ -180,20 +187,34 @@ public class WhiteListList extends BaseFragments {
                 switch (prevID){
                     case BasePage.Pages.mainPage:{
                         BasePage p = getMainActivity().createPageFromID(prevID);
-                        getMainActivity().getSupportFragmentManager().beginTransaction().remove(page.getCurrent()).commit();
-                        getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container,p).commit();
+                        getMainActivity().getSupportFragmentManager().beginTransaction().
+                                //addToBackStack(null).
+                                remove(page.getCurrent()).
+                                add(R.id.container, p).
+                                commit();
+                        /*getMainActivity().getSupportFragmentManager().beginTransaction().
+                                add(R.id.container, p).
+                                commit();*/
                         break;
                     }
                     case BasePage.Pages.queitTimePage:{
                         getMainActivity().getHeader().setVisibleBack(false);
                         getMainActivity().getHeader().setVisibleCancel(true);
-                        getMainActivity().getSupportFragmentManager().beginTransaction().remove(page.getCurrent()).show(QueitTimePage.instance).commit();
+                        getMainActivity().getSupportFragmentManager().beginTransaction().
+                                //addToBackStack(null).
+                                remove(page.getCurrent()).
+                                show(QueitTimePage.instance).
+                                commit();
                         break;
                     }
                     case BasePage.Pages.areaCard:{
                         getMainActivity().getHeader().setVisibleBack(false);
                         getMainActivity().getHeader().setVisibleCancel(true);
-                        getMainActivity().getSupportFragmentManager().beginTransaction().remove(page.getCurrent()).show(AreaCard.instance).commit();
+                        getMainActivity().getSupportFragmentManager().beginTransaction().
+                                //addToBackStack(null).
+                                remove(page.getCurrent()).
+                                show(AreaCard.instance).
+                                commit();
                         break;
                     }
 

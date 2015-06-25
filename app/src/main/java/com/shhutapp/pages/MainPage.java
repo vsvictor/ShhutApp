@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.shhutapp.MainActivity;
 import com.shhutapp.OkCancelListener;
 import com.shhutapp.AppSettings;
+import com.shhutapp.data.GeoCard;
 import com.shhutapp.fragments.CardList;
 import com.shhutapp.fragments.Header;
 import com.shhutapp.R;
@@ -16,8 +17,10 @@ import com.shhutapp.fragments.MainControlPanel;
 import com.shhutapp.fragments.MainControlPanelListener;
 import com.shhutapp.fragments.OkCancel;
 import com.shhutapp.fragments.OnDeleteCard;
+import com.shhutapp.fragments.OnEditCard;
 import com.shhutapp.fragments.OnMenuListener;
 import com.shhutapp.fragments.Scale;
+import com.shhutapp.fragments.area.AreaCard;
 import com.shhutapp.utils.DateTimeOperator;
 
 import java.util.Calendar;
@@ -93,8 +96,12 @@ public class MainPage extends BasePage {
                 Bundle args = new Bundle();
                 args.putInt("back", getID());
                 qt.setArguments(args);
-                getMainActivity().getSupportFragmentManager().beginTransaction().remove(getCurrent()).commit();
-                getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, qt).commit();
+                getMainActivity().getSupportFragmentManager().beginTransaction().
+                        addToBackStack(null).
+                        remove(getCurrent()).
+                        add(R.id.container, qt).
+                        commit();
+                //getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, qt).commit();
             }
 
             @Override
@@ -103,8 +110,8 @@ public class MainPage extends BasePage {
                 Bundle args = new Bundle();
                 args.putInt("back", getID());
                 wlp.setArguments(args);
-                getMainActivity().getSupportFragmentManager().beginTransaction().remove(getCurrent()).commit();
-                getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, wlp).commit();
+                getMainActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).remove(getCurrent()).add(R.id.container, wlp).commit();
+                //getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, wlp).commit();
             }
 
             @Override
@@ -114,6 +121,7 @@ public class MainPage extends BasePage {
                 args.putInt("back", getID());
                 mp.setArguments(args);
                 getMainActivity().getSupportFragmentManager().beginTransaction().
+                        addToBackStack(null).
                         remove(getCurrent()).
                         add(R.id.container, mp).
                         commit();
@@ -140,6 +148,7 @@ public class MainPage extends BasePage {
                 args.putInt("back", getID());
                 sp.setArguments(args);
                 getMainActivity().getSupportFragmentManager().beginTransaction().
+                        addToBackStack(null).
                         remove(getCurrent()).
                         add(R.id.container, sp).
                         commit();
@@ -149,7 +158,17 @@ public class MainPage extends BasePage {
         cardList.setOnCardDeleteListener(new OnDeleteCard() {
             @Override
             public void onDeleteCard() {
-
+            }
+        });
+        cardList.setOnEditListener(new OnEditCard() {
+            @Override
+            public void onEdit(GeoCard card) {
+                AreaCard ar = new AreaCard(getMainActivity());
+                Bundle b = new Bundle();
+                b.putInt("id", card.getID());
+                ar.setArguments(b);
+                getMainActivity().getSupportFragmentManager().beginTransaction().remove(getCurrent()).commit();
+                getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, ar).commit();
             }
         });
     }

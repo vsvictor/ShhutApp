@@ -65,8 +65,9 @@ public class WhiteListNew extends BaseFragments {
                 whitelistAppCont = new WhiteListAppCont(getMainActivity(), page);
                 whitelistAppCont.setArguments(b);
                 getMainActivity().getSupportFragmentManager().beginTransaction().
+                        addToBackStack(null).
                         remove(getIAm()).
-                        add(R.id.whitelistPage, whitelistAppCont).
+                        add(R.id.whitelistPage, whitelistAppCont,"AppCont").
                         commit();
             }
         });
@@ -75,15 +76,16 @@ public class WhiteListNew extends BaseFragments {
             public void onCancel() {
                     if (getMainActivity().isWhiteListEmpty()) {
                         getMainActivity().getSupportFragmentManager().beginTransaction().
+                                addToBackStack(null).
                                 remove(getIAm()).
                                 add(R.id.whitelistPage, page.getWhiteListEmpty()).
                                 commit();
                     } else {
                         getMainActivity().getSupportFragmentManager().beginTransaction().
+                                addToBackStack(null).
                                 remove(page.getWhitelistNew()).
                                 add(R.id.whitelistPage, page.getWhitelistList()).
-                                //add(R.id.whitelistPage, page.getWhiteListEmpty()).
-                                        commit();
+                                commit();
                     }
             }
         });

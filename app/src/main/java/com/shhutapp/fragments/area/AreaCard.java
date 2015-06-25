@@ -28,6 +28,7 @@ import com.shhutapp.controls.OnTimeChanged;
 import com.shhutapp.controls.SecondTimeSeekBarRed;
 import com.shhutapp.data.Card;
 import com.shhutapp.data.CardType;
+import com.shhutapp.data.GeoCard;
 import com.shhutapp.data.QueitCard;
 import com.shhutapp.fragments.BaseFragments;
 import com.shhutapp.fragments.OnBackListener;
@@ -97,14 +98,66 @@ public class AreaCard extends BasePage {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         instance = this;
-        locName = getArguments().getString("name");
-        String ph = getArguments().getString("photo");
-        Bitmap bp = Convertor.Base64ToBitmap(ph);
-        address = getArguments().getString("address");
-        dr = new BitmapDrawable(bp);
-        //getMainActivity().clearSMS();
-        //getMainActivity().clearWhiteList();
-        //getMainActivity().clearQueitCard();
+        try {
+            locName = getArguments().getString("name");
+            String ph = getArguments().getString("photo");
+            Bitmap bp = Convertor.Base64ToBitmap(ph);
+            address = getArguments().getString("address");
+            dr = new BitmapDrawable(bp);
+            getMainActivity().clearSMS();
+            getMainActivity().clearWhiteList();
+            getMainActivity().clearQueitCard();
+            getMainActivity().getHeader().setVisibleNext(false);
+            getMainActivity().getHeader().setVisibleOk(true);
+            getMainActivity().getHeader().setOnOkListener(new OnOkListener() {
+                @Override
+                public void onOk() {
+                    int idLoc = -1;
+                    String[] cols = {"id"};
+                    String[] args = {locName};
+                    Cursor c = getMainActivity().getDB().query("locations", cols, "name=?", args, null, null, null);
+                    if (c.moveToFirst()) idLoc = c.getInt(0);
+                    ContentValues cv = new ContentValues();
+
+                    if (cbOnOff) cv.put("idActivate", 1);
+                    else cv.put("idActivate", 3);
+
+                    cv.put("type", Card.cardTypeToId(CardType.Geo));
+
+                    cv.put("name", locName);
+                    cv.put("idGeo", idLoc);
+                    if (getMainActivity().getQueitCard() != null)
+                        cv.put("idDream", getMainActivity().getQueitCard().getID());
+                    if (getMainActivity().getWhiteList() != null)
+                        cv.put("idWhiteList", getMainActivity().getWhiteList().getID());
+                    if (getMainActivity().getSMS() != null) {
+                        cv.put("idMessage", getMainActivity().getSMS().getID());
+                        getMainActivity().clearSMS();
+                    } else cv.put("idMessage", -1);
+                    cv.put("time", (hours * 60 + min));
+                    cv.put("onoff", 1);
+                    getMainActivity().getDB().insert("cards", null, cv);
+                    BasePage page = getMainActivity().createPageFromID(BasePage.Pages.mainPage);
+                    //getMainActivity().getSupportFragmentManager().beginTransaction().remove(page).commit();
+                    getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, page).commit();
+                }
+            });
+        }catch (NullPointerException ex){
+            long id = getArguments().getInt("id");
+            GeoCard card = getMainActivity().getDBHelper().loadGeoCard(id);
+            if(card != null) {
+                getMainActivity().getHeader().setInvisibleAll();
+                getMainActivity().getHeader().setLeftText(72);
+                getMainActivity().getHeader().setTextHeader(card.getName());
+                getMainActivity().getHeader().setVisibleMenu(true);
+                getMainActivity().getHeader().setVisibleCancel(true);
+                locName = card.getName();
+                address = card.getAddress();
+                dr = new BitmapDrawable(card.getBackground());
+                if(card.getTypeActivation() == 1) cbOnOff = true;
+                else if(card.getTypeActivation() == 2) cbOnOff = false;
+            }
+        }
     }
 
     @Override
@@ -120,8 +173,7 @@ public class AreaCard extends BasePage {
     @Override
     public void onViewCreated(View view, Bundle saved) {
         super.onViewCreated(view, saved);
-        getMainActivity().getHeader().setVisibleNext(false);
-        getMainActivity().getHeader().setVisibleOk(true);
+        //rlMapMap = (RelativeLayout) rView.findViewById(R.id.rlMapMap);
         getMainActivity().getHeader().setOnCancelListener(new OnCancelListener() {
             @Override
             public void onCancel() {
@@ -130,40 +182,6 @@ public class AreaCard extends BasePage {
                 getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, mp).commit();
             }
         });
-        getMainActivity().getHeader().setOnOkListener(new OnOkListener() {
-            @Override
-            public void onOk() {
-                int idLoc = -1;
-                String[] cols = {"id"};
-                String[] args = {locName};
-                Cursor c = getMainActivity().getDB().query("locations", cols, "name=?", args, null, null, null);
-                if (c.moveToFirst()) idLoc = c.getInt(0);
-                ContentValues cv = new ContentValues();
-
-                if (cbOnOff)cv.put("idActivate", 1);
-                else cv.put("idActivate", 3);
-
-                cv.put("type", Card.cardTypeToId(CardType.Geo));
-
-                cv.put("name", locName);
-                cv.put("idGeo", idLoc);
-                if(getMainActivity().getQueitCard() != null)
-                    cv.put("idDream", getMainActivity().getQueitCard().getID());
-                if(getMainActivity().getWhiteList()!=null)
-                    cv.put("idWhiteList", getMainActivity().getWhiteList().getID());
-                if (getMainActivity().getSMS() != null) {
-                    cv.put("idMessage", getMainActivity().getSMS().getID());
-                    getMainActivity().clearSMS();
-                } else cv.put("idMessage", -1);
-                cv.put("time",(hours*60+min));
-                cv.put("onoff",1);
-                getMainActivity().getDB().insert("cards", null, cv);
-                BasePage page = getMainActivity().createPageFromID(BasePage.Pages.mainPage);
-                //getMainActivity().getSupportFragmentManager().beginTransaction().remove(page).commit();
-                getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, page).commit();
-            }
-        });
-        //rlMapMap = (RelativeLayout) rView.findViewById(R.id.rlMapMap);
         tvMapAddress = (TextView) rootView.findViewById(R.id.tvMapAddress);
         tvMapAddress.setText(address);
         ivMapMap = (ImageView) rootView.findViewById(R.id.ivMapMap);
@@ -216,8 +234,6 @@ public class AreaCard extends BasePage {
                 secondScale.setEnabled(!cbOnOff);
                 mainScale.invalidate();
                 secondScale.invalidate();
-                //ivGeocardQuietOff.setVisibility(cbOnOff ? View.VISIBLE : View.INVISIBLE);
-                //ivGeocardQuietOn.setVisibility(cbOnOff ? View.INVISIBLE : View.VISIBLE);
                 ivGeocardQuietOff.setAlpha(cbOnOff ? 56 : 255);
                 ivGeocardQuietOn.setAlpha(cbOnOff ? 56 : 255);
             }
@@ -273,6 +289,16 @@ public class AreaCard extends BasePage {
         else{
             tvNearBegin.setVisibility(View.INVISIBLE);
             tvNearEnd.setVisibility(View.INVISIBLE);
+        }
+        if(cbOnOff){
+            ivCBOn.setVisibility(View.VISIBLE);
+            ivCBOff.setVisibility(View.INVISIBLE);
+            mainScale.setEnabled(false);
+            secondScale.setEnabled(false);
+            mainScale.invalidate();
+            secondScale.invalidate();
+            ivGeocardQuietOff.setAlpha(56);
+            ivGeocardQuietOn.setAlpha(56);
         }
     }
     public void onHiddenChanged(boolean hidden){

@@ -39,7 +39,7 @@ import android.os.IBinder;
 public class Addressator extends Service{
 	private static final String TAG = "Addressator";
 	private JSONParser parser;
-	private Logger logger;
+	//private Logger logger;
 	private String name;
 	private double lat;
 	private double lon;
@@ -48,7 +48,7 @@ public class Addressator extends Service{
 	private SQLiteDatabase db;
 	public void onCreate(){
 		super.onCreate();
-		logger = createLogger();
+		//logger = createLogger();
 		parser = new JSONParser();
 		helper = new DBHelper(getApplicationContext());
 		db = helper.getWritableDatabase();

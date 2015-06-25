@@ -60,8 +60,11 @@ public class WhiteListApplications extends BaseFragments {
     }
     public void onCreate(Bundle saved){
         super.onCreate(saved);
-        id = getArguments().getInt("id");
-        sName = getArguments().getString("name");
+        try {
+            id = getArguments().getInt("id");
+            sName = getArguments().getString("name");
+        }catch (NullPointerException e){}
+
     }
     public View onCreateView(LayoutInflater inf, ViewGroup container, Bundle savedInstanceState) {
         rView = inf.inflate(R.layout.whitelist_app, container, false);
@@ -70,7 +73,10 @@ public class WhiteListApplications extends BaseFragments {
     @Override
     public void onViewCreated(View view, Bundle saved) {
         super.onViewCreated(view, saved);
-        getMainActivity().getSupportFragmentManager().beginTransaction().remove(getOwner()).commit();
+        /*getMainActivity().getSupportFragmentManager().beginTransaction().
+                addToBackStack(null).
+                remove(getOwner()).
+                commit();*/
         rlSelected = (RelativeLayout) rView.findViewById(R.id.rlAppSelectedData);
         rlAll = (RelativeLayout) rView.findViewById(R.id.rlWhiteListAppList);
         hSelected = rlSelected.getLayoutParams().height;
@@ -143,8 +149,9 @@ public class WhiteListApplications extends BaseFragments {
         getMainActivity().getHeader().setInvisibleAll();
         getMainActivity().getHeader().setVisibleBack(true);
         getMainActivity().getHeader().setVisibleSearch(true);
-        getMainActivity().getHeader().setTextHeader(getMainActivity().getResources().getString(R.string.familiar_nums));
+        //getMainActivity().getHeader().setTextHeader(getMainActivity().getResources().getString(R.string.familiar_nums));
         getMainActivity().getHeader().setVisibleCounter(true);
+/*
         getMainActivity().getHeader().setOnBackListener(new OnBackListener() {
             @Override
             public void onBack() {
@@ -157,11 +164,13 @@ public class WhiteListApplications extends BaseFragments {
                 page.whitelistAppCont.getArguments().putInt("id", id);
                 page.whitelistAppCont.getArguments().putString("name", sName);
                 getMainActivity().getSupportFragmentManager().beginTransaction().
+                        addToBackStack(null).
                         remove(getIAm()).
                         add(R.id.whitelistPage, page.whitelistAppCont).
                         commit();
             }
         });
+*/
         Bundle b = getArguments();
         if(b != null){
             id = b.getInt("id");
@@ -281,5 +290,8 @@ public class WhiteListApplications extends BaseFragments {
             super.notifyDataSetChanged();
         }
     }
-
+    public void onPause(){
+        super.onPause();
+        getMainActivity().getHeader().setVisibleCounter(false);
+    }
 }

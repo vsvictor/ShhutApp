@@ -157,7 +157,10 @@ public class Map extends BaseFragments{
                         b.putString("photo", Convertor.BitmapToBase64(bp));
                         b.putString("address", tvMapAddress.getText().toString());
                         ar.setArguments(b);
-                        getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.areaPage, ar).commit();
+                        getMainActivity().getSupportFragmentManager().beginTransaction().
+                                addToBackStack(null).
+                                replace(R.id.areaPage, ar).
+                                commit();
                     }
                 };
                 zv.getManager().clearAll();

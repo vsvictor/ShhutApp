@@ -27,6 +27,7 @@ public class CardList extends  BaseFragments {
     private boolean isEmpty;
     private SwipeListView lvCardList;
     private OnDeleteCard listener;
+    private OnEditCard editListener;
     private RelativeLayout rlCardDeletePanel;
     private TextView tvCardName;
     private TextView tvCardDeleteCancel;
@@ -83,8 +84,12 @@ public class CardList extends  BaseFragments {
                 Bundle args = new Bundle();
                 args.putInt("back", BasePage.Pages.mainPage);
                 ap.setArguments(args);
-                getMainActivity().getSupportFragmentManager().beginTransaction().remove(page).commit();
-                getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, ap).commit();
+                getMainActivity().getSupportFragmentManager().beginTransaction().
+                        addToBackStack(null).
+                        remove(page).
+                        add(R.id.container, ap).
+                        commit();
+                //getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, ap).commit();
 
             }
         });
@@ -124,6 +129,10 @@ public class CardList extends  BaseFragments {
 
             @Override
             public void onClickFrontView(int position) {
+                if(editListener != null){
+                    GeoCard card = (GeoCard) ((CardAdapter) lvCardList.getAdapter()).getData().get(position);
+                    editListener.onEdit(card);
+                }
             }
 
             @Override
@@ -153,4 +162,5 @@ public class CardList extends  BaseFragments {
     public void setOnCardDeleteListener(OnDeleteCard ll){
         listener = ll;
     }
+    public void setOnEditListener(OnEditCard ll){editListener = ll;}
 }

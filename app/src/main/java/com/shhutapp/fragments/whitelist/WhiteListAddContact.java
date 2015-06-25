@@ -161,6 +161,7 @@ public class WhiteListAddContact extends BaseFragments {
                     page.whitelistAppCont.setArguments(b);
                 }
                 getMainActivity().getSupportFragmentManager().beginTransaction().
+                        //addToBackStack(null).
                         remove(getIAm()).
                         add(R.id.whitelistPage, page.whitelistAppCont).
                         commit();

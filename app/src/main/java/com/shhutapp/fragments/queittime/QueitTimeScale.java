@@ -15,6 +15,9 @@ import com.shhutapp.controls.TimeSeekBar;
 import com.shhutapp.fragments.BaseFragments;
 import com.shhutapp.pages.QueitTimePage;
 import com.shhutapp.utils.Convertor;
+import com.shhutapp.utils.DateTimeOperator;
+
+import java.util.Date;
 
 /**
  * Created by victor on 20.05.15.
@@ -32,6 +35,9 @@ public class QueitTimeScale extends BaseFragments {
     private int hours2;
     private int min1;
     private int min2;
+    private boolean edit;
+    private int amin1;
+    private int amin2;
 
     public QueitTimeScale(){
         super(MainActivity.getMainActivity());
@@ -45,8 +51,22 @@ public class QueitTimeScale extends BaseFragments {
     }
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        time1 = "00:00";
-        time2 = "00:00";
+        try{
+            amin1 = getArguments().getInt("min1");
+            amin2 = getArguments().getInt("min2");
+            hours1 = amin1/60;
+            min1 = amin1-(hours1*60);
+            hours2 = amin2/60;
+            min2 = amin2-(hours2*60);
+            time1 = DateTimeOperator.minutesToTimeString(amin1);
+            time2 = DateTimeOperator.minutesToTimeString(amin2);
+            edit = true;
+
+        }catch (Exception e){
+            time1 = "00:00";
+            time2 = "00:00";
+            edit = false;
+        }
     }
 
     @Override
@@ -58,6 +78,13 @@ public class QueitTimeScale extends BaseFragments {
     @Override
     public void onViewCreated(View view, Bundle saved) {
         super.onViewCreated(view, saved);
+        createScale();
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+    }
+    private void createScale(){
         sbBegin = (MainTimeSeekBar) rView.findViewById(R.id.sbBegin);
         sbBegin.setThumb(R.drawable.thumb_full);
         sbBegin.setOnChangeListener(new OnTimeChanged() {
@@ -135,13 +162,16 @@ public class QueitTimeScale extends BaseFragments {
 
         sbEnd.setSecond(sbEndSec);
         sbEndSec.setMain(sbEnd);
-    }
-    @Override
-    public void onResume(){
-        super.onResume();
+        if(edit){
+            setTime(amin1, amin2);
+        }
     }
     public void free(){
         sbBegin.free();
         sbEnd.free();
+    }
+    private void setTime(int min1, int min2){
+        sbBegin.setTime(min1);
+        sbEnd.setTime(min2);
     }
 }

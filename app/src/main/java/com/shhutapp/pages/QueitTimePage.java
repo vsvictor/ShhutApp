@@ -20,6 +20,8 @@ import com.shhutapp.fragments.queittime.QueitTimeList;
 import com.shhutapp.fragments.queittime.QueitTimeScale;
 import com.shhutapp.utils.DateTimeOperator;
 
+import java.util.Date;
+
 /**
  * Created by victor on 19.05.15.
  */
@@ -65,7 +67,10 @@ public class QueitTimePage extends BasePage {
     @Override
     public View onCreateView(LayoutInflater inf, ViewGroup container, Bundle savedInstanceState) {
         rootView = inf.inflate(R.layout.queittime_page, container, false);
-        fragmentManager().beginTransaction().add(R.id.queitTimePage, qt_list).commit();
+        fragmentManager().beginTransaction().
+                addToBackStack(null).
+                add(R.id.queitTimePage, qt_list).
+                commit();
         getMainActivity().getHeader().setOnOkListener(new OnOkListener() {
             @Override
             public void onOk() {
@@ -88,14 +93,15 @@ public class QueitTimePage extends BasePage {
                 card.save(getMainActivity().getDB(), sms_id, wl_id);
                 if (qt_control.isAdded()) {
                     fragmentManager().beginTransaction().
+                            addToBackStack(null).
                             remove(qt_scale).
                             remove(qt_control).
                             show(qt_list).
                             commit();
                 } else {
                     fragmentManager().beginTransaction().
-                            //remove(qt_list).
-                                    remove(qt_days).
+                            addToBackStack(null).
+                            remove(qt_days).
                             remove(qt_scale).
                             show(qt_list).
                             commit();
@@ -110,14 +116,15 @@ public class QueitTimePage extends BasePage {
             public void onCancel() {
                 if (qt_control.isAdded()) {
                     fragmentManager().beginTransaction().
+                            addToBackStack(null).
                             remove(qt_scale).
                             remove(qt_control).
                             show(qt_list).
                             commit();
                 } else {
                     fragmentManager().beginTransaction().
-                            //remove(qt_list).
-                                    remove(qt_days).
+                            addToBackStack(null).
+                            remove(qt_days).
                             remove(qt_scale).
                             show(qt_list).
                             commit();
@@ -138,8 +145,13 @@ public class QueitTimePage extends BasePage {
                 getMainActivity().getHeader().setInvisibleAll();
                 getMainActivity().getHeader().setVisibleOk(true);
                 getMainActivity().getHeader().setVisibleCancel(true);
-                fragmentManager().beginTransaction().hide(qt_list).add(R.id.queitTimePage, qt_scale).commit();
-                fragmentManager().beginTransaction().add(R.id.queitTimePage, qt_control).commit();
+                fragmentManager().beginTransaction().
+                        addToBackStack(null).
+                        hide(qt_list).
+                        add(R.id.queitTimePage, qt_scale).
+                        add(R.id.queitTimePage, qt_control).
+                        commit();
+                //fragmentManager().beginTransaction().add(R.id.queitTimePage, qt_control).commit();
             }
             @Override
             public void onDelete() {
@@ -148,11 +160,36 @@ public class QueitTimePage extends BasePage {
 
             @Override
             public void onEdit(int id) {
+                getMainActivity().getHeader().setInvisibleAll();
+                getMainActivity().getHeader().setVisibleOk(true);
+                getMainActivity().getHeader().setVisibleCancel(true);
+                QueitCard card = getMainActivity().getDBHelper().loadQueitCard(id);
+                int d1 = DateTimeOperator.DateToMinutes(card.getBegin());
+                int d2 = DateTimeOperator.DateToMinutes(card.getEnd());
+                Bundle b  = new Bundle();
+                b.putInt("min1", d1);
+                b.putInt("min2", d2);
+                b.putBoolean("edit", true);
+                //if(qt_scale != null) qt_scale = new QueitTimeScale(getMainActivity(), instance);
+                qt_scale.setArguments(b);
 
+                Bundle bb = new Bundle();
+                bb.putBoolean("isWhiteList", card.isWhiteList(getMainActivity().getDB()));
+                bb.putBoolean("isMessage", card.isMessage(getMainActivity().getDB()));
+                qt_control.setArguments(bb);
+
+                fragmentManager().beginTransaction().
+                        addToBackStack(null).
+                        hide(qt_list).
+                        add(R.id.queitTimePage, qt_scale).
+                        add(R.id.queitTimePage, qt_control).
+                        commit();
+                //fragmentManager().beginTransaction().add(R.id.queitTimePage, qt_control).commit();
+                //qt_scale.setTime(d1, d2);
             }
 
             @Override
-            public void onSelected() {
+            public void onSelected(int id) {
 
             }
         });
@@ -160,6 +197,7 @@ public class QueitTimePage extends BasePage {
             @Override
             public void onDays() {
                 fragmentManager().beginTransaction().
+                        addToBackStack(null).
                         remove(qt_list).
                         remove(qt_control).
                         add(R.id.queitTimePage, qt_days).
@@ -174,7 +212,11 @@ public class QueitTimePage extends BasePage {
                 args.putInt("back", getID());
                 args.putBoolean("isRadio", true);
                 wlp.setArguments(args);
-                getMainActivity().getSupportFragmentManager().beginTransaction().hide(instance).add(R.id.container, wlp).commit();
+                getMainActivity().getSupportFragmentManager().beginTransaction().
+                        addToBackStack(null).
+                        hide(instance).
+                        add(R.id.container, wlp).
+                        commit();
             }
 
             @Override
@@ -183,7 +225,11 @@ public class QueitTimePage extends BasePage {
                 Bundle args = new Bundle();
                 args.putInt("back", getID());
                 mp.setArguments(args);
-                getMainActivity().getSupportFragmentManager().beginTransaction().hide(instance).add(R.id.container, mp).commit();
+                getMainActivity().getSupportFragmentManager().beginTransaction().
+                        addToBackStack(null).
+                        hide(instance).
+                        add(R.id.container, mp).
+                        commit();
             }
         });
         qt_days.setOnQueitTimeDaysListener(new QueitTimeDaysListener() {
@@ -222,8 +268,14 @@ public class QueitTimePage extends BasePage {
                     Bundle args = new Bundle();
                     args.putInt("back", p.getID());
                     p.setArguments(args);
-                    getMainActivity().getSupportFragmentManager().beginTransaction().remove(getCurrent()).commit();
-                    getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, p).commit();
+                    getMainActivity().getSupportFragmentManager().beginTransaction().
+                            addToBackStack(null).
+                            remove(getCurrent()).
+                            add(R.id.container, p).
+                            commit();
+/*                    getMainActivity().getSupportFragmentManager().beginTransaction().
+                            add(R.id.container, p).
+                            commit();*/
                 }
             });
         }

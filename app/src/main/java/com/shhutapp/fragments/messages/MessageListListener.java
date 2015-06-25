@@ -7,5 +7,5 @@ public interface MessageListListener {
     void onAdd();
     void onDelete();
     void onEdit(int id);
-    void onSelected();
+    void onSelected(int id);
 }
