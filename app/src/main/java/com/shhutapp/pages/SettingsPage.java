@@ -1,10 +1,14 @@
 package com.shhutapp.pages;
 
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.shhutapp.fragments.OnBackListener;
 import com.shhutapp.fragments.OnHelpListener;
@@ -18,6 +22,20 @@ import com.shhutapp.fragments.settings.OnNetworks;
 import com.shhutapp.fragments.settings.SettingsSN;
 import com.shhutapp.social.SocialCommon;
 import com.shhutapp.start.StartHelpFirst;
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.VKScope;
+import com.vk.sdk.VKSdk;
+import com.vk.sdk.VKSdkListener;
+import com.vk.sdk.VKUIHelper;
+import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKApiConst;
+import com.vk.sdk.api.VKError;
+import com.vk.sdk.api.VKParameters;
+import com.vk.sdk.api.VKRequest;
+import com.vk.sdk.api.VKResponse;
+import com.vk.sdk.api.model.VKWallPostResult;
+import com.vk.sdk.dialogs.VKCaptchaDialog;
+import com.vk.sdk.util.VKUtil;
 
 /**
  * Created by victor on 26.05.15.
@@ -26,7 +44,13 @@ public class SettingsPage extends BasePage {
     private BasePage page;
     private BasePage instance;
     private SettingsSN sn;
+    private static final String[] sMyScope = new String[] {
 
+            VKScope.FRIENDS,
+            VKScope.WALL,
+            VKScope.PHOTOS,
+            VKScope.NOHTTPS
+    };
     public SettingsPage(){
         super(MainActivity.getMainActivity());
         sn = new SettingsSN(getMainActivity());
@@ -132,11 +156,25 @@ public class SettingsPage extends BasePage {
 
             @Override
             public void onVK() {
+                VKUIHelper.onCreate(getActivity());
+                VKSdk.initialize(sdkListener, "4961271");
+                if (VKSdk.wakeUpSession()) {
+                    vkWallPost();
+                    return;
+                }
+
+                String[] fingerprint = VKUtil.getCertificateFingerprint(getActivity(), getActivity().getPackageName());
+                Log.d("Fingerprint", fingerprint[0]);
+                VKSdk.authorize(sMyScope, true, true);
+
             }
 
             @Override
             public void onSMS() {
-            }
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+                sendIntent.setType("vnd.android-dir/mms-sms");
+                sendIntent.putExtra("sms_body", SocialCommon.getText());
+                getMainActivity().startActivity(sendIntent);             }
         });
     }
     @Override
@@ -152,4 +190,61 @@ public class SettingsPage extends BasePage {
     public int getID() {
         return Pages.settingsPage;
     }
+    private void vkWallPost() {
+        VKRequest post = VKApi.wall().post(VKParameters.from(VKApiConst.MESSAGE, SocialCommon.getText()));
+        post.setModelClass(VKWallPostResult.class);
+
+        post.executeWithListener(new VKRequest.VKRequestListener() {
+            @Override
+            public void onComplete(VKResponse response) {
+                super.onComplete(response);
+                VKWallPostResult result = (VKWallPostResult) response.parsedModel;
+             /*   Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("https://vk.com/wall-60479154_%s", result.post_id)));
+                startActivity(i);*/
+            }
+
+            @Override
+            public void onError(VKError error) {
+                showError(error.apiError != null ? error.apiError : error);
+            }
+        });
+    }
+    private void showError(VKError error) {
+        new AlertDialog.Builder(getActivity())
+                .setMessage(error.errorMessage)
+                .setPositiveButton("OK", null)
+                .show();
+
+        if (error.httpError != null) {
+            Log.w("Test", "Error in request or upload", error.httpError);
+        }
+    }
+    private final VKSdkListener sdkListener = new VKSdkListener() {
+        @Override
+        public void onCaptchaError(VKError captchaError) {
+            new VKCaptchaDialog(captchaError).show();
+        }
+
+        @Override
+        public void onTokenExpired(VKAccessToken expiredToken) {
+            VKSdk.authorize(sMyScope);
+        }
+
+        @Override
+        public void onAccessDenied(final VKError authorizationError) {
+            new AlertDialog.Builder(VKUIHelper.getTopActivity())
+                    .setMessage(authorizationError.toString())
+                    .show();
+        }
+
+        @Override
+        public void onReceiveNewToken(VKAccessToken newToken) {
+            vkWallPost();
+        }
+
+        @Override
+        public void onAcceptUserToken(VKAccessToken token) {
+            vkWallPost();
+        }
+    };
 }
