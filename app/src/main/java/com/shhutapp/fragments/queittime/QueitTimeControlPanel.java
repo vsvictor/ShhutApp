@@ -28,6 +28,7 @@ public class QueitTimeControlPanel extends BaseFragments {
     private ImageView ivQueitTimeMsgOff;
     private boolean isWhiteList;
     private boolean isMessage;
+    private boolean isDays;
     public QueitTimeControlPanel(){
         super();
         rView = null;
@@ -48,7 +49,11 @@ public class QueitTimeControlPanel extends BaseFragments {
         try {
             isWhiteList = getArguments().getBoolean("isWhiteList");
             isMessage = getArguments().getBoolean("isMessage");
+            isDays = getArguments().getBoolean("isDays");
         }catch (Exception e){
+            isWhiteList = false;
+            isMessage = false;
+            isDays = false;
             getMainActivity().clearWhiteList();
             getMainActivity().clearSMS();
         }
@@ -86,11 +91,18 @@ public class QueitTimeControlPanel extends BaseFragments {
 
         ivQueitTimeDaysOn = (ImageView) rView.findViewById(R.id.ivDaysOn);
         ivQueitTimeDaysOff = (ImageView) rView.findViewById(R.id.ivDaysOff);
+        ivQueitTimeDaysOn.setVisibility(isDays?View.VISIBLE:View.INVISIBLE);
+        ivQueitTimeDaysOff.setVisibility(isDays?View.INVISIBLE:View.VISIBLE);
+
         ivQueitTimeOn = (ImageView) rView.findViewById(R.id.ivQuietTimeWLOn);
         ivQueitTimeOff = (ImageView) rView.findViewById(R.id.ivQuietTimeWLOff);
+        ivQueitTimeOn.setVisibility(isWhiteList?View.VISIBLE:View.INVISIBLE);
+        ivQueitTimeOff.setVisibility(isWhiteList?View.INVISIBLE:View.VISIBLE);
+
         ivQueitTimeMsgOn = (ImageView) rView.findViewById(R.id.ivQueitTimeMsgOn);
         ivQueitTimeMsgOff = (ImageView) rView.findViewById(R.id.ivQueitTimeMsgOff);
-
+        ivQueitTimeMsgOn.setVisibility(isMessage?View.VISIBLE:View.INVISIBLE);
+        ivQueitTimeMsgOff.setVisibility(isMessage?View.INVISIBLE:View.VISIBLE);
     }
     public void setOnQueitTimeControlPanelListener(final QueitTimeControlPanelListener actions){
         listener = actions;

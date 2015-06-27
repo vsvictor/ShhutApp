@@ -5,6 +5,7 @@ import com.shhutapp.MainActivity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 public class Card extends IntStringPair {
 	private CardType type;
@@ -92,6 +93,32 @@ public class Card extends IntStringPair {
 		cv.put("onoff", this.onoff?1:0);
 		db.insert("cards", null, cv);
 	}
+	public void save(SQLiteDatabase db, boolean isUpdate){
+		ContentValues cv = new ContentValues();
+		if(isUpdate){
+			if(this.idLoc != -1) cv.put("idGeo", this.idLoc);
+			if(this.idQuiet != -1)cv.put("idDream", this.idQuiet);
+			if(this.idWhiteList != -1)cv.put("idWhiteList", this.idWhiteList);
+			if(this.idMessage != -1)cv.put("idMessage", this.idMessage);
+			cv.put("onoff", this.onoff ? 1 : 0);
+		}
+		else {
+			cv.put("type", cardTypeToId(this.type));
+			cv.put("name", " ");
+			cv.put("idActivate", 0);
+			cv.put("idGeo", this.idLoc);
+			cv.put("idDream", this.idQuiet);
+			cv.put("idWhiteList", this.idWhiteList);
+			cv.put("idMessage", this.idMessage);
+			cv.put("onoff", this.onoff ? 1 : 0);
+		}
+		if(isUpdate){
+			int r = db.update("cards", cv,"id=?",new String[]{String.valueOf(getID())});
+			//Toast.makeText(MainActivity.getMainActivity(),"Updated: "+String.valueOf(r), Toast.LENGTH_LONG).show();
+		}
+		else db.insert("cards", null, cv);
+	}
+
 	public boolean inWhiteList(String number){
 		if(this.wl == null) return false;
 		else return this.wl.inList(number);

@@ -113,6 +113,7 @@
         android:id="@+id/rlCardOnOff"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:visibility="invisible"
         android:layout_marginRight="@dimen/header_right_on_off">
 
         <ImageView

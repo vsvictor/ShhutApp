@@ -225,14 +225,14 @@ public class QueitTimeList extends BaseFragments {
             ivDaysOff.setVisibility(card.isAllDays()?View.VISIBLE:View.INVISIBLE);
             ivDaysOn.setVisibility(!card.isAllDays()?View.VISIBLE:View.INVISIBLE);
 
-            ivWLOff.setVisibility(card.isWhiteList(getMainActivity().getDB())?View.VISIBLE:View.INVISIBLE);
-            ivWLOn.setVisibility(!card.isWhiteList(getMainActivity().getDB())?View.VISIBLE:View.INVISIBLE);
+            ivWLOn.setVisibility(card.isWhiteList(getMainActivity().getDB())?View.VISIBLE:View.INVISIBLE);
+            ivWLOff.setVisibility(!card.isWhiteList(getMainActivity().getDB())?View.VISIBLE:View.INVISIBLE);
 
-            ivMsgOff.setVisibility(card.isMessage(getMainActivity().getDB())?View.VISIBLE:View.INVISIBLE);
-            ivMsgOn.setVisibility(!card.isMessage(getMainActivity().getDB())?View.VISIBLE:View.INVISIBLE);
+            ivMsgOn.setVisibility(card.isMessage(getMainActivity().getDB())?View.VISIBLE:View.INVISIBLE);
+            ivMsgOff.setVisibility(!card.isMessage(getMainActivity().getDB())?View.VISIBLE:View.INVISIBLE);
 
-            ivCardOff.setVisibility(!card.isOn()?View.VISIBLE:View.INVISIBLE);
             ivCardOn.setVisibility(card.isOn()?View.VISIBLE:View.INVISIBLE);
+            ivCardOff.setVisibility(card.isOn()?View.INVISIBLE:View.VISIBLE);
 
             return view;
         }

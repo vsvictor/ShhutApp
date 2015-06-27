@@ -24,10 +24,14 @@ public class Header extends BaseFragments {
     private ImageView ivSearch;
     private ImageView ivHelp;
     private ImageView ivMenu;
+    private ImageView ivCardOn;
+    private ImageView ivCardOff;
     private EditText edSearch;
     private ImageView ivBackSearch;
     private ImageView ivCancelSearch;
     private TextView tvCounter;
+    private RelativeLayout rlCardOnOff;
+    private boolean isOn = true;
     //private HeaderActionsListener listener;
     private OnOkListener onOk;
     private OnCancelListener onCancel;
@@ -38,6 +42,7 @@ public class Header extends BaseFragments {
     private OnMenuListener onMenu;
     private OnBackListener onBackSearch;
     private OnCancelListener onCancelSearch;
+    private OnCardOnOff onOnOff;
     public Header(){
         super();
     }
@@ -124,6 +129,18 @@ public class Header extends BaseFragments {
                 if(onCancelSearch != null ) onCancelSearch.onCancel();
             }
         });
+        ivCardOn = (ImageView) rView.findViewById(R.id.ivCardOn);
+        ivCardOff = (ImageView) rView.findViewById(R.id.ivCardOff);
+        rlCardOnOff = (RelativeLayout) rView.findViewById(R.id.rlCardOnOff);
+        rlCardOnOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isOn = !isOn;
+                ivCardOn.setVisibility(isOn ? View.VISIBLE : View.INVISIBLE);
+                ivCardOff.setVisibility(isOn?View.INVISIBLE:View.VISIBLE);
+                onOnOff.onSet(isOn);
+            }
+        });
     }
     public void setTextHeader(String text){
         tvHeader = (TextView)rView.findViewById(R.id.tvHeader);
@@ -138,7 +155,7 @@ public class Header extends BaseFragments {
         int left = Math.round(Convertor.convertDpToPixel(dp, act));
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         p.addRule(RelativeLayout.CENTER_VERTICAL);
-        p.setMargins(left,0,0,0);
+        p.setMargins(left,0,0, 0);
         tvHeader.setLayoutParams(p);
     }
     public void setGray(){
@@ -163,18 +180,19 @@ public class Header extends BaseFragments {
         edSearch.setVisibility(View.INVISIBLE);
         ivBackSearch.setVisibility(View.INVISIBLE);
         ivCancelSearch.setVisibility(View.INVISIBLE);
+        rlCardOnOff.setVisibility(View.INVISIBLE);
     }
     public void setVisibleTextHeader(boolean on){
         tvHeader.setVisibility(on?View.VISIBLE:View.INVISIBLE);
     }
-    public void setVisibleCounter(boolean on){
+    public void setVisibleCounter(boolean on) {
         tvCounter.setVisibility(on?View.VISIBLE:View.INVISIBLE);
     }
-    public void setCounter(int counter){
+    public void setCounter(int counter) {
         tvCounter.setText(String.valueOf(counter));
     }
-    public void setVisibleCancel(boolean on){
-        ivCancel.setVisibility(on?View.VISIBLE:View.INVISIBLE);
+    public void setVisibleCancel(boolean on) {
+        ivCancel.setVisibility(on ? View.VISIBLE : View.INVISIBLE);
     }
     public void setVisibleBack(boolean on){
         ivBack.setVisibility(on?View.VISIBLE:View.INVISIBLE);
@@ -203,6 +221,9 @@ public class Header extends BaseFragments {
     public void setVisibleCancelSearch(boolean on){
         ivCancelSearch.setVisibility(on?View.VISIBLE:View.INVISIBLE);
     }
+    public void setVisibleOnOff(boolean on){
+        rlCardOnOff.setVisibility(on?View.VISIBLE:View.INVISIBLE);
+    }
     public void setOnOkListener(OnOkListener ok){
         onOk = ok;
     }
@@ -229,6 +250,12 @@ public class Header extends BaseFragments {
     }
     public void setOnCancelSearchListener(OnCancelListener search){
         onCancelSearch = search;
+    }
+    public void setOnCardOnOff( OnCardOnOff onoff){onOnOff = onoff;}
+    public void setCardOnOff(boolean onoff){
+        isOn = onoff;
+        ivCardOn.setVisibility(isOn?View.VISIBLE:View.INVISIBLE);
+        ivCardOff.setVisibility(isOn?View.INVISIBLE:View.VISIBLE);
     }
     public EditText getEdSearch(){
         return edSearch;

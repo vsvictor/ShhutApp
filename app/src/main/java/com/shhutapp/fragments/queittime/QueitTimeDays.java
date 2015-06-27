@@ -59,6 +59,11 @@ public class QueitTimeDays extends BaseFragments {
     }
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try{
+            boolean[] qday = getArguments().getBooleanArray("days");
+            for(int i = 0; i<7;i++) day[i] = qday[i];
+        }catch (Exception e){
+        }
     }
     @Override
     public View onCreateView(LayoutInflater inf, ViewGroup container, Bundle savedInstanceState) {
@@ -72,7 +77,7 @@ public class QueitTimeDays extends BaseFragments {
         rlDaysBegin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.unvisible(day);
+                listener.unvisible();
             }
         });
         ivCircle[0] = (ImageView) rView.findViewById(R.id.ivCircle1);
@@ -111,6 +116,7 @@ public class QueitTimeDays extends BaseFragments {
                 }
             });
         }
+        reFillDays();
     }
     @Override
     public void onResume(){
@@ -165,8 +171,9 @@ public class QueitTimeDays extends BaseFragments {
                 tvDay[i].setTextColor(getMainActivity().getResources().getColor(R.color.blue_action_bar));
             }
         }
+        listener.publish(day);
     }
-    public void free(){
+    /*public void free(){
         for(int i = 0; i<7; i++) day[i] = false;
-    }
+    }*/
 }

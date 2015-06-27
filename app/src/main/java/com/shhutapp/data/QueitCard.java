@@ -20,7 +20,7 @@ public class QueitCard extends IntStringPair{
 	private boolean[] days;
 	private boolean isOn;
 	private boolean isMessage;
-	
+	private boolean iswhiteList;
 	public QueitCard(){
 		super(-1,"");
 		this.beg = new Date();
@@ -90,7 +90,7 @@ public class QueitCard extends IntStringPair{
 		cv.put("is4", this.days[3]?1:0);
 		cv.put("is5", this.days[4]?1:0);
 		cv.put("is6", this.days[5]?1:0);
-		cv.put("is7", this.days[6]?1:0);
+		cv.put("is7", this.days[6] ? 1 : 0);
 		long l = db.insert("quieties", null, cv);
 		card.setType(CardType.Dream);
 		card.setQuiet(l);
@@ -107,7 +107,7 @@ public class QueitCard extends IntStringPair{
 		cv.put("is4", this.days[3]?1:0);
 		cv.put("is5", this.days[4]?1:0);
 		cv.put("is6", this.days[5]?1:0);
-		cv.put("is7", this.days[6]?1:0);
+		cv.put("is7", this.days[6] ? 1 : 0);
 		long l = db.insert("quieties", null, cv);
 		card.setType(CardType.Dream);
 		card.setQuiet(l);
@@ -133,6 +133,45 @@ public class QueitCard extends IntStringPair{
 		card.setWhiteList(idWhiteList);
 		card.save(db);
 	}
+	public void save(SQLiteDatabase db, long idMessage, long idWhiteList, boolean isUpdate){
+		Card card = new Card();
+		long l = -1;
+		ContentValues cv = new ContentValues();
+		cv.put("begtime", this.beg.getTime());
+		cv.put("endtime", this.end.getTime());
+		cv.put("is1", this.days[0]?1:0);
+		cv.put("is2", this.days[1]?1:0);
+		cv.put("is3", this.days[2]?1:0);
+		cv.put("is4", this.days[3]?1:0);
+		cv.put("is5", this.days[4]?1:0);
+		cv.put("is6", this.days[5]?1:0);
+		cv.put("is7", this.days[6]?1:0);
+		if(isUpdate){
+			String[] qcols = {"idDream"};
+			String[] qargs = {String.valueOf(getID())};
+			Cursor c = db.query("cards",qcols,"id=?", qargs,null,null,null);
+			if(c.moveToFirst()) {
+				l=c.getLong(0);
+				db.update("quieties",cv,"id=?",new String[]{String.valueOf(l)});
+			}
+			card.setID(getID());
+			card.setType(CardType.Dream);
+			card.setQuiet(l);
+			card.setSMS(idMessage);
+			card.setWhiteList(idWhiteList);
+			card.setOnOff(isOn());
+			card.save(db, true);
+		}
+		else {
+			l = db.insert("quieties", null, cv);
+			card.setType(CardType.Dream);
+			card.setQuiet(l);
+			card.setSMS(idMessage);
+			card.setWhiteList(idWhiteList);
+			card.setOnOff(isOn());
+			card.save(db, false);
+		}
+	}
 
 	public void setOnOff(boolean b){
 		isOn = b;
@@ -157,20 +196,24 @@ public class QueitCard extends IntStringPair{
 	public boolean isSMS(){return isMessage;}
 	public boolean isWhiteList(SQLiteDatabase db){
 		String[] cols = {"idWhiteList"};
-		String[] args = {"1", String.valueOf(getID())};
-		Cursor c = db.query("cards", cols,"type=? and idDream=?", args, null, null, null);
+		//String[] args = {"1", String.valueOf(getID())};
+		String[] args = {String.valueOf(getID())};
+		int id = -1;
+		//Cursor c = db.query("cards", cols,"type=? and id=?", args, null, null, null);
+		Cursor c = db.query("cards", cols,"id=?", args, null, null, null);
 		if(!c.moveToFirst()) return false;
-		int id = c.getInt(0);
-		Toast.makeText(MainActivity.getMainActivity(),String.valueOf(id),Toast.LENGTH_LONG).show();
+		id = c.getInt(0);
+		//Toast.makeText(MainActivity.getMainActivity(),String.valueOf(id),Toast.LENGTH_LONG).show();
 		return id>0;
 	}
 	public boolean isMessage(SQLiteDatabase db){
 		String[] cols = {"idMessage"};
-		String[] args = {"1", String.valueOf(getID())};
-		Cursor c = db.query("cards", cols,"type=? and idDream=?", args, null, null, null);
+		//String[] args = {"1", String.valueOf(getID())};
+		String[] args = {String.valueOf(getID())};
+		Cursor c = db.query("cards", cols, "id=?", args, null, null, null);
 		if(!c.moveToFirst()) return false;
 		int id = c.getInt(0);
-		Toast.makeText(MainActivity.getMainActivity(),String.valueOf(id),Toast.LENGTH_LONG).show();
+		//Toast.makeText(MainActivity.getMainActivity(),String.valueOf(id),Toast.LENGTH_LONG).show();
 		return id>0;
 	}
 	public static class CompareBegin implements Comparable<QueitCard>, Comparator<BaseObject> {

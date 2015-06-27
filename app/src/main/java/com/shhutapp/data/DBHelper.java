@@ -118,7 +118,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	}
 	public QueitCard loadQueitCard(int id){
 		QueitCard card = null;
-		Cursor cur = act.getDB().rawQuery("Select cards.id, quieties.begtime , quieties.endtime,  quieties.is1,  quieties.is2, quieties.is3, quieties.is4, quieties.is5, quieties.is6, quieties.is7, cards.idMessage From cards, quieties Where cards.idDream=quieties.id and cards.id="+String.valueOf(id), null);
+		Cursor cur = act.getDB().rawQuery("Select cards.id, quieties.begtime , quieties.endtime,  quieties.is1,  quieties.is2, quieties.is3, quieties.is4, quieties.is5, quieties.is6, quieties.is7, cards.idMessage, cards.idWhiteList, cards.onoff From cards, quieties Where cards.idDream=quieties.id and cards.id="+String.valueOf(id), null);
 		if(cur.moveToFirst()){
 			card = new QueitCard();
 			card.setID(cur.getInt(0));
@@ -136,6 +136,11 @@ public class DBHelper extends SQLiteOpenHelper{
 			long idMessage = cur.getLong(10);
 			if(idMessage >= 0) card.setSMS(true);
 			else card.setSMS(false);
+			long idWhiteList = cur.getLong(11);
+			/*if(idWhiteList >=0) card.setWhiteList(true);
+			else card.setWhiteList(false);*/
+			int onoff = cur.getInt(12);
+			card.setOnOff(onoff==1?true:false);
 		}
 		return card;
 	}
@@ -187,7 +192,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	}
 	public BaseObjectList loadQueitCard(){
 		BaseObjectList list = new BaseObjectList();
-		Cursor cur = act.getDB().rawQuery("Select cards.id, quieties.begtime , quieties.endtime,  quieties.is1,  quieties.is2, quieties.is3, quieties.is4, quieties.is5, quieties.is6, quieties.is7, cards.idMessage From cards, quieties Where cards.idDream=quieties.id", null);
+		Cursor cur = act.getDB().rawQuery("Select cards.id, quieties.begtime , quieties.endtime,  quieties.is1,  quieties.is2, quieties.is3, quieties.is4, quieties.is5, quieties.is6, quieties.is7, cards.idMessage, cards.idWhiteList, cards.onoff From cards, quieties Where cards.idDream=quieties.id", null);
 		if(cur.moveToFirst()){
 			do{
 				QueitCard card = new QueitCard(); 
@@ -206,6 +211,9 @@ public class DBHelper extends SQLiteOpenHelper{
 				long idMessage = cur.getLong(10);
 				if(idMessage >= 0) card.setSMS(true);
 				else card.setSMS(false);
+				long idWhite = cur.getLong(11);
+				int isOn = cur.getInt(12);
+				card.setOnOff(isOn == 1?true:false);
 				list.add(card);
 			}while(cur.moveToNext());
 		}
@@ -213,7 +221,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	}
 	public BaseObjectList loadQueitCardsOrderByTime(){
 		BaseObjectList list = new BaseObjectList();
-		Cursor cur = act.getDB().rawQuery("Select cards.id, quieties.begtime , quieties.endtime,  quieties.is1,  quieties.is2, quieties.is3, quieties.is4, quieties.is5, quieties.is6, quieties.is7, cards.idMessage From cards, quieties Where cards.idDream=quieties.id ORDER by quieties.begtime", null);
+		Cursor cur = act.getDB().rawQuery("Select cards.id, quieties.begtime , quieties.endtime,  quieties.is1,  quieties.is2, quieties.is3, quieties.is4, quieties.is5, quieties.is6, quieties.is7, cards.idMessage, cards.idWhiteList, cards.onoff From cards, quieties Where cards.idDream=quieties.id ORDER by quieties.begtime", null);
 		if(cur.moveToFirst()){
 			do{
 				QueitCard card = new QueitCard();
@@ -232,6 +240,9 @@ public class DBHelper extends SQLiteOpenHelper{
 				long idMessage = cur.getLong(10);
 				if(idMessage >= 0) card.setSMS(true);
 				else card.setSMS(false);
+				long idWhite = cur.getLong(11);
+				int isOn = cur.getInt(12);
+				card.setOnOff(isOn == 1?true:false);
 				list.add(card);
 			}while(cur.moveToNext());
 		}
