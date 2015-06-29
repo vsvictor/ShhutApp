@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.IBinder;
@@ -16,6 +17,7 @@ import android.provider.ContactsContract;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.SphericalUtil;
+import com.shhutapp.MainActivity;
 import com.shhutapp.data.BaseObjectList;
 import com.shhutapp.data.Card;
 import com.shhutapp.data.CardType;
@@ -44,6 +46,8 @@ public class Carder extends Service{
 	private static boolean isStarted = false;
 	private Logger logger;
 	public static BaseObjectList cont;
+	private AudioManager auManager;
+
 	@Override
 	public void onCreate(){
 		super.onCreate();
@@ -54,6 +58,8 @@ public class Carder extends Service{
 		//logger = createLogger();
 		//logger.info("Carder created");
 		cont = loadContacts();
+		auManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+
 	}
 	@Override
 	public int onStartCommand(final Intent intent, int flags, int startID) {
@@ -100,8 +106,12 @@ public class Carder extends Service{
 							}
 						}while(c.moveToNext());
 					}
+
+					if(!activeCards.isEmpty() || MainActivity.isDream()) auManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
+					else auManager.setStreamVolume(AudioManager.STREAM_RING, 100, 0);
+
 					try {
-						Thread.sleep(1000*20);
+						Thread.sleep(1000*5);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

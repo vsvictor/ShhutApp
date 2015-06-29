@@ -40,6 +40,9 @@ public class CallReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		sended = false;
+		phManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+		auManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+		//auManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
 		String phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
 		AppSettings set = new AppSettings(context);
 		incomingCall = true;
@@ -116,13 +119,14 @@ public class CallReceiver extends BroadcastReceiver {
 					}
 					break;
 				}
+				String sms = "";
 				if(c.getType() == CardType.Dream){
 					if(call){Log.i(TAG, "Called dream");}
 					else {
 						disableCall(context);
 						sendToCall(context);
 						try{
-							String sms = c.buildSMSText();
+							sms = c.getSMSText();
 							if(!sended) sendSMS(phoneNumber,sms);
 						} catch(Exception e){
 							Log.i(TAG, e.getMessage());
@@ -134,20 +138,17 @@ public class CallReceiver extends BroadcastReceiver {
 				
 			}
 		}
-		setVolumeDefault(context);
+		//setVolumeDefault(context);
 		Log.v(TAG, "Receving " + phoneNumber);
+		//auManager.setStreamVolume(AudioManager.STREAM_RING, 100, 0);
 	}
 	
 	//@SuppressWarnings("deprecation")
 	private static void disableCall(Context context){
 		ITelephony telephonyService;
 
-		phManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-		auManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-		volume = auManager.getStreamVolume(AudioManager.STREAM_RING);
-		vibrateState = auManager.getVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER);
-		auManager.setStreamVolume(AudioManager.STREAM_RING, 1, 0);
-		auManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_OFF);
+		//volume = auManager.getStreamVolume(AudioManager.STREAM_RING);
+		//vibrateState = auManager.getVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER);
 		try {
 			Class c = Class.forName(phManager.getClass().getName());
 			Method m = c.getDeclaredMethod("getITelephony");
@@ -158,11 +159,6 @@ public class CallReceiver extends BroadcastReceiver {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	private static void setVolumeDefault(Context context){
-		auManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-		auManager.setStreamVolume(AudioManager.STREAM_RING, volume, 0);
-		auManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, vibrateState);
 	}
 	private void sendSMS(String ph, String text){
 		SmsManager.getDefault().sendTextMessage(ph, null, text, null, null);

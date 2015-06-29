@@ -149,6 +149,7 @@ public class WhiteListAddContact extends BaseFragments {
             public void onBack() {
                 getMainActivity().getHeader().setCounter(0);
                 getMainActivity().getHeader().setVisibleCounter(false);
+                /*
                 Bundle b = new Bundle();
                 b.putInt("id", id);
                 b.putString("name", sName);
@@ -160,10 +161,12 @@ public class WhiteListAddContact extends BaseFragments {
                 else{
                     page.whitelistAppCont.setArguments(b);
                 }
+                */
+                WhiteListContacts www = new WhiteListContacts(getMainActivity(), page);
                 getMainActivity().getSupportFragmentManager().beginTransaction().
                         //addToBackStack(null).
                         remove(getIAm()).
-                        add(R.id.whitelistPage, page.whitelistAppCont).
+                        add(R.id.whitelistPage, www).
                         commit();
             }
         });

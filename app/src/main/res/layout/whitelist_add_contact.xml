@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -37,7 +38,10 @@
                 android:transcriptMode="alwaysScroll"
                 android:stackFromBottom="true"
                 android:id="@+id/lvAddContactSelected"
-                android:divider="@null" />
+                android:divider="@null"
+                android:fastScrollAlwaysVisible="true"
+                android:fastScrollEnabled="true"
+                android:scrollingCache="false" />
         </RelativeLayout>
     </RelativeLayout>
 
@@ -56,10 +60,14 @@
         android:layout_marginTop="@dimen/white_list_contact_added_top">
 
         <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:transcriptMode="alwaysScroll"
             android:id="@+id/lvAddContactList"
-            android:divider="@null" />
+            android:divider="@null"
+            android:fastScrollAlwaysVisible="true"
+            android:fastScrollEnabled="true" />
     </RelativeLayout>
 
 </LinearLayout>

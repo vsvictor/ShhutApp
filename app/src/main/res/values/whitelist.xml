@@ -99,7 +99,7 @@
     <dimen name="white_list_app_dirivider_left">36dp</dimen>
     <dimen name="white_list_app_dirivider_right">10dp</dimen>
 
-    <dimen name="white_list_add_contact_selected_height">190dp</dimen>
+    <dimen name="white_list_add_contact_selected_height">144dp</dimen>
     <dimen name="white_list_add_contact_selected_bottom">5dp</dimen>
     <dimen name="white_list_add_contact_selected_panel_width">36dp</dimen>
     <dimen name="white_list_add_contact_selected_data_width">314dp</dimen>

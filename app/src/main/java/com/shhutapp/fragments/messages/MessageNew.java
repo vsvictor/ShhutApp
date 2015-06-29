@@ -103,6 +103,10 @@ public class MessageNew extends BaseFragments {
                 if (edMessage.getText().toString().length() > 3) {
                     getMainActivity().getHeader().setVisibleOk(true);
                 }
+                if(edMessage.getText().toString().length()>145){
+                    edMessage.setText(edMessage.getText().toString().substring(0,144));
+                    edMessage.setSelection(edMessage.getText().toString().length(), edMessage.getText().toString().length());
+                }
             }
 
             @Override

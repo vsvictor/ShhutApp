@@ -139,7 +139,7 @@ public class WhiteListList extends BaseFragments {
             @Override
             public void onClickFrontView(int position) {
                 int id = ((WhiteListCard) ((WhiteListAdapter) swWhiteList.getAdapter()).getData().get(position)).getID();
-                if(isRadio){
+                if(!isRadio){
                     listener.onEdit(id);
                     adapter.notifyDataSetUpdated();
                 }

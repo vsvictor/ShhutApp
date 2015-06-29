@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/red_light" >
+            android:background="@color/red_light_red" >
 
         </RelativeLayout>
 
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/red_light"
+            android:background="@color/red_light_red"
             android:visibility="invisible" >
         </RelativeLayout>
 

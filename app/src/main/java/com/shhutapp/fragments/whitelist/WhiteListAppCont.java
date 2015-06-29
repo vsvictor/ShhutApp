@@ -83,7 +83,7 @@ public class WhiteListAppCont extends BaseFragments {
                 RelativeLayout rlContactsRed = (RelativeLayout) rView.findViewById(R.id.rlContactsRed);
                 RelativeLayout rlApplicationsRed = (RelativeLayout) rView.findViewById(R.id.rlApplicationRed);
                 tvContactsText.setTextColor(Color.argb(255, 255, 255, 255));
-                tvApplicationsText.setTextColor(Color.argb(127, 255, 255, 255));
+                tvApplicationsText.setTextColor(Color.argb(255, 153, 228, 238));
                 rlContactsRed.setVisibility(View.VISIBLE);
                 rlApplicationsRed.setVisibility(View.INVISIBLE);
                 try {
@@ -105,7 +105,7 @@ public class WhiteListAppCont extends BaseFragments {
                 TextView tvApplicationsText = (TextView) rView.findViewById(R.id.tvApplicationsText);
                 RelativeLayout rlContactsRed = (RelativeLayout) rView.findViewById(R.id.rlContactsRed);
                 RelativeLayout rlApplicationsRed = (RelativeLayout) rView.findViewById(R.id.rlApplicationRed);
-                tvContactsText.setTextColor(Color.argb(127, 255, 255, 255));
+                tvContactsText.setTextColor(Color.argb(255, 153, 228, 238));
                 tvApplicationsText.setTextColor(Color.argb(255, 255, 255, 255));
                 rlContactsRed.setVisibility(View.INVISIBLE);
                 rlApplicationsRed.setVisibility(View.VISIBLE);
