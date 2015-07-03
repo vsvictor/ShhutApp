@@ -1,5 +1,6 @@
 package com.shhutapp.start;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -31,6 +32,7 @@ public class StartHelpFirst extends BasePage {
     public StartHelpFirst(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public StartHelpFirst(MainActivity act){
         super(act);
     }

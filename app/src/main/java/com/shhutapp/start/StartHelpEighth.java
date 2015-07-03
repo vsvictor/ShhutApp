@@ -1,5 +1,6 @@
 package com.shhutapp.start;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -32,6 +33,7 @@ public class StartHelpEighth extends BasePage {
     public StartHelpEighth(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public StartHelpEighth(MainActivity act){
         super(act);
     }

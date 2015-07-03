@@ -1,5 +1,6 @@
 package com.shhutapp.pages;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -59,12 +60,14 @@ public class SettingsPage extends BasePage {
         ms = new MainSettings(getMainActivity());
         this.instance = this;
     }
+    @SuppressLint("ValidFragment")
     public SettingsPage(MainActivity act){
         super(act);
         sn = new SettingsSN(act);
         ms = new MainSettings(act);
         this.instance = this;
     }
+    @SuppressLint("ValidFragment")
     public SettingsPage(MainActivity act, BasePage page){
         super(act);
         this.page = page;

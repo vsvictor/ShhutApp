@@ -1,5 +1,6 @@
 package com.shhutapp.fragments.queittime;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,6 +41,7 @@ public class QueitTimeDays extends BaseFragments {
         tvDay = new TextView[7];
         ivCircle = new ImageView[7];
     }
+    @SuppressLint("ValidFragment")
     public QueitTimeDays(MainActivity act){
         super(act);
         day = new boolean[7];
@@ -48,6 +50,7 @@ public class QueitTimeDays extends BaseFragments {
         tvDay = new TextView[7];
         ivCircle = new ImageView[7];
     }
+    @SuppressLint("ValidFragment")
     public QueitTimeDays(MainActivity act, QueitTimePage page){
         super(act);
         this.page = page;

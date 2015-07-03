@@ -1,5 +1,6 @@
 package com.shhutapp.help;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ public class HelpDreamMode extends BaseFragments {
         rView = null;
         act = null;
     }
+    @SuppressLint("ValidFragment")
     public HelpDreamMode(MainActivity act){
         super(act);
         rView = null;

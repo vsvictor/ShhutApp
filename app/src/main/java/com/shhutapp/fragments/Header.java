@@ -1,5 +1,6 @@
 package com.shhutapp.fragments;
 
+import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Layout;
@@ -46,6 +47,7 @@ public class Header extends BaseFragments {
     public Header(){
         super();
     }
+    @SuppressLint("ValidFragment")
     public Header(MainActivity act){
         super(act);
     }

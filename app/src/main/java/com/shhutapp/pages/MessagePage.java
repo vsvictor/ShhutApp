@@ -1,5 +1,6 @@
 package com.shhutapp.pages;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,9 +33,11 @@ public class MessagePage extends BasePage {
     public MessagePage(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public  MessagePage(MainActivity act){
         super(act);
     }
+    @SuppressLint("ValidFragment")
     public  MessagePage(MainActivity act, BasePage prev){
         super(act);
         this.prev = prev;

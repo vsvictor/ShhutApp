@@ -1,5 +1,6 @@
 package com.shhutapp.pages;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,9 +36,11 @@ public class WhiteListPage extends BasePage{
     public WhiteListPage(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public WhiteListPage(MainActivity act){
         super(act);
     }
+    @SuppressLint("ValidFragment")
     public WhiteListPage(MainActivity act, BasePage prev){
         super(act);
         this.prev = prev;

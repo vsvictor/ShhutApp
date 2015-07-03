@@ -1,5 +1,6 @@
 package com.shhutapp.pages;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,9 +32,11 @@ public class DreamPage extends BasePage {
     public DreamPage() {
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public DreamPage(MainActivity act) {
         super(act);
     }
+    @SuppressLint("ValidFragment")
     public DreamPage(MainActivity act, DreamPage page) {
         super(act);
         this.page = page;

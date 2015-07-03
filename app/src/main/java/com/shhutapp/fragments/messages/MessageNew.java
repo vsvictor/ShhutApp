@@ -1,5 +1,6 @@
 package com.shhutapp.fragments.messages;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -33,9 +34,11 @@ public class MessageNew extends BaseFragments {
     public MessageNew(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public MessageNew(MainActivity act){
         super(act);
     }
+    @SuppressLint("ValidFragment")
     public MessageNew(MainActivity act, MessagePage page){
         super(act);
         this.page = page;

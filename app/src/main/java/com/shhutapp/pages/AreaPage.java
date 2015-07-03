@@ -1,5 +1,6 @@
 package com.shhutapp.pages;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +23,11 @@ public class AreaPage extends BasePage{
     public AreaPage(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public AreaPage(MainActivity act){
         super(act);
     }
+    @SuppressLint("ValidFragment")
     public AreaPage(MainActivity act, BasePage prev){
         super(act);
         this.prev = prev;

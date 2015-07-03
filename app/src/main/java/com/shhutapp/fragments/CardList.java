@@ -1,5 +1,6 @@
 package com.shhutapp.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,11 +39,13 @@ public class CardList extends  BaseFragments {
         act = null;
         this.page = null;
     }
+    @SuppressLint("ValidFragment")
     public  CardList(MainActivity act){
         super(act);
         rView = null;
         this.page = null;
     }
+    @SuppressLint("ValidFragment")
     public  CardList(MainActivity act, BasePage page){
         super(act);
         rView = null;

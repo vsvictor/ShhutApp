@@ -1,5 +1,6 @@
 package com.shhutapp.start;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -28,6 +29,7 @@ public class StartHelpThird extends BasePage {
     public StartHelpThird(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public StartHelpThird(MainActivity act){
         super(act);
     }

@@ -1,5 +1,6 @@
 package com.shhutapp.fragments.messages;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -38,9 +39,11 @@ public class MessageList extends BaseFragments {
     public MessageList(){
         super();
     }
+    @SuppressLint("ValidFragment")
     public MessageList(MainActivity act){
         super(act);
     }
+    @SuppressLint("ValidFragment")
     public MessageList(MainActivity act, MessagePage page){
         super(act);
         this.page = page;

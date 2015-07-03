@@ -1,5 +1,6 @@
 package com.shhutapp.fragments.messages;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +19,11 @@ public class MessageEmpty extends BaseFragments {
     public MessageEmpty(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public MessageEmpty(MainActivity act){
         super(act);
     }
+    @SuppressLint("ValidFragment")
     public MessageEmpty(MainActivity act, BasePage page){
         super(act);
         this.page = page;

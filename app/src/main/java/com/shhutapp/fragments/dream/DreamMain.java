@@ -1,5 +1,6 @@
 package com.shhutapp.fragments.dream;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -55,9 +56,11 @@ public class DreamMain extends BaseFragments {
     public DreamMain(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public DreamMain(MainActivity act){
         super(act);
     }
+    @SuppressLint("ValidFragment")
     public DreamMain(MainActivity act, BasePage page){
         super(act);
         this.page = page;

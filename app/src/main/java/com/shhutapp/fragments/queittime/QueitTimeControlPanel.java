@@ -1,5 +1,6 @@
 package com.shhutapp.fragments.queittime;
 
+import android.annotation.SuppressLint;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -33,10 +34,12 @@ public class QueitTimeControlPanel extends BaseFragments {
         super();
         rView = null;
     }
+    @SuppressLint("ValidFragment")
     public  QueitTimeControlPanel(MainActivity act){
         super(act);
         rView = null;
     }
+    @SuppressLint("ValidFragment")
     public  QueitTimeControlPanel(MainActivity act, QueitTimePage page){
         super(act);
         rView = null;

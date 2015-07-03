@@ -1,5 +1,6 @@
 package com.shhutapp.fragments.settings;
 
+import android.annotation.SuppressLint;
 import android.media.audiofx.BassBoost;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,9 +27,11 @@ public class SettingsSN extends BaseFragments {
     public SettingsSN(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public SettingsSN(MainActivity act){
         super(act);
     }
+    @SuppressLint("ValidFragment")
     public SettingsSN(MainActivity act, BasePage page){
         super(act);
         this.page = page;

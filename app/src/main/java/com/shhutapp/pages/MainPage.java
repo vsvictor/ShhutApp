@@ -1,5 +1,6 @@
 package com.shhutapp.pages;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,7 @@ public class MainPage extends BasePage {
     public MainPage() {
         super(MainActivity.getMainActivity());
     }
-
+    @SuppressLint("ValidFragment")
     public MainPage(MainActivity act) {
         super(act);
         header = getMainActivity().getHeader();

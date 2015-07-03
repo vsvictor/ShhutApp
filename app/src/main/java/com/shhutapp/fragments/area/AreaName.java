@@ -1,5 +1,6 @@
 package com.shhutapp.fragments.area;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -37,9 +38,11 @@ public class AreaName extends BaseFragments {
     public AreaName(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public AreaName(MainActivity act){
         super(act);
     }
+    @SuppressLint("ValidFragment")
     public AreaName(MainActivity act, BasePage page){
         super(act);
         this.page = page;

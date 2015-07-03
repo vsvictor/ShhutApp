@@ -1,5 +1,6 @@
 package com.shhutapp.pages;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,7 @@ public class QueitTimePage extends BasePage {
         super(MainActivity.getMainActivity());
         days = new boolean[7];
     }
+    @SuppressLint("ValidFragment")
     public QueitTimePage(MainActivity act){
         super(act);
         qt_list = new QueitTimeList(getMainActivity(),this);
@@ -48,6 +50,7 @@ public class QueitTimePage extends BasePage {
         qt_days = new QueitTimeDays(getMainActivity(), this);
         days = new boolean[7];
     }
+    @SuppressLint("ValidFragment")
     public QueitTimePage(MainActivity act, BasePage prev){
         super(act);
         qt_list = new QueitTimeList(getMainActivity(),this);

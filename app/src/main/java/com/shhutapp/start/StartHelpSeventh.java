@@ -1,5 +1,6 @@
 package com.shhutapp.start;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -36,6 +37,7 @@ public class StartHelpSeventh extends BasePage {
     public StartHelpSeventh(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public StartHelpSeventh(MainActivity act){
         super(act);
     }

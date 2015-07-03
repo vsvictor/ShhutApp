@@ -1,5 +1,6 @@
 package com.shhutapp.fragments.area;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentCallbacks;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -87,9 +88,11 @@ public class AreaCard extends BasePage {
     public AreaCard(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public AreaCard(MainActivity act){
         super(act);
     }
+    @SuppressLint("ValidFragment")
     public AreaCard(MainActivity act, BasePage page){
         super(act);
         this.page = page;

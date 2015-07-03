@@ -1,5 +1,6 @@
 package com.shhutapp.start;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -28,6 +29,7 @@ public class StartHelpFifth extends BasePage {
     public StartHelpFifth(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public StartHelpFifth(MainActivity act){
         super(act);
     }

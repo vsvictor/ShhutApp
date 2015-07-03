@@ -1,5 +1,6 @@
 package com.shhutapp.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,10 +41,12 @@ public class Scale extends BaseFragments {
         rView = null;
         act = null;
     }
+    @SuppressLint("ValidFragment")
     public Scale(MainActivity act){
         super(act);
         rView = null;
     }
+    @SuppressLint("ValidFragment")
     public Scale(MainActivity act, MainPage page){
         super(act);
         rView = null;

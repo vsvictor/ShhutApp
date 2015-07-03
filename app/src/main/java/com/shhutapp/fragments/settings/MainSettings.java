@@ -1,5 +1,6 @@
 package com.shhutapp.fragments.settings;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -52,9 +53,11 @@ public class MainSettings extends BaseFragments {
     public MainSettings(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public MainSettings(MainActivity act){
         super(act);
     }
+    @SuppressLint("ValidFragment")
     public MainSettings(MainActivity act, BasePage prev){
         super(act);
         this.prev = prev;

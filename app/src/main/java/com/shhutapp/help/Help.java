@@ -1,5 +1,6 @@
 package com.shhutapp.help;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ public class Help extends BaseFragments {
         rView = null;
         act = null;
     }
+    @SuppressLint("ValidFragment")
     public Help(MainActivity act){
         super(act);
         rView = null;

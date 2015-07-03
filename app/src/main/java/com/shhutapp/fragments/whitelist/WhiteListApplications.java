@@ -1,5 +1,6 @@
 package com.shhutapp.fragments.whitelist;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -51,9 +52,11 @@ public class WhiteListApplications extends BaseFragments {
     public WhiteListApplications(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public WhiteListApplications(MainActivity act){
         super(act);
     }
+    @SuppressLint("ValidFragment")
     public WhiteListApplications(MainActivity act, WhiteListPage page){
         super(act);
         this.page = page;

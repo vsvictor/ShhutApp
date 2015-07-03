@@ -1,5 +1,6 @@
 package com.shhutapp.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ public class OkCancel extends BaseFragments {
         rView = null;
         act = null;
     }
+    @SuppressLint("ValidFragment")
     public OkCancel(MainActivity act){
         super(act);
         rView = null;

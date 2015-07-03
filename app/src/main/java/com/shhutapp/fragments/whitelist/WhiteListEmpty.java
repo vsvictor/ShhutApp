@@ -1,5 +1,6 @@
 package com.shhutapp.fragments.whitelist;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +25,11 @@ public class WhiteListEmpty extends BaseFragments {
     public WhiteListEmpty(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public WhiteListEmpty(MainActivity act){
         super(act);
     }
+    @SuppressLint("ValidFragment")
     public WhiteListEmpty(MainActivity act, WhiteListPage page){
         super(act);
         this.page = page;

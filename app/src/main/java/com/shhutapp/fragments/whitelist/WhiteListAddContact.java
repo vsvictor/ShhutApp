@@ -1,5 +1,6 @@
 package com.shhutapp.fragments.whitelist;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
@@ -49,9 +50,11 @@ public class WhiteListAddContact extends BaseFragments {
     public WhiteListAddContact(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public WhiteListAddContact(MainActivity act){
         super(act);
     }
+    @SuppressLint("ValidFragment")
     public WhiteListAddContact(MainActivity act, WhiteListPage page){
         super(act);
         this.page = page;

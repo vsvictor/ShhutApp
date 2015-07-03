@@ -1,5 +1,6 @@
 package com.shhutapp.fragments.area;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -105,12 +106,14 @@ public class Map extends BaseFragments{
         lon = 0;
         isMenu = false;
     }
+    @SuppressLint("ValidFragment")
     public Map(MainActivity act){
         super(act);
         lat = 0;
         lon = 0;
         isMenu = false;
     }
+    @SuppressLint("ValidFragment")
     public Map(MainActivity act, BasePage page){
         super(act);
         this.page = page;

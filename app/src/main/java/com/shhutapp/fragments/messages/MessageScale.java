@@ -1,5 +1,6 @@
 package com.shhutapp.fragments.messages;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +19,11 @@ public class MessageScale extends BaseFragments {
     public MessageScale(){
         super();
     }
+    @SuppressLint("ValidFragment")
     public MessageScale(MainActivity act){
         super(act);
     }
+    @SuppressLint("ValidFragment")
     public MessageScale(MainActivity act, MessagePage page) {
         super(act);
         this.page = page;

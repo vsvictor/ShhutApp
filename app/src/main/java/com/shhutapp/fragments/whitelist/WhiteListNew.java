@@ -1,5 +1,6 @@
 package com.shhutapp.fragments.whitelist;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -41,9 +42,11 @@ public class WhiteListNew extends BaseFragments {
     public WhiteListNew(){
         super(MainActivity.getMainActivity());
     }
+    @SuppressLint("ValidFragment")
     public WhiteListNew(MainActivity act){
         super(act);
     }
+    @SuppressLint("ValidFragment")
     public WhiteListNew(MainActivity act, WhiteListPage page){
         super(act);
         this.page = page;

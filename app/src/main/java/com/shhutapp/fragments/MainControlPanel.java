@@ -1,5 +1,6 @@
 package com.shhutapp.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ public class MainControlPanel extends BaseFragments {
         super();
         rView = null;
     }
+    @SuppressLint("ValidFragment")
     public  MainControlPanel(MainActivity act){
         super(act);
         rView = null;
