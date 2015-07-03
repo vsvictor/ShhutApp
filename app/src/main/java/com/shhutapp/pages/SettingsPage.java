@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.shhutapp.fragments.OnBackListener;
 import com.shhutapp.fragments.OnHelpListener;
 import com.shhutapp.fragments.area.AreaCard;
+import com.shhutapp.fragments.settings.MainSettings;
 import com.shhutapp.social.common.AuthListener;
 import com.shhutapp.social.facebook.FacebookFacade;
 import com.shhutapp.social.twitter.TwitterFacade;
@@ -44,6 +45,7 @@ public class SettingsPage extends BasePage {
     private BasePage page;
     private BasePage instance;
     private SettingsSN sn;
+    private MainSettings ms;
     private static final String[] sMyScope = new String[] {
 
             VKScope.FRIENDS,
@@ -54,17 +56,20 @@ public class SettingsPage extends BasePage {
     public SettingsPage(){
         super(MainActivity.getMainActivity());
         sn = new SettingsSN(getMainActivity());
+        ms = new MainSettings(getMainActivity());
         this.instance = this;
     }
     public SettingsPage(MainActivity act){
         super(act);
         sn = new SettingsSN(act);
+        ms = new MainSettings(act);
         this.instance = this;
     }
     public SettingsPage(MainActivity act, BasePage page){
         super(act);
         this.page = page;
         sn = new SettingsSN(act, page);
+        ms = new MainSettings(act, page);
         this.instance = this;
         this.page = page;
     }
@@ -82,7 +87,7 @@ public class SettingsPage extends BasePage {
     }
     public void onViewCreated(View view, Bundle saved){
         super.onViewCreated(view, saved);
-        fragmentManager().beginTransaction().add(R.id.settingsPage,sn).commit();
+        fragmentManager().beginTransaction().add(R.id.settingsPage,sn).add(R.id.settingsPage, ms).commit();
         getMainActivity().getHeader().setInvisibleAll();
         getMainActivity().getHeader().setLeftText(73);
         getMainActivity().getHeader().setTextHeader(getMainActivity().getResources().getString(R.string.settings));

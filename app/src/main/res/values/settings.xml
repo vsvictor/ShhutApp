@@ -5,6 +5,43 @@
     <dimen name="setting_sn_panel_text_height">32dp</dimen>
     <dimen name="setting_sn_panel_text_text_size">24sp</dimen>
 
+    <dimen name="setting_text_text_size">14sp</dimen>4
+    <dimen name="setting_volume_text_top">24dp</dimen>
+    <dimen name="setting_volume_top">24dp</dimen>
+    <dimen name="setting_volume_vibro_width">24dp</dimen>
+    <dimen name="setting_volume_vibro_height">20dp</dimen>
+    <dimen name="setting_volume_vibro_left">16dp</dimen>
+    <dimen name="setting_volume_vibro_scale_width">288dp</dimen>
+    <dimen name="setting_volume_vibro_scale_left">16dp</dimen>
+    <dimen name="setting_diriv1_top">16dp</dimen>
+    <dimen name="setting_on_volume_top">16dp</dimen>
+    <dimen name="setting_on_volume_bottom">16dp</dimen>
+    <dimen name="setting_on_volume_left">16dp</dimen>
+    <dimen name="setting_on_volume_cb_right">32dp</dimen>
+    <dimen name="setting_on_volume_cb_width">20dp</dimen>
+    <dimen name="setting_on_volume_cb_height">20dp</dimen>
+    <dimen name="setting_language_top">16dp</dimen>
+    <dimen name="setting_language_left">16dp</dimen>
+    <dimen name="setting_language_height">45dp</dimen>
+    <dimen name="setting_language_height_ex">145dp</dimen>
+    <dimen name="setting_language_groupe_textsize">14sp</dimen>
+    <dimen name="setting_language_child_textsize">14sp</dimen>
+
+    <dimen name="setting_team_text_top">16dp</dimen>
+    <dimen name="setting_team_top">8dp</dimen>
+    <dimen name="setting_team_left">16dp</dimen>
+    <dimen name="setting_team_height">65dp</dimen>
+    <dimen name="setting_team_height_ex">145dp</dimen>
+    <dimen name="setting_team_groupe_textsize">14sp</dimen>
+    <dimen name="setting_team_child_textsize">14sp</dimen>
+
+
     <string name="settings">Settings</string>
     <string name="send_application">Send application!</string>
+    <string name="volume">The level of renewed sound volume</string>
+    <string name="on_volume_button">Switching on from the sound volume button</string>
+    <string name="on_vibrate">Vibration in case of notifications</string>
+    <string name="use_default_lang">Use the device language</string>
+    <string name="team">Team</string>
+    <string name="about">About</string>
 </resources>

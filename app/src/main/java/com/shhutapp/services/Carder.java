@@ -108,7 +108,7 @@ public class Carder extends Service{
 					}
 
 					if(!activeCards.isEmpty() || MainActivity.isDream()) auManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
-					else auManager.setStreamVolume(AudioManager.STREAM_RING, 100, 0);
+					else auManager.setStreamVolume(AudioManager.STREAM_RING, MainActivity.getMainActivity().getSettings().getDefaultCallVolume(), 0);
 
 					try {
 						Thread.sleep(1000*5);
