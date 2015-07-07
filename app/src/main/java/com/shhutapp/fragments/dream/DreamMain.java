@@ -79,9 +79,9 @@ public class DreamMain extends BaseFragments {
         getMainActivity().getHeader().setHeight(0);
         beg = Calendar.getInstance().getTime();
 
-        Bitmap b = BitmapFactory.decodeResource(getMainActivity().getResources(), R.drawable.dream_background);
-        int w = (int) Convertor.convertDpToPixel(480, getMainActivity());
-        int h = (int) Convertor.convertDpToPixel(800, getMainActivity());
+        Bitmap b = BitmapFactory.decodeResource(getMainActivity().getResources(), R.drawable.dream_background_night);
+        int w = (int) Convertor.convertDpToPixel(360, getMainActivity());
+        int h = (int) Convertor.convertDpToPixel(640, getMainActivity());
         Bitmap bitmap = Bitmap.createScaledBitmap(b,w,h,false);
         Drawable dr = new BitmapDrawable(bitmap);
         rlDreamBackground = (RelativeLayout) rView.findViewById(R.id.rlDreamBackground);
@@ -92,7 +92,19 @@ public class DreamMain extends BaseFragments {
         rw.invalidate();
 
         ivDreamWL = (ImageView) rView.findViewById(R.id.rlDreamWL);
+        if(getMainActivity().getWhiteList() != null){
+            ivDreamWL.setVisibility(View.VISIBLE);
+        }
+        else{
+            ivDreamWL.setVisibility(View.INVISIBLE);
+        }
         ivDreamMsg = (ImageView) rView.findViewById(R.id.rlDreamMsg);
+        if(getMainActivity().getSMS() != null){
+            ivDreamMsg.setVisibility(View.VISIBLE);
+        }
+        else{
+            ivDreamMsg.setVisibility(View.INVISIBLE);
+        }
         tvDreamBeginValue = (TextView) rView.findViewById(R.id.tvDreamBeginValue);
         tvDreamBeginValue.setText(DateTimeOperator.dateToTimeString(beg));
         tvDreamTimerHourseValue = (TextView) rView.findViewById(R.id.tvDreamTimerHoursValue);
@@ -110,6 +122,10 @@ public class DreamMain extends BaseFragments {
     @Override
     public void onResume(){
         super.onResume();
+    }
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
     }
     Handler handler = new Handler(){
         public void handleMessage(android.os.Message msg) {

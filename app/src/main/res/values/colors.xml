@@ -15,5 +15,5 @@
     <color name="red_light_red">#FFFF4081</color>
     <color name="geoscale_red_disable">#38FF4081</color>
     <color name="geoscale_red_enable">#FFFF4081</color>
-
+    <color name="trans">#00000000</color>
 </resources>

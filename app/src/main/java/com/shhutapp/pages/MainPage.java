@@ -1,6 +1,7 @@
 package com.shhutapp.pages;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +54,8 @@ public class MainPage extends BasePage {
 
     public View onCreateView(LayoutInflater inf, ViewGroup container, Bundle savedInstanceState) {
         rootView = inf.inflate(R.layout.main_page, container, false);
+        //Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
+        //startActivity(intent);
 
         return rootView;
     }
@@ -60,6 +63,7 @@ public class MainPage extends BasePage {
     @Override
     public void onResume() {
         super.onResume();
+        getMainActivity().setBlackNav();
         header.setInvisibleAll();
         header.setHeight(56);
         header.setLeftText(16);
@@ -110,6 +114,7 @@ public class MainPage extends BasePage {
                 WhiteListPage wlp = new WhiteListPage(getMainActivity());
                 Bundle args = new Bundle();
                 args.putInt("back", getID());
+                args.putBoolean("isRadio", true);
                 wlp.setArguments(args);
                 getMainActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).remove(getCurrent()).add(R.id.container, wlp).commit();
                 //getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, wlp).commit();
@@ -120,6 +125,7 @@ public class MainPage extends BasePage {
                 MessagePage mp = new MessagePage(getMainActivity());
                 Bundle args = new Bundle();
                 args.putInt("back", getID());
+                args.putBoolean("isRadio", true);
                 mp.setArguments(args);
                 getMainActivity().getSupportFragmentManager().beginTransaction().
                         addToBackStack(null).
@@ -172,6 +178,7 @@ public class MainPage extends BasePage {
                 getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, ar).commit();
             }
         });
+
     }
     @Override
     public void onPause(){

@@ -1,37 +1,39 @@
 package com.shhutapp;
 
 
+import android.accessibilityservice.AccessibilityServiceInfo;
+import android.app.NotificationManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
+import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.os.IBinder;
 import android.provider.Settings;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.WindowManager;
+import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.shhutapp.data.QueitCard;
 import com.shhutapp.data.SMSCard;
 import com.shhutapp.data.WhiteListCard;
 import com.shhutapp.fragments.Header;
 import com.shhutapp.fragments.area.AreaCard;
-import com.shhutapp.help.Help;
 import com.shhutapp.pages.AreaPage;
 import com.shhutapp.pages.BasePage;
 import com.shhutapp.pages.MainPage;
@@ -40,20 +42,17 @@ import com.shhutapp.pages.MessagePage;
 import com.shhutapp.pages.QueitTimePage;
 import com.shhutapp.pages.SettingsPage;
 import com.shhutapp.pages.WhiteListPage;
+import com.shhutapp.services.AppNotify;
 import com.shhutapp.services.AppReceiver;
 import com.shhutapp.services.CallReceiver;
 import com.shhutapp.services.Carder;
-import com.shhutapp.services.Finder;
-import com.shhutapp.services.Locator;
 import com.shhutapp.services.MessageReceiver;
-import com.shhutapp.start.StartHelpEighth;
+import com.shhutapp.services.NoficationService;
 import com.shhutapp.start.StartHelpFirst;
-import com.shhutapp.start.StartHelpSeventh;
-import com.shhutapp.utils.Convertor;
 
 import java.util.List;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends FragmentActivity {
     private static MainActivity act;
     private LayoutInflater inf;
     private boolean isCardListEmty;
@@ -86,6 +85,14 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.main);
+        NotificationManager man = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+/*
+        Settings.Secure.putString(getContentResolver(),
+                Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, "com.shhutapp.services/NoficationService");
+        Settings.Secure.putString(getContentResolver(),
+                Settings.Secure.ACCESSIBILITY_ENABLED, "1");
+*/
         //turnGPSOn();
 
 /*        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -93,6 +100,7 @@ public class MainActivity extends ActionBarActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.blue_action_bar));
         }*/
+
         replaceStatusBarColor();
         act = this;
         //isCardListEmty = false;
@@ -110,6 +118,10 @@ public class MainActivity extends ActionBarActivity {
             startService(new Intent(this, Finder.class));
         }*/
         startService(new Intent(this, Carder.class));
+        //PackageManager pm = this.getPackageManager();
+        //ComponentName name = new ComponentName(this, NoficationService.class);
+        //pm.setComponentEnabledSetting(name, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+
         settings = new AppSettings(this);
         if (savedInstanceState == null) {
             header = new Header(this);
@@ -360,7 +372,7 @@ public class MainActivity extends ActionBarActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             old_statusbar_color = getWindow().getStatusBarColor();
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(old_statusbar_color);
+            getWindow().setStatusBarColor(R.color.black);
         }
     }
     public void replaceStatusBarColor(){
@@ -368,6 +380,22 @@ public class MainActivity extends ActionBarActivity {
             old_statusbar_color = getWindow().getStatusBarColor();
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.blue_action_bar));
+        }
+    }
+    public void setTransparedNav(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //old_statusbar_color = getWindow().getNavigationBarColor();
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.trans));
+        }
+    }
+    public void setBlackNav(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //old_statusbar_color = getWindow().getNavigationBarColor();
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
         }
     }
 

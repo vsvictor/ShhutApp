@@ -93,7 +93,7 @@ public class MessagePage extends BasePage {
                         getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, page).commit();
                         break;
                     }
-                    case BasePage.Pages.queitTimePage:{
+                    case BasePage.Pages.queitTimePage: {
                         getMainActivity().getHeader().setVisibleBack(false);
                         getMainActivity().getHeader().setVisibleCancel(true);
 
@@ -103,7 +103,7 @@ public class MessagePage extends BasePage {
                                 commit();
                         break;
                     }
-                    case Pages.areaCard:{
+                    case Pages.areaCard: {
                         getMainActivity().getHeader().setVisibleBack(false);
                         getMainActivity().getHeader().setVisibleCancel(true);
 
@@ -117,48 +117,19 @@ public class MessagePage extends BasePage {
                 }
             }
         });
-        scale.setHeight(getMainActivity().isMessageListEmpty() ? 98 : 0);
+        //scale.setHeight(getMainActivity().isMessageListEmpty() ? 98 : 0);
+        messagesList = new MessageList(getMainActivity(), this);
         messagesList.setHeight(getMainActivity().isMessageListEmpty() ? 486 : 640 - 56 - 48);
         messagesList.showEmpty(getMainActivity().isMessageListEmpty());
-        messagesList.setOnMessageListListener(new MessageListListener() {
-            @Override
-            public void onAdd() {
-                header.setInvisibleAll();
-                header.setVisibleCancel(true);
-                Bundle b = new Bundle();
-                b.putBoolean("isArgs", false);
-                newMessage.setArguments(b);
-                getMainActivity().getSupportFragmentManager().beginTransaction().
-                        addToBackStack(null).
-                        remove(empty).
-                        remove(messagesList).
-                        add(R.id.messagePage, newMessage).
-                        commit();
-            }
-            @Override
-            public void onDelete() {
-            }
-            @Override
-            public void onEdit(int id) {
-                header.setInvisibleAll();
-                header.setVisibleCancel(true);
-                //newMessage = new MessageNew(getMainActivity(), instance);
-                getMainActivity().getSupportFragmentManager().beginTransaction().
-                        addToBackStack(null).
-                        remove(empty).
-                        remove(messagesList).
-                        add(R.id.messagePage, newMessage).
-                        commit();
-            }
-            @Override
-            public void onSelected(int id) {
-            }
-        });
+        messagesList.setOnMessageListListener(lis);
     }
     @Override
     public void onResume(){
         super.onResume();
         if(act.isMessageListEmpty()) {
+            scale = new MessageScale(getMainActivity(), this);
+            messagesList = new MessageList(getMainActivity(), this);
+            messagesList.setOnMessageListListener(lis);
             fragmentManager().beginTransaction().
                     //addToBackStack(null).
                     add(R.id.messagePage, scale).
@@ -167,6 +138,8 @@ public class MessagePage extends BasePage {
         }
         else{
             Log.i("Resume", "Resumed");
+            //messagesList = new MessageList(getMainActivity(), this);
+            //messagesList.setOnMessageListListener(lis);
             fragmentManager().beginTransaction().
                     //addToBackStack(null).
                     add(R.id.messagePage, messagesList).
@@ -187,4 +160,38 @@ public class MessagePage extends BasePage {
     public MessageNew getMessageNewFragment(){
         return  newMessage;
     }
+    MessageListListener lis = new MessageListListener() {
+        @Override
+        public void onAdd() {
+            header.setInvisibleAll();
+            header.setVisibleCancel(true);
+            Bundle b = new Bundle();
+            b.putBoolean("isArgs", false);
+            newMessage.setArguments(b);
+            getMainActivity().getSupportFragmentManager().beginTransaction().
+                    addToBackStack(null).
+                    remove(empty).
+                    remove(messagesList).
+                    add(R.id.messagePage, newMessage).
+                    commit();
+        }
+        @Override
+        public void onDelete() {
+        }
+        @Override
+        public void onEdit(int id) {
+            header.setInvisibleAll();
+            header.setVisibleCancel(true);
+            //newMessage = new MessageNew(getMainActivity(), instance);
+            getMainActivity().getSupportFragmentManager().beginTransaction().
+                    addToBackStack(null).
+                    remove(empty).
+                    remove(messagesList).
+                    add(R.id.messagePage, newMessage).
+                    commit();
+        }
+        @Override
+        public void onSelected(int id) {
+        }
+    };
 }

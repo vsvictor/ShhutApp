@@ -74,6 +74,7 @@ public class TransportedLayoutCircle extends ImageView {
             Bitmap b = BitmapFactory.decodeResource(context.getResources(), this.draw);
             if(b.getWidth()>lr || b.getHeight() > lb) {
                 bitmap = Bitmap.createScaledBitmap(b, lr, lb, false);
+                //bitmap = Bitmap.createScaledBitmap(b, 360, 640, false);
                 isLarge = true;
             }
             else{

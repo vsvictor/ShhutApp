@@ -238,7 +238,8 @@ public class Carder extends Service{
 		Criteria criteria = new Criteria();
 		String provider = locationManager.getBestProvider(criteria, true);
 		Location loc = locationManager.getLastKnownLocation(provider);
-		return new LatLng(loc.getLatitude(), loc.getLongitude());
+		if(loc == null) return new LatLng(0,0);
+		else return new LatLng(loc.getLatitude(), loc.getLongitude());
 	}
 	private BaseObjectList loadContacts(){
 		BaseObjectList res = new BaseObjectList();

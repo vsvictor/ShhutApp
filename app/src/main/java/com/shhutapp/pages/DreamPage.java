@@ -1,6 +1,7 @@
 package com.shhutapp.pages;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +30,8 @@ public class DreamPage extends BasePage {
     private int callCounterl;
     private int appCounter;
     private int msgCounter;
+    private boolean reges = false;
+
     public DreamPage() {
         super(MainActivity.getMainActivity());
     }
@@ -103,6 +106,8 @@ public class DreamPage extends BasePage {
     @Override
     public void onResume(){
         super.onResume();
+        getMainActivity().resumeStatusBarColor();
+        getMainActivity().setTransparedNav();
         getMainActivity().getHeader().setHeight(0);
         if(!main.isAdded()) {
             fragmentManager().beginTransaction().add(R.id.dreamPage, main).commit();
@@ -111,13 +116,22 @@ public class DreamPage extends BasePage {
         filter.addAction("call");
         filter.addAction("app");
         filter.addAction("msg");
-        getMainActivity().registerReceiver(receiver, filter);
+        if(!reges) {
+            getMainActivity().registerReceiver(receiver, filter);
+            reges =true;
+        }
     }
     @Override
     public void onPause(){
         super.onPause();
-        //receiver.abortBroadcast();
-        //getMainActivity().unregisterReceiver(receiver);
+        if(reges) {
+            //receiver.abortBroadcast();
+            getMainActivity().unregisterReceiver(receiver);
+        }
+    }
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
     }
     @Override
     public int getID() {
@@ -143,6 +157,8 @@ public class DreamPage extends BasePage {
                 }
             }
             main.updateData(callCounterl/2, appCounter, msgCounter);
+            NotificationManager man = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            man.cancelAll();
         }
     };
 }

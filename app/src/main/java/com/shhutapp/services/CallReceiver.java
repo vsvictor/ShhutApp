@@ -12,9 +12,12 @@ import com.android.internal.telephony.ITelephony;
 import com.shhutapp.data.SMSCard;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.net.Uri;
+import android.provider.CallLog;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -68,6 +71,7 @@ public class CallReceiver extends BroadcastReceiver {
 			else{
 				disableCall(context);
 				sendToCall(context);
+				addMissing(context,phoneNumber);
 				try{
 					SMSCard c = MainActivity.getMainActivity().getSMS();
 					if(c != null){
@@ -108,6 +112,7 @@ public class CallReceiver extends BroadcastReceiver {
 					else{
 						disableCall(context);
 						sendToCall(context);
+						addMissing(context, phoneNumber);
 						try{
 							String sms = c.buildSMSText();
 							if(!sended) sendSMS(phoneNumber,sms);
@@ -125,6 +130,7 @@ public class CallReceiver extends BroadcastReceiver {
 					else {
 						disableCall(context);
 						sendToCall(context);
+						addMissing(context,phoneNumber);
 						try{
 							sms = c.getSMSText();
 							if(!sended) sendSMS(phoneNumber,sms);
@@ -168,5 +174,19 @@ public class CallReceiver extends BroadcastReceiver {
 		Intent intent = new Intent("call");
 		intent.putExtra("type",1);
 		context.sendBroadcast(intent);
+	}
+	private void addMissing(Context context, String number){
+		Uri call_log = CallLog.Calls.CONTENT_URI;
+		ContentValues values = new ContentValues();
+		values.put(CallLog.Calls.NUMBER, number);
+		values.put(CallLog.Calls.DATE, System.currentTimeMillis());
+		values.put(CallLog.Calls.DURATION, 0);
+		values.put(CallLog.Calls.TYPE, CallLog.Calls.INCOMING_TYPE);
+		values.put(CallLog.Calls.NEW, 1);
+		values.put(CallLog.Calls.CACHED_NAME, "");
+		values.put(CallLog.Calls.CACHED_NUMBER_TYPE, 0);
+		values.put(CallLog.Calls.CACHED_NUMBER_LABEL, "");
+		//Log.d(TAG, "Inserting call log placeholder for " + number);
+		context.getContentResolver().insert(CallLog.Calls.CONTENT_URI, values);
 	}
 }
