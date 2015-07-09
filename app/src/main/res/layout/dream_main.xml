@@ -8,7 +8,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rlDreamBackground">
+        android:id="@+id/rlDreamBackground"
+        android:layout_marginTop="28dp">
     </RelativeLayout>
 
 
@@ -24,7 +25,8 @@
         android:text="@string/press_to_exit"
         android:id="@+id/tvPressToExit"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:layout_marginTop="28dp" />
 
     <LinearLayout
         android:orientation="horizontal"

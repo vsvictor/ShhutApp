@@ -95,7 +95,16 @@
             android:name=".services.Carder"
             android:label="Carder" >
         </service>
-        <service android:name=".services.NoficationService" android:enabled="true"
+        <service android:name="com.shhutapp.services.NLService"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
+<!--
+        <service android:name=".services.NoficationService" android:enabled="true" android:exported="false"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
@@ -104,7 +113,7 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/acc" />
         </service>
-
+-->
         <!--
         <receiver android:name=".services.CallReceiver">
             <intent-filter>

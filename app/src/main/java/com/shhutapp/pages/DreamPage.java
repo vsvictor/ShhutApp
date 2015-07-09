@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -120,13 +121,16 @@ public class DreamPage extends BasePage {
             getMainActivity().registerReceiver(receiver, filter);
             reges =true;
         }
+        IntentFilter ifil = new IntentFilter();
+        ifil.addAction("com.google.android.c2dm.intent.RECEIVE");
+        getMainActivity().registerReceiver(res, ifil);
     }
     @Override
     public void onPause(){
         super.onPause();
         if(reges) {
             //receiver.abortBroadcast();
-            getMainActivity().unregisterReceiver(receiver);
+            //getMainActivity().unregisterReceiver(receiver);
         }
     }
     @Override
@@ -153,12 +157,21 @@ public class DreamPage extends BasePage {
                 case 3: {
                     int count = intent.getExtras().getStringArrayList("messages").size();
                     msgCounter += count;
+
                     break;
                 }
             }
+
             main.updateData(callCounterl/2, appCounter, msgCounter);
-            NotificationManager man = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            man.cancelAll();
+            //NotificationManager man = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            //man.cancelAll();
+            //abortBroadcast();
+        }
+    };
+    private BroadcastReceiver res = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i("Broad", "!!!!!!!!!!YES!!!!!!!!!!!!!!");
         }
     };
 }

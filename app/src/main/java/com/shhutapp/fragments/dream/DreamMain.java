@@ -79,10 +79,16 @@ public class DreamMain extends BaseFragments {
         getMainActivity().getHeader().setHeight(0);
         beg = Calendar.getInstance().getTime();
 
-        Bitmap b = BitmapFactory.decodeResource(getMainActivity().getResources(), R.drawable.dream_background_night);
+
         int w = (int) Convertor.convertDpToPixel(360, getMainActivity());
         int h = (int) Convertor.convertDpToPixel(640, getMainActivity());
-        Bitmap bitmap = Bitmap.createScaledBitmap(b,w,h,false);
+        BitmapFactory.Options opt = new BitmapFactory.Options();
+        //opt.outHeight = h;
+        //opt.outWidth = w;
+        opt.inSampleSize = 4;
+        Bitmap bitmap = BitmapFactory.decodeResource(getMainActivity().getResources(), R.drawable.dream_background_night, opt);
+
+        //Bitmap bitmap = Bitmap.createScaledBitmap(b,w,h,false);
         Drawable dr = new BitmapDrawable(bitmap);
         rlDreamBackground = (RelativeLayout) rView.findViewById(R.id.rlDreamBackground);
         rlDreamBackground.setBackground(dr);

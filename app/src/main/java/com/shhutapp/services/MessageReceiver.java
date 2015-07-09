@@ -35,6 +35,7 @@ public class MessageReceiver extends BroadcastReceiver {
                 context.sendBroadcast(res);
                 Log.i("Message",messages.toString());
             }
+            abortBroadcast();
         }
     }
 }

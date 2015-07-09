@@ -378,6 +378,8 @@ ADDED from AndroidManifest.xml:94:9
 		ADDED from AndroidManifest.xml:95:13
 service#com.shhutapp.services.NoficationService
 ADDED from AndroidManifest.xml:98:9
+	android:exported
+		ADDED from AndroidManifest.xml:98:84
 	android:enabled
 		ADDED from AndroidManifest.xml:98:61
 	android:permission

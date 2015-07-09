@@ -46,18 +46,21 @@ public class TransportedLayoutCircle extends ImageView {
         this.context= context;
         center = new Point(0,0);
         radius = 0;
+        bitmap = null;
     }
     public TransportedLayoutCircle(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context= context;
         center = new Point(0,0);
         radius = 0;
+        bitmap = null;
     }
     public TransportedLayoutCircle(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context= context;
         center = new Point(0,0);
         radius = 0;
+        bitmap = null;
     }
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public TransportedLayoutCircle(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -65,24 +68,31 @@ public class TransportedLayoutCircle extends ImageView {
         this.context= context;
         center = new Point(0,0);
         radius = 0;
+        bitmap = null;
     }
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom){
         super.onLayout(changed, left, top, right, bottom);
         ll = left;lt=top;lr=right;lb=bottom;
+
         if(this.draw != -1) {
-            Bitmap b = BitmapFactory.decodeResource(context.getResources(), this.draw);
-            if(b.getWidth()>lr || b.getHeight() > lb) {
-                bitmap = Bitmap.createScaledBitmap(b, lr, lb, false);
-                //bitmap = Bitmap.createScaledBitmap(b, 360, 640, false);
-                isLarge = true;
-            }
-            else{
-                int r = getRadius();
-                bitmap = Bitmap.createScaledBitmap(b, r,r, false);
-                isLarge = false;
+            if(bitmap == null) {
+                Bitmap b = BitmapFactory.decodeResource(context.getResources(), this.draw);
+                if (b.getWidth() > lr || b.getHeight() > lb) {
+                    bitmap = Bitmap.createScaledBitmap(b, lr, lb, false);
+                    //bitmap = Bitmap.createScaledBitmap(b, 360, 640, false);
+                    isLarge = true;
+                } else {
+                    int r = getRadius();
+                    bitmap = Bitmap.createScaledBitmap(b, r, r, false);
+                    isLarge = false;
+                }
             }
         }
+
+        //BitmapFactory.Options opt = new BitmapFactory.Options();
+        //opt.inSampleSize = 4;
+        //bitmap = BitmapFactory.decodeResource(context.getResources(), this.draw, opt);
     }
     @SuppressLint("NewApi")
     @Override

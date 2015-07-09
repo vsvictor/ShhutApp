@@ -47,6 +47,7 @@ import com.shhutapp.services.AppReceiver;
 import com.shhutapp.services.CallReceiver;
 import com.shhutapp.services.Carder;
 import com.shhutapp.services.MessageReceiver;
+import com.shhutapp.services.NLService;
 import com.shhutapp.services.NoficationService;
 import com.shhutapp.start.StartHelpFirst;
 
@@ -118,10 +119,19 @@ public class MainActivity extends FragmentActivity {
             startService(new Intent(this, Finder.class));
         }*/
         startService(new Intent(this, Carder.class));
-        //PackageManager pm = this.getPackageManager();
-        //ComponentName name = new ComponentName(this, NoficationService.class);
-        //pm.setComponentEnabledSetting(name, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+        //startService(new Intent(this, NoficationService.class));
+        startService(new Intent(this, NLService.class));
+        bindService(new Intent(this, NLService.class), new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
 
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+
+            }
+        },BIND_AUTO_CREATE);
         settings = new AppSettings(this);
         if (savedInstanceState == null) {
             header = new Header(this);
