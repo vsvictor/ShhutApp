@@ -376,36 +376,28 @@ ADDED from AndroidManifest.xml:94:9
 		ADDED from AndroidManifest.xml:96:13
 	android:name
 		ADDED from AndroidManifest.xml:95:13
-service#com.shhutapp.services.NoficationService
-ADDED from AndroidManifest.xml:98:9
-	android:exported
-		ADDED from AndroidManifest.xml:98:84
-	android:enabled
-		ADDED from AndroidManifest.xml:98:61
+service#com.shhutapp.services.NLService
+ADDED from AndroidManifest.xml:99:9
+	android:label
+		ADDED from AndroidManifest.xml:100:13
 	android:permission
-		ADDED from AndroidManifest.xml:99:13
+		ADDED from AndroidManifest.xml:101:13
 	android:name
-		ADDED from AndroidManifest.xml:98:18
-intent-filter#android.accessibilityservice.AccessibilityService
-ADDED from AndroidManifest.xml:100:13
-action#android.accessibilityservice.AccessibilityService
-ADDED from AndroidManifest.xml:101:17
+		ADDED from AndroidManifest.xml:99:18
+intent-filter#android.service.notification.NotificationListenerService
+ADDED from AndroidManifest.xml:102:13
+action#android.service.notification.NotificationListenerService
+ADDED from AndroidManifest.xml:103:17
 	android:name
-		ADDED from AndroidManifest.xml:101:25
-meta-data#android.accessibilityservice
-ADDED from AndroidManifest.xml:103:13
-	android:resource
-		ADDED from AndroidManifest.xml:105:17
-	android:name
-		ADDED from AndroidManifest.xml:104:17
+		ADDED from AndroidManifest.xml:103:25
 meta-data#com.google.android.maps.v2.API_KEY
-ADDED from AndroidManifest.xml:117:9
+ADDED from AndroidManifest.xml:127:9
 	android:name
-		ADDED from AndroidManifest.xml:118:13
+		ADDED from AndroidManifest.xml:128:13
 	android:value
-		ADDED from AndroidManifest.xml:119:13
+		ADDED from AndroidManifest.xml:129:13
 meta-data#com.google.android.gms.version
-ADDED from AndroidManifest.xml:121:9
+ADDED from AndroidManifest.xml:131:9
 MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
@@ -436,15 +428,15 @@ MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
 	android:name
-		ADDED from AndroidManifest.xml:122:13
+		ADDED from AndroidManifest.xml:132:13
 	android:value
-		ADDED from AndroidManifest.xml:123:13
+		ADDED from AndroidManifest.xml:133:13
 meta-data#com.facebook.sdk.ApplicationId
-ADDED from AndroidManifest.xml:125:9
+ADDED from AndroidManifest.xml:135:9
 	android:name
-		ADDED from AndroidManifest.xml:126:13
+		ADDED from AndroidManifest.xml:136:13
 	android:value
-		ADDED from AndroidManifest.xml:127:13
+		ADDED from AndroidManifest.xml:137:13
 activity#com.google.android.gms.ads.AdActivity
 ADDED from com.google.android.gms:play-services-ads:7.5.0:26:9
 	android:configChanges

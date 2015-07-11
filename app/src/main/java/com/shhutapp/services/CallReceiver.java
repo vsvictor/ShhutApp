@@ -15,6 +15,7 @@ import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.provider.CallLog;
@@ -32,17 +33,19 @@ public class CallReceiver extends BroadcastReceiver {
 	private boolean sended;
 	private static int volume;
 	private static int vibrateState;
+
+	/*
 	public CallReceiver(){
 		super();
 	}
-	
+	*/
 	public CallReceiver(Context context){
 		super();
 		this.vcontext = context;
 	}
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		sended = false;
+		//sended = false;
 		phManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		auManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 		//auManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
@@ -70,8 +73,11 @@ public class CallReceiver extends BroadcastReceiver {
 			if(call){Log.i(TAG, "Called geo");}
 			else{
 				disableCall(context);
-				sendToCall(context);
-				addMissing(context,phoneNumber);
+				if(!sended) {
+					sendToCall(context);
+					addMissing(context, phoneNumber);
+				}
+				sended = !sended;
 				try{
 					SMSCard c = MainActivity.getMainActivity().getSMS();
 					if(c != null){
@@ -111,8 +117,11 @@ public class CallReceiver extends BroadcastReceiver {
 					if(call){Log.i(TAG, "Called geo");}
 					else{
 						disableCall(context);
-						sendToCall(context);
-						addMissing(context, phoneNumber);
+						if(!sended) {
+							sendToCall(context);
+							addMissing(context, phoneNumber);
+						}
+						sended = !sended;
 						try{
 							String sms = c.buildSMSText();
 							if(!sended) sendSMS(phoneNumber,sms);
@@ -129,8 +138,11 @@ public class CallReceiver extends BroadcastReceiver {
 					if(call){Log.i(TAG, "Called dream");}
 					else {
 						disableCall(context);
-						sendToCall(context);
-						addMissing(context,phoneNumber);
+						if(sended) {
+							sendToCall(context);
+							addMissing(context, phoneNumber);
+						}
+						sended = !sended;
 						try{
 							sms = c.getSMSText();
 							if(!sended) sendSMS(phoneNumber,sms);
@@ -176,17 +188,24 @@ public class CallReceiver extends BroadcastReceiver {
 		context.sendBroadcast(intent);
 	}
 	private void addMissing(Context context, String number){
+		Long l = System.currentTimeMillis();
 		Uri call_log = CallLog.Calls.CONTENT_URI;
 		ContentValues values = new ContentValues();
 		values.put(CallLog.Calls.NUMBER, number);
-		values.put(CallLog.Calls.DATE, System.currentTimeMillis());
+		values.put(CallLog.Calls.DATE, l);
 		values.put(CallLog.Calls.DURATION, 0);
 		values.put(CallLog.Calls.TYPE, CallLog.Calls.INCOMING_TYPE);
 		values.put(CallLog.Calls.NEW, 1);
 		values.put(CallLog.Calls.CACHED_NAME, "");
 		values.put(CallLog.Calls.CACHED_NUMBER_TYPE, 0);
 		values.put(CallLog.Calls.CACHED_NUMBER_LABEL, "");
-		//Log.d(TAG, "Inserting call log placeholder for " + number);
-		context.getContentResolver().insert(CallLog.Calls.CONTENT_URI, values);
+		Log.d(TAG, "Inserting call log placeholder for " + number);
+		String[] cols = {CallLog.Calls.NUMBER};
+/*		Cursor c = context.getContentResolver().query(
+				CallLog.Calls.CONTENT_URI,cols,CallLog.Calls.NUMBER+"=? AND "+CallLog.Calls.DATE+"=?",
+				new String[]{number, String.valueOf(l)},null);
+		if(!c.moveToFirst())*/
+
+			context.getContentResolver().insert(CallLog.Calls.CONTENT_URI, values);
 	}
 }

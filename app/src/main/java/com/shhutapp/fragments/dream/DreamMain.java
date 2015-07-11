@@ -3,6 +3,7 @@ package com.shhutapp.fragments.dream;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -52,6 +53,7 @@ public class DreamMain extends BaseFragments {
     private Date curr;
     private RelativeLayout rlDreamBackground;
     private TransportedLayoutCircle ivDreamBack;
+    private TextView tvPressToExit;
 
     public DreamMain(){
         super(MainActivity.getMainActivity());
@@ -78,7 +80,6 @@ public class DreamMain extends BaseFragments {
         super.onViewCreated(view, saved);
         getMainActivity().getHeader().setHeight(0);
         beg = Calendar.getInstance().getTime();
-
 
         int w = (int) Convertor.convertDpToPixel(360, getMainActivity());
         int h = (int) Convertor.convertDpToPixel(640, getMainActivity());
@@ -111,13 +112,24 @@ public class DreamMain extends BaseFragments {
         else{
             ivDreamMsg.setVisibility(View.INVISIBLE);
         }
+        tvPressToExit = (TextView) rView.findViewById(R.id.tvPressToExit);
+        tvPressToExit.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Medium.ttf"));
+
         tvDreamBeginValue = (TextView) rView.findViewById(R.id.tvDreamBeginValue);
+        tvDreamBeginValue.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Light.ttf"));
         tvDreamBeginValue.setText(DateTimeOperator.dateToTimeString(beg));
+        tvDreamBeginValue.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Light.ttf"));
         tvDreamTimerHourseValue = (TextView) rView.findViewById(R.id.tvDreamTimerHoursValue);
+        tvDreamTimerHourseValue.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Light.ttf"));
         tvDreamTimerMinValue = (TextView) rView.findViewById(R.id.tvDreamTimerMinValue);
+        tvDreamTimerMinValue.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Light.ttf"));
+
         tvDreamCallCount = (TextView) rView.findViewById(R.id.tvDreamCallCount);
+        tvDreamCallCount.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Medium.ttf"));
         tvDreamAppCount = (TextView) rView.findViewById(R.id.tvDreamAppCount);
+        tvDreamAppCount.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Medium.ttf"));
         tvDreamMsgCount = (TextView) rView.findViewById(R.id.tvDreamMsgCount);
+        tvDreamMsgCount.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Medium.ttf"));
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask(){
             @Override

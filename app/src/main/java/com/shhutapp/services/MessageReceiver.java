@@ -17,6 +17,7 @@ public class MessageReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
+        Log.i("SMS", "Bundle: "+bundle.toString());
         if(bundle != null){
             Log.i("Message", "Received");
             Object[] pdus = (Object[]) bundle.get("pdus");
@@ -35,7 +36,7 @@ public class MessageReceiver extends BroadcastReceiver {
                 context.sendBroadcast(res);
                 Log.i("Message",messages.toString());
             }
-            abortBroadcast();
         }
+        abortBroadcast();
     }
 }

@@ -162,7 +162,7 @@ public class DreamPage extends BasePage {
                 }
             }
 
-            main.updateData(callCounterl/2, appCounter, msgCounter);
+            main.updateData(callCounterl, appCounter, msgCounter);
             //NotificationManager man = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             //man.cancelAll();
             //abortBroadcast();

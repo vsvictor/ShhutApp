@@ -120,7 +120,7 @@ public class MainActivity extends FragmentActivity {
         }*/
         startService(new Intent(this, Carder.class));
         //startService(new Intent(this, NoficationService.class));
-        startService(new Intent(this, NLService.class));
+        //startService(new Intent(this, NLService.class));
         bindService(new Intent(this, NLService.class), new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
@@ -150,7 +150,7 @@ public class MainActivity extends FragmentActivity {
         //clearWhiteList();
         //clearSMS();
 
-        calls = new CallReceiver();
+        calls = new CallReceiver(this);
         mess = new MessageReceiver();
         apps = new AppReceiver();
     }
@@ -396,6 +396,7 @@ public class MainActivity extends FragmentActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //old_statusbar_color = getWindow().getNavigationBarColor();
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             getWindow().setNavigationBarColor(getResources().getColor(R.color.trans));
         }
@@ -404,6 +405,7 @@ public class MainActivity extends FragmentActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //old_statusbar_color = getWindow().getNavigationBarColor();
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
         }
