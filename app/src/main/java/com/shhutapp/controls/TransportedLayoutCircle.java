@@ -132,7 +132,7 @@ public class TransportedLayoutCircle extends ImageView {
     }
     public void addRadius(final int step){
         if(radius>maxRadius) {
-            this.listener.onStop();
+            if(this.listener!= null) this.listener.onStop();
             return;
         }
         radius += step;

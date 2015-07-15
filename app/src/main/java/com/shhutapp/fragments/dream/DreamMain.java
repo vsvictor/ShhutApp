@@ -54,6 +54,7 @@ public class DreamMain extends BaseFragments {
     private RelativeLayout rlDreamBackground;
     private TransportedLayoutCircle ivDreamBack;
     private TextView tvPressToExit;
+    private TextView tvDreamBeginText;
 
     public DreamMain(){
         super(MainActivity.getMainActivity());
@@ -114,7 +115,8 @@ public class DreamMain extends BaseFragments {
         }
         tvPressToExit = (TextView) rView.findViewById(R.id.tvPressToExit);
         tvPressToExit.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Medium.ttf"));
-
+        tvDreamBeginText = (TextView) rView.findViewById(R.id.tvDreamBeginText);
+        tvDreamBeginText.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Light.ttf"));
         tvDreamBeginValue = (TextView) rView.findViewById(R.id.tvDreamBeginValue);
         tvDreamBeginValue.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Light.ttf"));
         tvDreamBeginValue.setText(DateTimeOperator.dateToTimeString(beg));

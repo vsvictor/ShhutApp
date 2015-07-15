@@ -132,6 +132,7 @@ public class MainActivity extends FragmentActivity {
 
             }
         },BIND_AUTO_CREATE);
+
         settings = new AppSettings(this);
         if (savedInstanceState == null) {
             header = new Header(this);
@@ -396,19 +397,20 @@ public class MainActivity extends FragmentActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //old_statusbar_color = getWindow().getNavigationBarColor();
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             getWindow().setNavigationBarColor(getResources().getColor(R.color.trans));
         }
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
     public void setBlackNav(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //old_statusbar_color = getWindow().getNavigationBarColor();
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
         }
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
 }

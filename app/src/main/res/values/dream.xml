@@ -3,9 +3,9 @@
     <dimen name="rl_dream_buttons_panel_top">45dp</dimen>
     <dimen name="rl_dream_buttons_panel_right">8dp</dimen>
 
-    <dimen name="rl_dream_center_top">185dp</dimen>
+    <dimen name="rl_dream_center_top">186dp</dimen>
     <dimen name="rl_dream_center_pict_size">30dp</dimen>
-    <dimen name="rl_dream_center_pict_bottom">15dp</dimen>
+    <dimen name="rl_dream_center_pict_bottom">4dp</dimen>
     <dimen name="rl_dream_center_big_text_size">36dp</dimen>
     <dimen name="rl_dream_center_small_text_size">20dp</dimen>
 

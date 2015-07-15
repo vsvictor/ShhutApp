@@ -85,7 +85,7 @@ public class DreamPage extends BasePage {
                         getMainActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                tr.addRadius();
+                                tr.addRadius(2);
                                 if(tr.getRadius()>tr.getMaxRadius()){
                                     t.cancel();
                                     getMainActivity().replaceStatusBarColor();

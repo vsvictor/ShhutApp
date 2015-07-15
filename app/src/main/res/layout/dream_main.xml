@@ -67,13 +67,14 @@
             android:layout_height="@dimen/rl_dream_center_pict_size"
             android:id="@+id/ivMonth"
             android:src="@drawable/dream_month"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/rl_dream_center_pict_bottom" />
+            android:layout_centerHorizontal="true" />
 
         <RelativeLayout
             android:layout_below="@id/ivMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
             android:id="@+id/rlDreamBegin"
             android:layout_centerHorizontal="true">
 
@@ -81,11 +82,15 @@
                 android:id="@+id/rlDreamBeginPanel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
                 android:layout_marginRight="5dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/begin"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
                 android:id="@+id/tvDreamBeginText"
                 android:textColor="@color/white"
                 android:textSize="@dimen/rl_dream_center_big_text_size" />
@@ -102,6 +107,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00:00"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
                 android:id="@+id/tvDreamBeginValue"
                 android:textColor="@color/white"
                 android:textSize="@dimen/rl_dream_center_big_text_size"/>
@@ -112,11 +119,13 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/rlDreamTimer"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="-4dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingTop="0dp"
+                    android:paddingBottom="0dp"
                     android:text="00"
                     android:id="@+id/tvDreamTimerHoursValue"
                     android:textSize="@dimen/rl_dream_center_big_text_size"
