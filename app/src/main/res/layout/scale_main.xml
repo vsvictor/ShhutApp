@@ -34,13 +34,26 @@
 -->
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:id="@+id/rlTimer"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="|"
+                android:id="@+id/tvDiriv"
+                android:layout_centerHorizontal="true"
+                android:textSize="@dimen/timer_text_size"
+                android:textColor="@color/white_50_opacity"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" />
+
 
             <RelativeLayout
+                android:layout_toLeftOf="@id/tvDiriv"
                 android:id="@+id/rlAfter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -48,14 +61,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="New Text"
+                    android:text="00"
                     android:id="@+id/tvHoursValue"
                     android:textSize="@dimen/timer_text_size"
                     android:textColor="@color/white" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="New Text"
+                    android:text="@string/h"
                     android:id="@+id/tvHours"
                     android:textSize="@dimen/timer_text_size"
                     android:textColor="@color/white_50_opacity"
@@ -73,7 +86,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="New Text"
+                    android:text="@string/m"
                     android:id="@+id/tvMinutes"
                     android:textSize="@dimen/timer_text_size"
                     android:textColor="@color/white_50_opacity"
@@ -85,18 +98,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="|"
-                android:id="@+id/tvDiriv"
-                android:layout_toRightOf="@id/rlAfter"
-                android:layout_centerHorizontal="true"
-                android:textSize="@dimen/timer_text_size"
-                android:textColor="@color/white_50_opacity"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Text"
+                android:text="00:00"
                 android:id="@+id/tvBefore"
                 android:layout_toRightOf="@id/tvDiriv"
                 android:layout_centerHorizontal="true"

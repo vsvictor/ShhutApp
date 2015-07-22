@@ -83,9 +83,10 @@ public class Scale extends BaseFragments {
                 if (minutes > 0) {
                     rlTimer.setVisibility(View.VISIBLE);
                     if (!showed) {
-                        getMainActivity().getSupportFragmentManager().beginTransaction().
+                        /*getMainActivity().getSupportFragmentManager().beginTransaction().
                                 show(page.getOkCancel()).
-                                commit();
+                                commit();*/
+                        getMainActivity().setDream(true);
                         showed = true;
                     }
                     Date d = Calendar.getInstance().getTime();

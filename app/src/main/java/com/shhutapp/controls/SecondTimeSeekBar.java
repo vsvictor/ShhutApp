@@ -143,7 +143,7 @@ public class SecondTimeSeekBar extends ImageView{
         if(minus<0) beg=minus;
 
         if(begPic != null){
-            canvas.drawBitmap(begPic, 0, line-begPic.getHeight()/2, p);
+            canvas.drawBitmap(begPic, 0, line-begPic.getHeight()/2, e);
         }
 
         for(int i = beg;i<end;i++){
@@ -154,14 +154,14 @@ public class SecondTimeSeekBar extends ImageView{
             }
         }
         if(endPic != null){
-            canvas.drawBitmap(endPic, width-endPic.getWidth(), line-endPic.getHeight()/2, p);
+            canvas.drawBitmap(endPic, width-endPic.getWidth(), line-endPic.getHeight()/2, e);
         }
 
         if(thumb != null){
             if(offset>width) offset=width;
             if(offset<beg) offset = beg;
             if(offset>end) offset = end;
-            canvas.drawBitmap(thumb, offset, line-thumb.getHeight()/2, p);
+            canvas.drawBitmap(thumb, offset, line-thumb.getHeight()/2, e);
         }
         invalidate();
         if(onChange != null) onChange.onTimeChanged(offsetToTime(minus, Math.round(offset)));
