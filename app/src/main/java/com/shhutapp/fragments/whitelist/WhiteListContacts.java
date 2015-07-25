@@ -3,6 +3,7 @@ package com.shhutapp.fragments.whitelist;
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,10 +79,12 @@ public class WhiteListContacts extends BaseFragments {
                 Bundle b = new Bundle();
                 b.putInt("id", id);
                 whitelistAddContact.setArguments(b);
+                //Fragment ff = getMainActivity().getSupportFragmentManager().findFragmentByTag("AppCont");
                 getMainActivity().getSupportFragmentManager().beginTransaction().
                         addToBackStack(null).
                         //remove(getOwner()).
                         remove(getIAm()).
+                        remove(page.whitelistAppCont).
                         add(R.id.whitelistPage, whitelistAddContact).
                         commit();
             }

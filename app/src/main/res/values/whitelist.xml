@@ -28,8 +28,8 @@
     <dimen name="white_list_contacts_familiar_add_height">24dp</dimen>
     <dimen name="white_list_contacts_familiar_add_width">24dp</dimen>
 
-    <dimen name="white_list_contacts_familiar_all_height">24dp</dimen>
-    <dimen name="white_list_contacts_familiar_all_width">24dp</dimen>
+    <dimen name="white_list_contacts_familiar_all_height">34dp</dimen>
+    <dimen name="white_list_contacts_familiar_all_width">34dp</dimen>
     <dimen name="white_list_contacts_familiar_all_left">16dp</dimen>
     <dimen name="white_list_contacts_familiar_all_right">16dp</dimen>
 
@@ -132,8 +132,8 @@
     <dimen name="white_list_contact_text_size">14sp</dimen>
 
     <string name="whitelist">White list</string>
-    <string name="contacts">Contacts</string>
-    <string name="applications">Applications</string>
+    <string name="contacts">CONTACTS</string>
+    <string name="applications">APPLICATIONS</string>
     <string name="familiar">Familiar</string>
     <string name="familiar_nums">Familiar numbers</string>
     <string name="unfamiliar">Unfamiliar</string>

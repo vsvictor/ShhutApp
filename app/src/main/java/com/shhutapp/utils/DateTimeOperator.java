@@ -29,6 +29,22 @@ public class DateTimeOperator {
 		String stringDate = simpledateformat.format(aDate);
 		return stringDate;
 	}
+	public static String dateToTimeString12(Date aDate) {
+		String aFormat = "HH:mm";
+		if (aDate == null)
+			return "";
+		SimpleDateFormat simpledateformat = new SimpleDateFormat(aFormat);
+		String stringDate = simpledateformat.format(aDate);
+		String[] ss = stringDate.split(":");
+		int hh = Integer.parseInt(ss[0]);
+		String suff = "AM";
+		if(hh>=12){
+			hh = hh-12;
+			suff = "PM";
+		}
+		return stringDate+" "+suff;
+	}
+
 	public static String numberDayToNameDay(Context context, int number){
 		String s = "";
 		switch(number){

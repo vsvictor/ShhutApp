@@ -36,6 +36,8 @@ public class Scale extends BaseFragments {
     private SecondTimeSeekBar msbSec;
     private int minInFirst;
     private int minInsec;
+    private TextView tvDiriv;
+
     public Scale(){
         super();
         rView = null;
@@ -94,18 +96,23 @@ public class Scale extends BaseFragments {
                     tvBefore.setText(DateTimeOperator.dateToTimeString(d));
                 } else {
                     rlTimer.setVisibility(View.INVISIBLE);
+/*
                     getMainActivity().getSupportFragmentManager().beginTransaction().
                             hide(page.getOkCancel()).
                             commit();
+*/
                     showed = false;
                     getMainActivity().setDream(false);
                 }
+                tvDiriv = (TextView) rView.findViewById(R.id.tvDiriv2);
+                tvDiriv.setVisibility(View.VISIBLE);
                 int h = minutes / 60;
                 int m = minutes - (h * 60);
                 tvHoursValue.setText(String.valueOf(h));
                 String sText = DateTimeOperator.minutesToString(minutes,
                         getMainActivity().getResources().getString(R.string.h),
                         getMainActivity().getResources().getString(R.string.min));
+                tvMinutesValue.setText(String.valueOf(m).length()<2?"0"+String.valueOf(m):String.valueOf(m));
             }
         });
         msbSec = (SecondTimeSeekBar) rView.findViewById(R.id.msbSeconds);

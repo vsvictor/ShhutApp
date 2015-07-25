@@ -119,8 +119,8 @@ public class DreamMain extends BaseFragments {
         tvDreamBeginText.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Light.ttf"));
         tvDreamBeginValue = (TextView) rView.findViewById(R.id.tvDreamBeginValue);
         tvDreamBeginValue.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Light.ttf"));
-        tvDreamBeginValue.setText(DateTimeOperator.dateToTimeString(beg));
-        tvDreamBeginValue.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Light.ttf"));
+        tvDreamBeginValue.setText(DateTimeOperator.dateToTimeString12(beg));
+        //tvDreamBeginValue.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Light.ttf"));
         tvDreamTimerHourseValue = (TextView) rView.findViewById(R.id.tvDreamTimerHoursValue);
         tvDreamTimerHourseValue.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Light.ttf"));
         tvDreamTimerMinValue = (TextView) rView.findViewById(R.id.tvDreamTimerMinValue);

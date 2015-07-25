@@ -2,29 +2,46 @@ package com.shhutapp.fragments.whitelist;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
+import com.shhutapp.data.BaseObject;
 import com.shhutapp.data.BaseObjectList;
 import com.shhutapp.data.ContactCard;
 import com.shhutapp.data.FilteredAdapter;
+import com.shhutapp.data.StringStringPair;
 import com.shhutapp.fragments.BaseFragments;
 import com.shhutapp.fragments.OnBackListener;
 import com.shhutapp.fragments.OnCancelListener;
 import com.shhutapp.fragments.OnSearchListener;
 import com.shhutapp.pages.WhiteListPage;
+import com.shhutapp.utils.Convertor;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -76,6 +93,10 @@ public class WhiteListAddContact extends BaseFragments {
         hSelected = rlSelected.getLayoutParams().height;
         hAll = rlAll.getLayoutParams().height;
         lvAll = (ListView)rView.findViewById(R.id.lvAddContactList);
+        Bitmap b = BitmapFactory.decodeResource(getMainActivity().getResources(), R.drawable.lv_thumb);
+        Bitmap bb = Bitmap.createScaledBitmap(b, (int)Convertor.convertDpToPixel(3,getMainActivity()),(int)Convertor.convertDpToPixel(20,getMainActivity()),false);
+        Drawable dr = new BitmapDrawable(bb);
+        setFastDrawableThumb(lvAll, dr);
         lvAdded = (ListView)rView.findViewById(R.id.lvAddContactSelected);
         getMainActivity().getHeader().setOnSearchListener(new OnSearchListener() {
             @Override
@@ -165,10 +186,16 @@ public class WhiteListAddContact extends BaseFragments {
                     page.whitelistAppCont.setArguments(b);
                 }
                 */
+                page.whitelistAppCont = new WhiteListAppCont(getMainActivity(), page);
+                Bundle bcont = new Bundle();
+                bcont.putInt("id", id);
+                bcont.putString("name", sName);
+                page.whitelistAppCont.setArguments(bcont);
                 WhiteListContacts www = new WhiteListContacts(getMainActivity(), page);
                 getMainActivity().getSupportFragmentManager().beginTransaction().
                         //addToBackStack(null).
                         remove(getIAm()).
+                        add(R.id.whitelistPage, page.whitelistAppCont).
                         add(R.id.whitelistPage, www).
                         commit();
             }
@@ -187,9 +214,35 @@ public class WhiteListAddContact extends BaseFragments {
         if(adapterSelect != null) getMainActivity().getHeader().setCounter(adapterSelect.getCount());
         else getMainActivity().getHeader().setCounter(0);
     }
-    private class WhiteListContactsAdapter extends FilteredAdapter {
+    private class WhiteListContactsAdapter extends FilteredAdapter  implements SectionIndexer{
+        private ArrayList<String> myElements;
+        private HashMap<String, Integer> azIndexer;
+        private String[] sections;
         public WhiteListContactsAdapter(Context context, BaseObjectList list) {
             super(context, list);
+            myElements = new ArrayList<String>();
+            azIndexer = new HashMap<String, Integer>();
+            for(BaseObject b: list) {
+                myElements.add((String) b.getName());
+            }
+            int size = myElements.size();
+            for(int i = size-1;i>=0;i--){
+                String ss = myElements.get(i);
+                azIndexer.put(ss.substring(0,1),i);
+            }
+
+            Set<String> keys = azIndexer.keySet(); // set of letters
+
+            Iterator<String> it = keys.iterator();
+            ArrayList<String> keyList = new ArrayList<String>();
+
+            while (it.hasNext()) {
+                String key = it.next();
+                keyList.add(key);
+            }
+            Collections.sort(keyList);//sort the keylist
+            sections = new String[keyList.size()]; // simple conversion to array
+            keyList.toArray(sections);
         }
         @Override
         public View getView(int position, View view, ViewGroup parent) {
@@ -256,6 +309,20 @@ public class WhiteListAddContact extends BaseFragments {
             data = list;
             super.notifyDataSetChanged();
         }
+        @Override
+        public Object[] getSections() {
+            return sections;
+        }
+        @Override
+        public int getPositionForSection(int sectionIndex) {
+            String letter = sections[sectionIndex];
+            return azIndexer.get(letter);
+        }
+        @Override
+        public int getSectionForPosition(int position) {
+            Log.v("getSectionForPosition", "called");
+            return 0;
+        }
     }
     private class WhiteListSelectedAdapter extends FilteredAdapter {
         public WhiteListSelectedAdapter(Context context, BaseObjectList list) {
@@ -291,5 +358,8 @@ public class WhiteListAddContact extends BaseFragments {
             data = list;
             super.notifyDataSetChanged();
         }
+    }
+    public void setFastDrawableThumb(ListView lv, Drawable dr){
+        //lv.set
     }
 }

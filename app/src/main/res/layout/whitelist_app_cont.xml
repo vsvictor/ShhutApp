@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/contacts"
+            android:textSize="14sp"
             android:textColor="@color/white" />
     </RelativeLayout>
 
@@ -51,6 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/applications"
+            android:textSize="14sp"
             android:textColor="@color/white_50_opacity" />
 u
     </RelativeLayout>

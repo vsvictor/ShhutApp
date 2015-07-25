@@ -2,6 +2,7 @@ package com.shhutapp.fragments.whitelist;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -33,6 +34,9 @@ public class WhiteListAppCont extends BaseFragments {
     private int listID = -1;
     private String sName;
     private WhiteListCard card;
+    private TextView tvContactsText;
+    private TextView tvApplicationsText;
+
     public WhiteListAppCont(){
         super(MainActivity.getMainActivity());
     }
@@ -74,6 +78,11 @@ public class WhiteListAppCont extends BaseFragments {
         final Bundle args = new Bundle();
         args.putInt("id", card.getID());
         args.putString("name", card.getName());
+        tvContactsText = (TextView) rView.findViewById(R.id.tvContactsText);
+        tvContactsText.setTypeface(Typeface.createFromAsset(MainActivity.getMainActivity().getAssets(), "fonts/Roboto-Medium.ttf"));
+        tvApplicationsText = (TextView) rView.findViewById(R.id.tvApplicationsText);
+        tvApplicationsText.setTypeface(Typeface.createFromAsset(MainActivity.getMainActivity().getAssets(), "fonts/Roboto-Medium.ttf"));
+
         rlApplications = (RelativeLayout) rView.findViewById(R.id.rlApplications);
         rlApplicationsRed = (RelativeLayout) rView.findViewById(R.id.rlApplicationRed);
         rlContacts = (RelativeLayout) rView.findViewById(R.id.rlContacts);
@@ -126,7 +135,7 @@ public class WhiteListAppCont extends BaseFragments {
         //if(whitelistCont != null) whitelistCont = new WhiteListContacts(getMainActivity(),page);
         whitelistCont.setArguments(args);
         getMainActivity().getSupportFragmentManager().beginTransaction().
-                //addToBackStack(null).
+                //remove(getIAm()).
                 remove(whitelistApp).
                 add(R.id.whitelistPage, whitelistCont).
                 commit();
@@ -135,6 +144,7 @@ public class WhiteListAppCont extends BaseFragments {
         header.setOnBackListener(new OnBackListener() {
             @Override
             public void onBack() {
+                Fragment ff = getMainActivity().getSupportFragmentManager().findFragmentByTag("AppCont");
                 getMainActivity().getSupportFragmentManager().beginTransaction().
                         //addToBackStack(null).
                         remove(whitelistApp).

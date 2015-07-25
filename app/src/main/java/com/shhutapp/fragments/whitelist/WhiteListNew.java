@@ -38,7 +38,7 @@ public class WhiteListNew extends BaseFragments {
     private RelativeLayout rlEditTextError;
     private TextView tvCounter;
     private boolean isError;
-    private WhiteListAppCont whitelistAppCont;
+    //private WhiteListAppCont whitelistAppCont;
     public WhiteListNew(){
         super(MainActivity.getMainActivity());
     }
@@ -65,12 +65,12 @@ public class WhiteListNew extends BaseFragments {
                 Bundle b = new Bundle();
                 b.putInt("id",id);
                 b.putString("name", sName);
-                whitelistAppCont = new WhiteListAppCont(getMainActivity(), page);
-                whitelistAppCont.setArguments(b);
+                page.whitelistAppCont = new WhiteListAppCont(getMainActivity(), page);
+                page.whitelistAppCont.setArguments(b);
                 getMainActivity().getSupportFragmentManager().beginTransaction().
                         addToBackStack(null).
                         remove(getIAm()).
-                        add(R.id.whitelistPage, whitelistAppCont,"AppCont").
+                        add(R.id.whitelistPage, page.whitelistAppCont,"AppCont").
                         commit();
             }
         });
@@ -129,6 +129,10 @@ public class WhiteListNew extends BaseFragments {
                 setError(false);
                 if (edWhiteList.getText().toString().length() > 3) {
                     getMainActivity().getHeader().setVisibleOk(true);
+                }
+                if(edWhiteList.getText().toString().length()>=24){
+                    edWhiteList.setText(edWhiteList.getText().toString().substring(0,23));
+                    edWhiteList.setSelection(edWhiteList.getText().toString().length(), edWhiteList.getText().toString().length());
                 }
             }
 
