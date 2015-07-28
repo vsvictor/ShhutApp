@@ -11,14 +11,20 @@
         android:layout_height="match_parent"
         android:visibility="visible">
 
-        <TextView
-            android:id="@+id/tvTextWhiteList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="TextView" />
-
+            android:layout_marginRight="80dp"
+            android:id="@+id/rlItemText">
+            <TextView
+                android:id="@+id/tvTextWhiteList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="TextView" />
+        </RelativeLayout>
         <RelativeLayout
             android:id="@+id/rlWhiteListRadio"
             android:layout_width="@dimen/messages_item_radio_width"

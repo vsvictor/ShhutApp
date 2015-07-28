@@ -47,7 +47,7 @@ public class WhiteListList extends BaseFragments {
     private MessageListListener listener;
     private int prevID;
     private boolean isRadio;
-
+    private boolean isAdapt = false;
     public WhiteListList() {
         super();
     }
@@ -141,13 +141,13 @@ public class WhiteListList extends BaseFragments {
 
             @Override
             public void onClickFrontView(int position) {
-                int id = ((WhiteListCard) ((WhiteListAdapter) swWhiteList.getAdapter()).getData().get(position)).getID();
+                /*int id = ((WhiteListCard) ((WhiteListAdapter) swWhiteList.getAdapter()).getData().get(position)).getID();
                 if (!isRadio) {
                     listener.onEdit(id);
                     adapter.notifyDataSetUpdated();
                 } else {
                     listener.onSelected(id);
-                }
+                }*/
             }
 
             @Override
@@ -161,15 +161,23 @@ public class WhiteListList extends BaseFragments {
             public void onDismiss(int[] reverseSortedPositions) {
             }
         });
+/*
         swWhiteList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 int idd = ((WhiteListCard) ((WhiteListAdapter) swWhiteList.getAdapter()).getData().get(position)).getID();
                 listener.onEdit(idd);
                 adapter.notifyDataSetUpdated();
-                return true;
+                return false;
             }
-        });
+        });*/
+/*        swWhiteList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int idd = ((WhiteListCard) ((WhiteListAdapter) swWhiteList.getAdapter()).getData().get(position)).getID();
+                listener.onSelected(idd);
+            }
+        });*/
     }
     @Override
     public void onResume(){
@@ -242,6 +250,8 @@ public class WhiteListList extends BaseFragments {
     public int getCount(){return adapter.getCount();}
     private class WhiteListAdapter extends FilteredAdapter {
         private boolean isShow;
+        private RelativeLayout rlItemText;
+
         public WhiteListAdapter(Context context, BaseObjectList list) {
             super(context, list);
         }
@@ -276,6 +286,15 @@ public class WhiteListList extends BaseFragments {
                         getMainActivity().selectWhiteList(card);
                         card.setState(true);
                         notifyDataSetChanged();
+                        listener.onSelected(card.getID());
+                    }
+                });
+                rlItemText = (RelativeLayout) view.findViewById(R.id.rlItemText);
+                rlItemText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onEdit(card.getID());
+                        adapter.notifyDataSetUpdated();
                     }
                 });
             }
