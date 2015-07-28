@@ -45,7 +45,15 @@
         android:text="tvNameWhiteList"
         android:textColor="@color/black"
         android:textSize="@dimen/white_list_contact_text_size" />
-
+    <ImageView
+        android:layout_width="@dimen/white_list_add_contact_selected_icon_width"
+        android:layout_height="@dimen/white_list_add_contact_selected_icon_height"
+        android:id="@+id/ivAddContactSelectedIcon"
+        android:layout_marginLeft="@dimen/white_list_add_contact_selected_icon_left"
+        android:src="@drawable/favorites"
+        android:layout_centerVertical="true"
+        android:scaleType="fitXY"
+        android:visibility="invisible" />
     <RelativeLayout
         android:id="@+id/rlWhiteListSelectAddAlpha"
         android:layout_width="@dimen/white_list_contact_added_cb_width"
@@ -74,5 +82,17 @@
             android:src="@drawable/cb_on"
             android:visibility="invisible"
             android:scaleType="fitXY" />
+
     </RelativeLayout>
+    <ImageView
+        android:id="@+id/ivDiriveder"
+        android:src="@drawable/line_gray"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_alignParentBottom="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentTop="true" />
+
 </RelativeLayout>

@@ -44,6 +44,8 @@ public class Header extends BaseFragments {
     private OnBackListener onBackSearch;
     private OnCancelListener onCancelSearch;
     private OnCardOnOff onOnOff;
+    private OnClickCounter onCounter;
+
     public Header(){
         super();
     }
@@ -67,6 +69,12 @@ public class Header extends BaseFragments {
         tvHeader.setTypeface(Typeface.createFromAsset(MainActivity.getMainActivity().getAssets(), "fonts/Roboto-Medium.ttf"));
         tvCounter = (TextView)rView.findViewById(R.id.tvCounter);
         tvCounter.setTypeface(Typeface.createFromAsset(MainActivity.getMainActivity().getAssets(), "fonts/Roboto-Medium.ttf"));
+        tvCounter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCounter.onClick();
+            }
+        });
         ivCancel = (ImageView)rView.findViewById(R.id.ivCancel);
         ivCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -258,6 +266,9 @@ public class Header extends BaseFragments {
         isOn = onoff;
         ivCardOn.setVisibility(isOn?View.VISIBLE:View.INVISIBLE);
         ivCardOff.setVisibility(isOn?View.INVISIBLE:View.VISIBLE);
+    }
+    public void setOnClickCounter(OnClickCounter listener){
+        onCounter = listener;
     }
     public EditText getEdSearch(){
         return edSearch;

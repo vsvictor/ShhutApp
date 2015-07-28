@@ -120,7 +120,7 @@ public class MainActivity extends FragmentActivity {
         }*/
         startService(new Intent(this, Carder.class));
         //startService(new Intent(this, NoficationService.class));
-/*        startService(new Intent(this, NLService.class));
+        startService(new Intent(this, NLService.class));
         bindService(new Intent(this, NLService.class), new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
@@ -132,7 +132,7 @@ public class MainActivity extends FragmentActivity {
 
             }
         },BIND_AUTO_CREATE);
-*/
+
         settings = new AppSettings(this);
         if (savedInstanceState == null) {
             header = new Header(this);

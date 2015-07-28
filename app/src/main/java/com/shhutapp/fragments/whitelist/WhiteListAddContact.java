@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
+import com.shhutapp.data.ApplicationCard;
 import com.shhutapp.data.BaseObject;
 import com.shhutapp.data.BaseObjectList;
 import com.shhutapp.data.ContactCard;
@@ -33,6 +35,7 @@ import com.shhutapp.data.StringStringPair;
 import com.shhutapp.fragments.BaseFragments;
 import com.shhutapp.fragments.OnBackListener;
 import com.shhutapp.fragments.OnCancelListener;
+import com.shhutapp.fragments.OnClickCounter;
 import com.shhutapp.fragments.OnSearchListener;
 import com.shhutapp.pages.WhiteListPage;
 import com.shhutapp.utils.Convertor;
@@ -54,16 +57,17 @@ public class WhiteListAddContact extends BaseFragments {
     private BaseObjectList selected;
 
     private WhiteListContactsAdapter adapterCont;
-    private WhiteListSelectedAdapter adapterSelect;
-    private ListView lvAdded;
+    //private WhiteListSelectedAdapter adapterSelect;
+    //private ListView lvAdded;
     private ListView lvAll;
     private int id = -1;
     private String sName;
     private EditText edSearch;
-    private RelativeLayout rlSelected;
+    //private RelativeLayout rlSelected;
     private RelativeLayout rlAll;
-    private int hSelected;
+    //private int hSelected;
     private int hAll;
+    private int it;
     public WhiteListAddContact(){
         super(MainActivity.getMainActivity());
     }
@@ -88,16 +92,9 @@ public class WhiteListAddContact extends BaseFragments {
     @Override
     public void onViewCreated(View view, Bundle saved) {
         super.onViewCreated(view, saved);
-        rlSelected = (RelativeLayout) rView.findViewById(R.id.rlWhiteListAddContact);
         rlAll = (RelativeLayout) rView.findViewById(R.id.rlWhiteListAddContactList);
-        hSelected = rlSelected.getLayoutParams().height;
         hAll = rlAll.getLayoutParams().height;
         lvAll = (ListView)rView.findViewById(R.id.lvAddContactList);
-        Bitmap b = BitmapFactory.decodeResource(getMainActivity().getResources(), R.drawable.lv_thumb);
-        Bitmap bb = Bitmap.createScaledBitmap(b, (int)Convertor.convertDpToPixel(3,getMainActivity()),(int)Convertor.convertDpToPixel(20,getMainActivity()),false);
-        Drawable dr = new BitmapDrawable(bb);
-        setFastDrawableThumb(lvAll, dr);
-        lvAdded = (ListView)rView.findViewById(R.id.lvAddContactSelected);
         getMainActivity().getHeader().setOnSearchListener(new OnSearchListener() {
             @Override
             public void onSearch() {
@@ -125,7 +122,6 @@ public class WhiteListAddContact extends BaseFragments {
                     public void afterTextChanged(Editable s) {
                     }
                 });
-                rlSelected.getLayoutParams().height = 0;
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 rlAll.setLayoutParams(params);
             }
@@ -134,20 +130,15 @@ public class WhiteListAddContact extends BaseFragments {
             @Override
             public void onCancel() {
                 edSearch.setText("");
-                //adapterCont.resetFilter();
-                //adapterCont.notifyDataSetUpdated();
                 adapterCont = new WhiteListContactsAdapter(getMainActivity(), contacts);
                 lvAll.setAdapter(adapterCont);
                 lvAll.setSelection(0);
-                lvAdded.setSelection(adapterSelect.getCount() - 1);
             }
         });
         getMainActivity().getHeader().setOnBackSearchListener(new OnBackListener() {
             @Override
             public void onBack() {
                 LinearLayout.LayoutParams pSelected = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                pSelected.height = hSelected;
-                rlSelected.setLayoutParams(pSelected);
                 LinearLayout.LayoutParams pAll = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 pAll.height = hAll;
                 rlAll.setLayoutParams(pAll);
@@ -173,19 +164,6 @@ public class WhiteListAddContact extends BaseFragments {
             public void onBack() {
                 getMainActivity().getHeader().setCounter(0);
                 getMainActivity().getHeader().setVisibleCounter(false);
-                /*
-                Bundle b = new Bundle();
-                b.putInt("id", id);
-                b.putString("name", sName);
-                page.whitelistAppCont = new WhiteListAppCont(getMainActivity(), page);
-                if(page.whitelistAppCont.getArguments() != null) {
-                    page.whitelistAppCont.getArguments().putInt("id", id);
-                    page.whitelistAppCont.getArguments().putString("name", sName);
-                }
-                else{
-                    page.whitelistAppCont.setArguments(b);
-                }
-                */
                 page.whitelistAppCont = new WhiteListAppCont(getMainActivity(), page);
                 Bundle bcont = new Bundle();
                 bcont.putInt("id", id);
@@ -193,26 +171,56 @@ public class WhiteListAddContact extends BaseFragments {
                 page.whitelistAppCont.setArguments(bcont);
                 WhiteListContacts www = new WhiteListContacts(getMainActivity(), page);
                 getMainActivity().getSupportFragmentManager().beginTransaction().
-                        //addToBackStack(null).
                         remove(getIAm()).
                         add(R.id.whitelistPage, page.whitelistAppCont).
                         add(R.id.whitelistPage, www).
                         commit();
             }
         });
+        getMainActivity().getHeader().setOnClickCounter(new OnClickCounter() {
+            @Override
+            public void onClick() {
+                lvAll.smoothScrollToPosition(0);
+            }
+        });
         Bundle b = getArguments();
         if(b != null){
             id = b.getInt("id");
         }
-        contacts = getMainActivity().getDBHelper().loadContacts(id);
-        adapterCont = new WhiteListContactsAdapter(getMainActivity(),contacts);
-        lvAll.setAdapter(adapterCont);
         selected = getMainActivity().getDBHelper().loadContactsSelected(id);
-        adapterSelect = new WhiteListSelectedAdapter(getMainActivity(), selected);
-        lvAdded.setAdapter(adapterSelect);
+        contacts = getMainActivity().getDBHelper().loadContacts(id);
+
+        BaseObjectList ol = new BaseObjectList();
+        for(int i = 0; i<selected.size();i++){
+            ContactCard ap = (ContactCard)selected.get(i);
+            ap.setSection(0);
+            ol.add(ap);
+        }
+        for(int i = 0; i<contacts.size();i++){
+            ContactCard ap = (ContactCard)contacts.get(i);
+            ap.setSection(1);
+            ol.add(ap);
+        }
+        adapterCont = new WhiteListContactsAdapter(getMainActivity(),ol);
+        lvAll.setAdapter(adapterCont);
         getMainActivity().getHeader().setVisibleCounter(true);
-        if(adapterSelect != null) getMainActivity().getHeader().setCounter(adapterSelect.getCount());
+        if(selected != null) getMainActivity().getHeader().setCounter(selected.size());
         else getMainActivity().getHeader().setCounter(0);
+        lvAll.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final ImageView ivOn = (ImageView) view.findViewById(R.id.rbWhiteListOnAddAlpha);
+                final ImageView ivOff = (ImageView) view.findViewById(R.id.rbWhiteListOffAddAlpha);
+                WhiteListContactsAdapter ad = (WhiteListContactsAdapter)parent.getAdapter();
+                ContactCard card = (ContactCard) ad.getData().get(position);
+                if(card.getState()) {
+                    ivOn.performClick();
+                }
+                else {
+                    ivOff.performClick();
+                }
+            }
+        });
     }
     private class WhiteListContactsAdapter extends FilteredAdapter  implements SectionIndexer{
         private ArrayList<String> myElements;
@@ -245,13 +253,22 @@ public class WhiteListAddContact extends BaseFragments {
             keyList.toArray(sections);
         }
         @Override
-        public View getView(int position, View view, ViewGroup parent) {
+        public View getView(final int position, View view, ViewGroup parent) {
             ContactCard prevcard = null;
             if(position>0)prevcard = (ContactCard) getData().get(position - 1);
             final ContactCard card = (ContactCard) getData().get(position);
+
+
             view = this.getInflater().inflate(R.layout.contact_item_alphabet, parent, false);
+            ImageView ivFav = (ImageView) view.findViewById(R.id.ivAddContactSelectedIcon);
+            if(position == 0 && card.getSection() == 0) ivFav.setVisibility(View.VISIBLE);
+
             TextView tvSymbol = (TextView) view.findViewById(R.id.tvSymbol);
-            tvSymbol.setText(getSymbol(card, prevcard));
+            //if(card.getSection() == 1)tvSymbol.setText(getSymbol(card, prevcard));
+            //else tvSymbol.setText(" ");
+            if(position>selected.size()-1)tvSymbol.setText(getSymbol(card, prevcard));
+            else tvSymbol.setText(" ");
+
             TextView tvText = (TextView) view.findViewById(R.id.tvNameWhiteListAddAlpha);
             tvText.setText(card.getName());
             CircleImageView avatar = (CircleImageView) view.findViewById(R.id.ivAvatarAlpha);
@@ -269,27 +286,35 @@ public class WhiteListAddContact extends BaseFragments {
             ivOn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    it = position;
                     card.setState(false);
+                    selected.remove(card);
+                    card.setSection(1);
                     card.deleteFromList(getMainActivity().getDB(), id);
-                    adapterSelect.notifyDataSetSelected();
                     ivOn.setVisibility(View.INVISIBLE);
                     ivOff.setVisibility(View.VISIBLE);
-                    if(adapterSelect != null) getMainActivity().getHeader().setCounter(adapterSelect.getCount());
-                    else getMainActivity().getHeader().setCounter(0);
+                    notifyDataSetAdded();
+                    getMainActivity().getHeader().setCounter(selected.size());
                 }
             });
             ivOff.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    it = position;
                     card.setState(true);
+                    selected.add(card);
+                    card.setSection(0);
                     card.saveToList(getMainActivity().getDB(), id);
-                    adapterSelect.notifyDataSetSelected();
                     ivOn.setVisibility(View.VISIBLE);
                     ivOff.setVisibility(View.INVISIBLE);
-                    if(adapterSelect != null) getMainActivity().getHeader().setCounter(adapterSelect.getCount());
-                    else getMainActivity().getHeader().setCounter(0);
+                    notifyDataSetAdded();
+                    getMainActivity().getHeader().setCounter(selected.size());
                 }
             });
+            if((prevcard!=null)&&(card.getSection()==1 && prevcard.getSection() == 0)&&position<=selected.size()){
+                ImageView ivDirivider = (ImageView) view.findViewById(R.id.ivDiriveder);
+                ivDirivider.setVisibility(View.VISIBLE);
+            }
             return view;
         }
         private String getSymbol(ContactCard curr, ContactCard prev){
@@ -299,15 +324,25 @@ public class WhiteListAddContact extends BaseFragments {
             }
             return res;
         }
+        private void setDelimiter(ContactCard curr, ContactCard prev){
+        }
         public void notifyDataSetUpdated(){
             list = MainActivity.getMainActivity().getDBHelper().loadContacts(id);
             data = list;
             super.notifyDataSetChanged();
+            lvAll.setSelection(it);
         }
-        public void notifyDataSetSelected(){
-            list = MainActivity.getMainActivity().getDBHelper().loadContactsSelected(id);
-            data = list;
+        public void notifyDataSetAdded(){
+            //for(int i = 0; i<selected.size();i++){ContactCard c = (ContactCard)selected.get(i);c.setSection(0);}
+            //for(int i = 0; i<list.size();i++){ContactCard c = (ContactCard)list.get(i);c.setSection(1);}
+            //data = BaseObjectList.concat(selected,list);
+            data = new BaseObjectList();
+            for(int i = 0; i<selected.size();i++){ContactCard c = (ContactCard) selected.get(i);data.add(c);}
+            for(int i = 0; i<contacts.size();i++){ContactCard c = (ContactCard) contacts.get(i);data.add(c);}
             super.notifyDataSetChanged();
+            //lvAll.smoothScrollToPosition(it);
+            //lvAll.setSelection(it);
+            lvAll.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
         }
         @Override
         public Object[] getSections() {
@@ -320,46 +355,7 @@ public class WhiteListAddContact extends BaseFragments {
         }
         @Override
         public int getSectionForPosition(int position) {
-            Log.v("getSectionForPosition", "called");
             return 0;
         }
-    }
-    private class WhiteListSelectedAdapter extends FilteredAdapter {
-        public WhiteListSelectedAdapter(Context context, BaseObjectList list) {
-            super(context, list);
-        }
-        @Override
-        public View getView(int position, View view, ViewGroup parent) {
-            final ContactCard card = (ContactCard) getData().get(position);
-            view = this.getInflater().inflate(R.layout.contact_item, parent, false);
-            TextView tvText = (TextView) view.findViewById(R.id.tvNameWhiteListAdd);
-            tvText.setText(card.getName());
-            CircleImageView avatar = (CircleImageView) view.findViewById(R.id.ivAvatar);
-            if(card.getAvatar() != null) avatar.setImageBitmap(card.getAvatar());
-            final ImageView ivOn = (ImageView) view.findViewById(R.id.rbWhiteListOnAdd);
-            final ImageView ivOff = (ImageView) view.findViewById(R.id.rbWhiteListOffAdd);
-            if(card.getState()) {
-                ivOn.setVisibility(View.VISIBLE);
-                ivOff.setVisibility(View.INVISIBLE);
-            }
-            else {
-                ivOn.setVisibility(View.INVISIBLE);
-                ivOff.setVisibility(View.VISIBLE);
-            }
-            return view;
-        }
-        public void notifyDataSetUpdated(){
-            list = MainActivity.getMainActivity().getDBHelper().loadContacts(id);
-            data = list;
-            super.notifyDataSetChanged();
-        }
-        public void notifyDataSetSelected(){
-            list = MainActivity.getMainActivity().getDBHelper().loadContactsSelected(id);
-            data = list;
-            super.notifyDataSetChanged();
-        }
-    }
-    public void setFastDrawableThumb(ListView lv, Drawable dr){
-        //lv.set
     }
 }

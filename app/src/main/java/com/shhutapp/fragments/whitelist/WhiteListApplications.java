@@ -9,24 +9,34 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
 import com.shhutapp.data.ApplicationCard;
+import com.shhutapp.data.BaseObject;
 import com.shhutapp.data.BaseObjectList;
 import com.shhutapp.data.ContactCard;
 import com.shhutapp.data.FilteredAdapter;
 import com.shhutapp.fragments.BaseFragments;
 import com.shhutapp.fragments.OnBackListener;
 import com.shhutapp.fragments.OnCancelListener;
+import com.shhutapp.fragments.OnClickCounter;
 import com.shhutapp.fragments.OnSearchListener;
 import com.shhutapp.pages.WhiteListPage;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -38,13 +48,13 @@ public class WhiteListApplications extends BaseFragments {
     private String sName;
     public WhiteListPage page;
     private WhiteListApplicationsAdapter adapterCont;
-    private WhiteListSelectedApplicationsAdapter adapterSelect;
-    private RelativeLayout rlSelected;
+    //private WhiteListSelectedApplicationsAdapter adapterSelect;
+    //private RelativeLayout rlSelected;
     private RelativeLayout rlAll;
     private int hSelected;
     private int hAll;
     private ListView lvAll;
-    private ListView lvAdded;
+    //private ListView lvAdded;
     private EditText edSearch;
     private BaseObjectList contacts;
     private BaseObjectList selected;
@@ -71,21 +81,15 @@ public class WhiteListApplications extends BaseFragments {
     }
     public View onCreateView(LayoutInflater inf, ViewGroup container, Bundle savedInstanceState) {
         rView = inf.inflate(R.layout.whitelist_app, container, false);
+        //rView = inf.inflate(R.layout.whitelist_add_contact, container, false);
         return rView;
     }
     @Override
     public void onViewCreated(View view, Bundle saved) {
         super.onViewCreated(view, saved);
-        /*getMainActivity().getSupportFragmentManager().beginTransaction().
-                addToBackStack(null).
-                remove(getOwner()).
-                commit();*/
-        rlSelected = (RelativeLayout) rView.findViewById(R.id.rlAppSelectedData);
         rlAll = (RelativeLayout) rView.findViewById(R.id.rlWhiteListAppList);
-        hSelected = rlSelected.getLayoutParams().height;
         hAll = rlAll.getLayoutParams().height;
         lvAll = (ListView)rView.findViewById(R.id.lvAppList);
-        lvAdded = (ListView)rView.findViewById(R.id.lvAppSelected);
         getMainActivity().getHeader().setOnSearchListener(new OnSearchListener() {
             @Override
             public void onSearch() {
@@ -113,7 +117,7 @@ public class WhiteListApplications extends BaseFragments {
                     public void afterTextChanged(Editable s) {
                     }
                 });
-                rlSelected.getLayoutParams().height = 0;
+                //rlSelected.getLayoutParams().height = 0;
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 rlAll.setLayoutParams(params);
             }
@@ -125,15 +129,11 @@ public class WhiteListApplications extends BaseFragments {
                 adapterCont = new WhiteListApplicationsAdapter(getMainActivity(), contacts);
                 lvAll.setAdapter(adapterCont);
                 lvAll.setSelection(0);
-                lvAdded.setSelection(adapterSelect.getCount() - 1);
             }
         });
         getMainActivity().getHeader().setOnBackSearchListener(new OnBackListener() {
             @Override
             public void onBack() {
-                LinearLayout.LayoutParams pSelected = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                pSelected.height = hSelected;
-                rlSelected.setLayoutParams(pSelected);
                 LinearLayout.LayoutParams pAll = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 pAll.height = hAll;
                 rlAll.setLayoutParams(pAll);
@@ -152,45 +152,80 @@ public class WhiteListApplications extends BaseFragments {
         getMainActivity().getHeader().setInvisibleAll();
         getMainActivity().getHeader().setVisibleBack(true);
         getMainActivity().getHeader().setVisibleSearch(true);
-        //getMainActivity().getHeader().setTextHeader(getMainActivity().getResources().getString(R.string.familiar_nums));
         getMainActivity().getHeader().setVisibleCounter(true);
-/*
-        getMainActivity().getHeader().setOnBackListener(new OnBackListener() {
+        getMainActivity().getHeader().setOnClickCounter(new OnClickCounter() {
             @Override
-            public void onBack() {
-                getMainActivity().getHeader().setCounter(0);
-                getMainActivity().getHeader().setVisibleCounter(false);
-                Bundle b = new Bundle();
-                b.putInt("id", id);
-                b.putString("name", sName);
-                //page.whitelistAppCont = new WhiteListAppCont(getMainActivity(), page);
-                page.whitelistAppCont.getArguments().putInt("id", id);
-                page.whitelistAppCont.getArguments().putString("name", sName);
-                getMainActivity().getSupportFragmentManager().beginTransaction().
-                        addToBackStack(null).
-                        remove(getIAm()).
-                        add(R.id.whitelistPage, page.whitelistAppCont).
-                        commit();
+            public void onClick() {
+                lvAll.smoothScrollToPosition(0);
             }
         });
-*/
+
         Bundle b = getArguments();
         if(b != null){
             id = b.getInt("id");
         }
         contacts = getMainActivity().getDBHelper().loadApplications(id);
-        adapterCont = new WhiteListApplicationsAdapter(getMainActivity(),contacts);
-        lvAll.setAdapter(adapterCont);
         selected = getMainActivity().getDBHelper().loadApplicationsSelected(id);
-        adapterSelect = new WhiteListSelectedApplicationsAdapter(getMainActivity(), selected);
-        lvAdded.setAdapter(adapterSelect);
+        BaseObjectList ol = new BaseObjectList();
+        for(int i = 0; i<selected.size();i++){
+            ApplicationCard ap = (ApplicationCard)selected.get(i);
+            ap.setSection(0);
+            ol.add(ap);
+        }
+        for(int i = 0; i<contacts.size();i++){
+            ApplicationCard ap = (ApplicationCard)contacts.get(i);
+            ap.setSection(1);
+            ol.add(ap);
+        }
+
+        adapterCont = new WhiteListApplicationsAdapter(getMainActivity(),ol);
+        lvAll.setAdapter(adapterCont);
         getMainActivity().getHeader().setVisibleCounter(true);
-        if(adapterSelect != null) getMainActivity().getHeader().setCounter(adapterSelect.getCount());
-        else getMainActivity().getHeader().setCounter(0);
+        lvAll.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final ImageView ivOn = (ImageView) view.findViewById(R.id.rbWhiteListOnAddAlpha);
+                final ImageView ivOff = (ImageView) view.findViewById(R.id.rbWhiteListOffAddAlpha);
+                WhiteListApplicationsAdapter ad = (WhiteListApplicationsAdapter) parent.getAdapter();
+                ApplicationCard card = (ApplicationCard) ad.getData().get(position);
+                if (card.getState()) {
+                    ivOn.performClick();
+                } else {
+                    ivOff.performClick();
+                }
+            }
+        });
     }
-    private class WhiteListApplicationsAdapter extends FilteredAdapter {
+    private class WhiteListApplicationsAdapter extends FilteredAdapter implements SectionIndexer{
+        private ArrayList<String> myElements;
+        private HashMap<String, Integer> azIndexer;
+        private String[] sections;
         public WhiteListApplicationsAdapter(Context context, BaseObjectList list) {
             super(context, list);
+            myElements = new ArrayList<String>();
+            azIndexer = new HashMap<String, Integer>();
+            for(BaseObject b: list) {
+                myElements.add((String) b.getName());
+            }
+            int size = myElements.size();
+            for(int i = size-1;i>=0;i--){
+                String ss = myElements.get(i);
+                azIndexer.put(ss.substring(0,1),i);
+            }
+
+            Set<String> keys = azIndexer.keySet(); // set of letters
+
+            Iterator<String> it = keys.iterator();
+            ArrayList<String> keyList = new ArrayList<String>();
+
+            while (it.hasNext()) {
+                String key = it.next();
+                keyList.add(key);
+            }
+            Collections.sort(keyList);//sort the keylist
+            sections = new String[keyList.size()]; // simple conversion to array
+            keyList.toArray(sections);
+
         }
         @Override
         public View getView(int position, View view, ViewGroup parent) {
@@ -200,6 +235,10 @@ public class WhiteListApplications extends BaseFragments {
             view = this.getInflater().inflate(R.layout.contact_item_alphabet, parent, false);
             TextView tvSymbol = (TextView) view.findViewById(R.id.tvSymbol);
             tvSymbol.setText(getSymbol(card, prevcard));
+
+            if(position>selected.size()-1)tvSymbol.setText(getSymbol(card, prevcard));
+            else tvSymbol.setText(" ");
+
             TextView tvText = (TextView) view.findViewById(R.id.tvNameWhiteListAddAlpha);
             tvText.setText(card.getName());
             CircleImageView avatar = (CircleImageView) view.findViewById(R.id.ivAvatarAlpha);
@@ -218,33 +257,40 @@ public class WhiteListApplications extends BaseFragments {
                 @Override
                 public void onClick(View v) {
                     card.setState(false);
+                    selected.remove(card);
+                    card.setSection(1);
                     card.deleteFromList(getMainActivity().getDB(), id);
-                    adapterSelect.notifyDataSetSelected();
                     ivOn.setVisibility(View.INVISIBLE);
                     ivOff.setVisibility(View.VISIBLE);
-                    if(adapterSelect != null) getMainActivity().getHeader().setCounter(adapterSelect.getCount());
-                    else getMainActivity().getHeader().setCounter(0);
+                    notifyDataSetAdded();
+                    getMainActivity().getHeader().setCounter(selected.size());
                 }
             });
             ivOff.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     card.setState(true);
+                    selected.add(card);
+                    card.setSection(0);
                     card.saveToList(getMainActivity().getDB(), id);
-                    adapterSelect.notifyDataSetSelected();
                     ivOn.setVisibility(View.VISIBLE);
                     ivOff.setVisibility(View.INVISIBLE);
-                    if(adapterSelect != null) getMainActivity().getHeader().setCounter(adapterSelect.getCount());
-                    else getMainActivity().getHeader().setCounter(0);
+                    notifyDataSetAdded();
+                    getMainActivity().getHeader().setCounter(selected.size());
                 }
             });
+            if((prevcard!=null)&&(card.getSection()==1 && prevcard.getSection() == 0)&&position<=selected.size()){
+                ImageView ivDirivider = (ImageView) view.findViewById(R.id.ivDiriveder);
+                ivDirivider.setVisibility(View.VISIBLE);
+            }
+
             return view;
         }
         private String getSymbol(ApplicationCard curr, ApplicationCard prev){
             String res = " ";
-            //if((prev==null) ||(!curr.getName().substring(0,1).equalsIgnoreCase(prev.getName().substring(0,1)))){
-            //    res = curr.getName().substring(0,1);
-            //}
+            if((prev==null) ||(!curr.getName().substring(0,1).equalsIgnoreCase(prev.getName().substring(0,1)))){
+                res = curr.getName().substring(0,1);
+            }
             return res;
         }
         public void notifyDataSetUpdated(){
@@ -257,7 +303,30 @@ public class WhiteListApplications extends BaseFragments {
             data = list;
             super.notifyDataSetChanged();
         }
+        public void notifyDataSetAdded(){
+            data = new BaseObjectList();
+            for(int i = 0; i<selected.size();i++){ApplicationCard c = (ApplicationCard) selected.get(i);data.add(c);}
+            for(int i = 0; i<contacts.size();i++){ApplicationCard c = (ApplicationCard) contacts.get(i);data.add(c);}
+            //data.sortByName();
+            super.notifyDataSetChanged();
+            lvAll.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
+        }
+        @Override
+        public Object[] getSections() {
+            return sections;
+        }
+        @Override
+        public int getPositionForSection(int sectionIndex) {
+            String letter = sections[sectionIndex];
+            return azIndexer.get(letter);
+        }
+        @Override
+        public int getSectionForPosition(int position) {
+            return 0;
+        }
+
     }
+/*
     private class WhiteListSelectedApplicationsAdapter extends FilteredAdapter {
         public WhiteListSelectedApplicationsAdapter(Context context, BaseObjectList list) {
             super(context, list);
@@ -293,6 +362,7 @@ public class WhiteListApplications extends BaseFragments {
             super.notifyDataSetChanged();
         }
     }
+*/
     public void onPause(){
         super.onPause();
         getMainActivity().getHeader().setVisibleCounter(false);

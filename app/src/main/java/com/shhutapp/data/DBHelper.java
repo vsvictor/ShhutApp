@@ -381,6 +381,7 @@ public class DBHelper extends SQLiteOpenHelper{
 					}
 				}
 				card.setAvatar(act, b);
+                card.setSection(1);
 				res.add(card);
 			}while(cur.moveToNext());
 		}
@@ -392,6 +393,7 @@ public class DBHelper extends SQLiteOpenHelper{
 				for(int i = 0; i<res.size();i++){
 					ContactCard p = (ContactCard ) res.get(i);
 					if(p.getPhone().equals(s)) {
+						p.setSection(0);
 						p.setState(true);
 						break;
 					}
@@ -414,6 +416,7 @@ public class DBHelper extends SQLiteOpenHelper{
                     card.setAvatar(act, Convertor.Base64ToBitmap(c.getString(5)));
                 }
                 card.setState(true);
+                card.setSection(0);
                 res.add(card);
 			}while (c.moveToNext());
 		}
@@ -430,6 +433,7 @@ public class DBHelper extends SQLiteOpenHelper{
 			card.setName(packageInfo.loadLabel(pm) == null?packageInfo.packageName:packageInfo.loadLabel(pm));
 			card.setIcon(icon);
 			card.setPackage(packageInfo.packageName);
+            card.setSection(1);
 			res.add(card);
 		}
 		String[] args = {String.valueOf(listID), "1"};
@@ -446,6 +450,7 @@ public class DBHelper extends SQLiteOpenHelper{
 				}
 			}while(c.moveToNext());
 		}
+		res.sortByName();
 		return res;
 	}
 	public BaseObjectList loadApplicationsSelected(int listID){
@@ -462,6 +467,7 @@ public class DBHelper extends SQLiteOpenHelper{
 					card.setIcon(Convertor.Base64ToBitmap(c.getString(5)));
 				}
 				card.setState(true);
+                card.setSection(0);
 				res.add(card);
 			}while (c.moveToNext());
 		}

@@ -12,6 +12,7 @@ public class ApplicationCard extends IntStringPair{
 	private boolean OnOff = false;
 	private Bitmap icon;
 	private String packageName;
+	private int section = 0;
 	public ApplicationCard(){
 		super(-1,"");
 	}
@@ -49,5 +50,10 @@ public class ApplicationCard extends IntStringPair{
 		String[] args = {String.valueOf(id), String.valueOf(this.getID()), "1"};
 		db.delete("white_list_contacts", "idlist=? and idcard=? and type=?", args);
 	}
-
+    public void setSection(int section){
+        this.section = section;
+    }
+    public int getSection(){
+        return this.section;
+    }
 }

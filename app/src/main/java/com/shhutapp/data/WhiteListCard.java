@@ -102,9 +102,9 @@ public class WhiteListCard extends IntStringPair{
 		if(a.moveToFirst()){
 			do{
 				ApplicationCard card = new ApplicationCard();
-				Long l = c.getLong(0);
+				Long l = a.getLong(0);
 				card.setID(l.intValue());
-				card.setPackage(c.getString(4));
+				card.setPackage(a.getString(4));
 				cont.add(card);
 			}while(c.moveToNext());
 		}

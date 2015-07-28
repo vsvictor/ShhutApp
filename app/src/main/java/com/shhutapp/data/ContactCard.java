@@ -1,5 +1,6 @@
 package com.shhutapp.data;
 
+import com.shhutapp.MainActivity;
 import com.shhutapp.utils.Convertor;
 
 import android.content.ContentValues;
@@ -12,6 +13,7 @@ public class ContactCard extends IntStringPair{
 	private String phone;
 	private Bitmap avatar;
 	private boolean OnOff = false;
+	private int section = 0;
 	public ContactCard(){
 		super(-1,"");
 	}
@@ -61,4 +63,17 @@ public class ContactCard extends IntStringPair{
 		String[] args = {String.valueOf(id), String.valueOf(this.getID()), "0"};
 		db.delete("white_list_contacts", "idlist=? and idcard=? and type=?", args);
 	}
+    public void setSection(int section){
+        this.section = section;
+    }
+    public int getSection(){
+        return this.section;
+    }
+    public ContactCard clone(){
+        ContactCard c = new ContactCard(getID(),getName(),phone);
+        c.avatar = getAvatar();
+        c.OnOff = OnOff;
+        c.section = section;
+        return c;
+    }
 }

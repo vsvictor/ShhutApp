@@ -5,57 +5,18 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/white_list_app_selected_height"
-        android:id="@+id/rlWhiteListAppSelected">
-
-        <RelativeLayout
-            android:layout_width="@dimen/white_list_app_selected_panel_width"
-            android:layout_height="match_parent"
-            android:id="@+id/rlAppSelectedPanel">
-
-            <ImageView
-                android:layout_width="@dimen/white_list_app_selected_icon_width"
-                android:layout_height="@dimen/white_list_app_selected_icon_height"
-                android:id="@+id/ivAppSelectedIcon"
-                android:layout_marginLeft="@dimen/white_list_app_selected_icon_left"
-                android:layout_marginTop="@dimen/white_list_app_selected_icon_top"
-                android:src="@drawable/add_app"
-                android:scaleType="fitXY" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="@dimen/white_list_app_selected_data_width"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@id/rlAppSelectedPanel"
-            android:id="@+id/rlAppSelectedData"
-            android:layout_marginRight="@dimen/white_list_app_selected_data_right">
-
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:transcriptMode="alwaysScroll"
-                android:stackFromBottom="true"
-                android:id="@+id/lvAppSelected" />
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/white_list_app_dirivider_height"
-        android:id="@+id/rlWhiteListAppDirivider"
-        android:background="@color/gray_light"
-        android:layout_marginLeft="@dimen/white_list_app_dirivider_left"
-        android:layout_marginRight="@dimen/white_list_app_dirivider_right"></RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/white_list_app_list_height"
+        android:layout_height="match_parent"
         android:id="@+id/rlWhiteListAppList">
 
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/lvAppList" />
+            android:transcriptMode="alwaysScroll"
+            android:id="@+id/lvAppList"
+            android:fastScrollAlwaysVisible="true"
+            android:fastScrollEnabled="true"
+            android:layout_marginRight="10dp"
+            android:divider="@null" />
     </RelativeLayout>
 
 </LinearLayout>

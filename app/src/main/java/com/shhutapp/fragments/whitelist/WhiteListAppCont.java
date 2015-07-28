@@ -133,6 +133,7 @@ public class WhiteListAppCont extends BaseFragments {
             }
         });
         //if(whitelistCont != null) whitelistCont = new WhiteListContacts(getMainActivity(),page);
+        whitelistCont = new WhiteListContacts(getMainActivity(), page);
         whitelistCont.setArguments(args);
         getMainActivity().getSupportFragmentManager().beginTransaction().
                 //remove(getIAm()).
