@@ -30,9 +30,8 @@ import com.shhutapp.utils.Convertor;
  */
 public class TransportedLayoutCircle extends ImageView {
     private Context context;
-    //private int lLeft, lTop, lRight, lBottom;
     public boolean start;
-    private int radius;
+    private float radius;
     private Point center;
     private Bitmap bitmap;
     private int ll,lt,lr,lb;
@@ -41,6 +40,7 @@ public class TransportedLayoutCircle extends ImageView {
     private int background_color = Color.argb(192,0,0,0);
     private int draw = -1;
     private boolean isLarge;
+    private  Canvas can;
     public TransportedLayoutCircle(Context context) {
         super(context);
         this.context= context;
@@ -98,6 +98,7 @@ public class TransportedLayoutCircle extends ImageView {
     @Override
     protected void onDraw(Canvas scanvas) {
         super.onDraw(scanvas);
+        can = scanvas;
             if (center.x != 0 && center.y != 0 && radius != 0 && bitmap != null) {
                 Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
                 Canvas canvas = new Canvas(output);
@@ -119,18 +120,20 @@ public class TransportedLayoutCircle extends ImageView {
             }
     }
 
-
+    public void reDraw(){
+        invalidate();
+    }
     public void setRadius(int radius){
         this.radius = radius;
     }
 
     public int getRadius(){
-        return radius;
+        return Math.round(radius);
     }
     public int getMaxRadius(){
         return maxRadius;
     }
-    public void addRadius(final int step){
+    public void addRadius(final float step){
         if(radius>maxRadius) {
             if(this.listener!= null) this.listener.onStop();
             return;

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
+import com.shhutapp.data.SMSCard;
 import com.shhutapp.fragments.area.AreaCard;
 import com.shhutapp.fragments.messages.MessageEmpty;
 import com.shhutapp.fragments.Header;
@@ -27,6 +28,7 @@ public class MessagePage extends BasePage {
     private MessageList messagesList;
     private MessageEmpty empty;
     private MessageNew newMessage;
+    private int selectedSMS;
     private BasePage prev;
     private static MessagePage instance;
 
@@ -45,12 +47,14 @@ public class MessagePage extends BasePage {
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        instance = this;
         prevID = getArguments().getInt("back");
         header = getMainActivity().getHeader();
         scale = new MessageScale(getMainActivity(), this);
         messagesList = new MessageList(getMainActivity(), this);
         empty = new MessageEmpty(getMainActivity(), this);
         newMessage = new MessageNew(getMainActivity(), this);
+        selectedSMS = -1;
     }
     public View onCreateView(LayoutInflater inf, ViewGroup container, Bundle savedInstanceState) {
         rootView = inf.inflate(R.layout.message_page, container, false);
@@ -118,32 +122,37 @@ public class MessagePage extends BasePage {
             }
         });
         //scale.setHeight(getMainActivity().isMessageListEmpty() ? 98 : 0);
-        messagesList = new MessageList(getMainActivity(), this);
-        messagesList.setHeight(getMainActivity().isMessageListEmpty() ? 486 : 640 - 56 - 48);
-        messagesList.showEmpty(getMainActivity().isMessageListEmpty());
-        messagesList.setOnMessageListListener(lis);
     }
     @Override
     public void onResume(){
         super.onResume();
+        messagesList = new MessageList(getMainActivity(), this);
+        messagesList.setHeight(getMainActivity().isMessageListEmpty() ? 486 : 640 - 56 - 48);
+        messagesList.showEmpty(getMainActivity().isMessageListEmpty());
+        messagesList.setOnMessageListListener(lis);
+
         if(act.isMessageListEmpty()) {
             scale = new MessageScale(getMainActivity(), this);
             messagesList = new MessageList(getMainActivity(), this);
+            messagesList.setHeight(640-56);
             messagesList.setOnMessageListListener(lis);
             fragmentManager().beginTransaction().
                     //addToBackStack(null).
-                    add(R.id.messagePage, scale).
-                    add(R.id.messagePage, messagesList).
+                    //add(R.id.rlFraq, scale).
+                    add(R.id.rlList, messagesList).
                     commit();
         }
         else{
             Log.i("Resume", "Resumed");
-            //messagesList = new MessageList(getMainActivity(), this);
-            //messagesList.setOnMessageListListener(lis);
+            messagesList = new MessageList(getMainActivity(), this);
+            messagesList.setOnMessageListListener(lis);
+            scale = new MessageScale(getMainActivity(), this);
+            messagesList.setHeight(640-56-98);
             fragmentManager().beginTransaction().
                     //addToBackStack(null).
-                    add(R.id.messagePage, messagesList).
-                    add(R.id.messagePage, empty).
+                    add(R.id.rlFraq, scale).
+                    add(R.id.rlList, messagesList).
+                    //add(R.id.messagePage, empty).
                     commit();
         }
     }
@@ -160,6 +169,9 @@ public class MessagePage extends BasePage {
     public MessageNew getMessageNewFragment(){
         return  newMessage;
     }
+    public int getSelectedID(){
+        return selectedSMS;
+    }
     MessageListListener lis = new MessageListListener() {
         @Override
         public void onAdd() {
@@ -167,6 +179,7 @@ public class MessagePage extends BasePage {
             header.setVisibleCancel(true);
             Bundle b = new Bundle();
             b.putBoolean("isArgs", false);
+            newMessage = new MessageNew(getMainActivity(),instance);
             newMessage.setArguments(b);
             getMainActivity().getSupportFragmentManager().beginTransaction().
                     addToBackStack(null).
@@ -182,7 +195,15 @@ public class MessagePage extends BasePage {
         public void onEdit(int id) {
             header.setInvisibleAll();
             header.setVisibleCancel(true);
-            //newMessage = new MessageNew(getMainActivity(), instance);
+            newMessage = new MessageNew(getMainActivity(), instance);
+            SMSCard card = getMainActivity().getDBHelper().loadMessage(id);
+            if(card != null) {
+                Bundle b = new Bundle();
+                b.putBoolean("isArgs", true);
+                b.putInt("id", id);
+                b.putString("text", card.getText());
+                newMessage.setArguments(b);
+            }
             getMainActivity().getSupportFragmentManager().beginTransaction().
                     addToBackStack(null).
                     remove(empty).
@@ -192,6 +213,9 @@ public class MessagePage extends BasePage {
         }
         @Override
         public void onSelected(int id) {
+            selectedSMS = id;
+            SMSCard card = getMainActivity().getDBHelper().loadMessage(id);
+            scale.setTime(card.getTime());
         }
     };
 }

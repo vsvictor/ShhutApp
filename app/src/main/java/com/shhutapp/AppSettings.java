@@ -19,9 +19,19 @@ public class AppSettings {
 		ed.putBoolean("first", first);
 		ed.commit();
 	}
+
 	public boolean isFirst(){
 		return sh.getBoolean("first", true);
 	}
+	public void setFirstQueit(boolean first){
+		SharedPreferences.Editor ed = sh.edit();
+		ed.putBoolean("first_q", first);
+		ed.commit();
+	}
+	public boolean isFirstQueit(){
+		return sh.getBoolean("first_q", true);
+	}
+
 	public void setMinAreaRadius(int min){
 		SharedPreferences.Editor ed = sh.edit();
 		ed.putInt("minAreaRadius", min);

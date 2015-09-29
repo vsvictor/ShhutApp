@@ -13,6 +13,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
@@ -68,7 +71,7 @@ public class DreamPage extends BasePage {
                 final TransportedLayoutCircle tr = (TransportedLayoutCircle) rootView.findViewById(R.id.ivDreamBack);
                 tr.setMaxRadius(800);
                 tr.setCenter(new Point((int) event.getX(), (int) event.getY()));
-                final Timer t = new Timer();
+              final Timer t = new Timer();
 /*                tr.setOnStopListener(new OnStopLister() {
                     @Override
                     public void onStop() {
@@ -79,13 +82,13 @@ public class DreamPage extends BasePage {
                         getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, getMainActivity().getMainPage()).commitAllowingStateLoss();
                     }
                 });*/
-                t.scheduleAtFixedRate(new TimerTask() {
+                t.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         getMainActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                tr.addRadius(2);
+                                tr.addRadius(3);
                                 if(tr.getRadius()>tr.getMaxRadius()){
                                     t.cancel();
                                     getMainActivity().replaceStatusBarColor();
@@ -93,11 +96,13 @@ public class DreamPage extends BasePage {
                                     getMainActivity().getSupportFragmentManager().beginTransaction().show(getMainActivity().getHeader()).commitAllowingStateLoss();
                                     getMainActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, getMainActivity().getMainPage()).commitAllowingStateLoss();
                                 }
-                                else tr.invalidate();
+                                else tr.reDraw();//tr.invalidate();
                             }
                         });
                     }
-                },0,5);
+                },25,25);
+                //Animation an = AnimationUtils.loadAnimation(getMainActivity(), R.anim.tear);
+                //tr.startAnimation(an);
 
                 return true;
             }

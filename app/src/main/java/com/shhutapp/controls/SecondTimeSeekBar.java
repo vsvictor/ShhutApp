@@ -145,7 +145,7 @@ public class SecondTimeSeekBar extends ImageView{
         if(begPic != null){
             canvas.drawBitmap(begPic, 0, line-begPic.getHeight()/2, e);
         }
-
+/*
         for(int i = beg;i<end;i++){
             if(i%(step*tapCounter)==0){
                 if(isSmall) canvas.drawRect(i-2,line-fourty/2,i+2,line+fourty/2,p);
@@ -153,6 +153,7 @@ public class SecondTimeSeekBar extends ImageView{
                 isSmall = !isSmall;
             }
         }
+*/
         if(endPic != null){
             canvas.drawBitmap(endPic, width-endPic.getWidth(), line-endPic.getHeight()/2, e);
         }

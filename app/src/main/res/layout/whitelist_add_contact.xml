@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.shhutapp.controls.ExLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llAddContactSelector"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -17,8 +18,9 @@
             android:transcriptMode="alwaysScroll"
             android:id="@+id/lvAddContactList"
             android:divider="@null"
+            android:scrollbarStyle="outsideInset"
             android:fastScrollAlwaysVisible="true"
             android:fastScrollEnabled="true" />
     </RelativeLayout>
 
-</LinearLayout>
+</com.shhutapp.controls.ExLinearLayout>

@@ -1,6 +1,7 @@
 package com.shhutapp.fragments.whitelist;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
+import com.shhutapp.controls.ExRelativeLayout;
 import com.shhutapp.data.BaseObject;
 import com.shhutapp.data.BaseObjectList;
 import com.shhutapp.data.SMSCard;
@@ -39,6 +43,8 @@ public class WhiteListNew extends BaseFragments {
     private TextView tvCounter;
     private boolean isError;
     //private WhiteListAppCont whitelistAppCont;
+    private ExRelativeLayout rootLayout;
+    private int itemNumber;
     public WhiteListNew(){
         super(MainActivity.getMainActivity());
     }
@@ -61,35 +67,41 @@ public class WhiteListNew extends BaseFragments {
                 WhiteListCard c = new WhiteListCard();
                 c.setID(-1);
                 c.setName(sName);
-                int id = c.newlist(getMainActivity().getDB());
-                Bundle b = new Bundle();
-                b.putInt("id",id);
-                b.putString("name", sName);
-                page.whitelistAppCont = new WhiteListAppCont(getMainActivity(), page);
-                page.whitelistAppCont.setArguments(b);
-                getMainActivity().getSupportFragmentManager().beginTransaction().
-                        addToBackStack(null).
-                        remove(getIAm()).
-                        add(R.id.whitelistPage, page.whitelistAppCont,"AppCont").
-                        commit();
+                boolean r = getMainActivity().getDBHelper().isExistWhiteList(sName);
+                if (!r) {
+                    int id = c.newlist(getMainActivity().getDB());
+                    Bundle b = new Bundle();
+                    b.putInt("id", id);
+                    b.putString("name", sName);
+                    page.whitelistAppCont = new WhiteListAppCont(getMainActivity(), page);
+                    page.whitelistAppCont.setArguments(b);
+                    getMainActivity().getSupportFragmentManager().beginTransaction().
+                            addToBackStack(null).
+                            remove(getIAm()).
+                            add(R.id.whitelistPage, page.whitelistAppCont, "AppCont").
+                            commit();
+                    //hideKeyboard();
+                } else {
+                    setError(true);
+                }
             }
         });
         getMainActivity().getHeader().setOnCancelListener(new OnCancelListener() {
             @Override
             public void onCancel() {
-                    if (getMainActivity().isWhiteListEmpty()) {
-                        getMainActivity().getSupportFragmentManager().beginTransaction().
-                                addToBackStack(null).
-                                remove(getIAm()).
-                                add(R.id.whitelistPage, page.getWhiteListEmpty()).
-                                commit();
-                    } else {
-                        getMainActivity().getSupportFragmentManager().beginTransaction().
-                                addToBackStack(null).
-                                remove(page.getWhitelistNew()).
-                                add(R.id.whitelistPage, page.getWhitelistList()).
-                                commit();
-                    }
+                if (getMainActivity().isWhiteListEmpty()) {
+                    getMainActivity().getSupportFragmentManager().beginTransaction().
+                            addToBackStack(null).
+                            remove(getIAm()).
+                            add(R.id.whitelistPage, page.getWhiteListEmpty()).
+                            commit();
+                } else {
+                    getMainActivity().getSupportFragmentManager().beginTransaction().
+                            addToBackStack(null).
+                            remove(page.getWhitelistNew()).
+                            add(R.id.whitelistPage, page.getWhitelistList()).
+                            commit();
+                }
             }
         });
     }
@@ -101,6 +113,7 @@ public class WhiteListNew extends BaseFragments {
     @Override
     public void onViewCreated(View view, Bundle saved) {
         super.onViewCreated(view, saved);
+        rootLayout = (ExRelativeLayout) rView.findViewById(R.id.rlWhiteListNew);
         edWhiteList = (EditText)rView.findViewById(R.id.edWhiteListNew);
         rlEditTextNormal = (RelativeLayout) rView.findViewById(R.id.rlWhiteListEditTextNormal);
         rlEditTextError  = (RelativeLayout) rView.findViewById(R.id.rlWhiteListEditTextError);
@@ -112,6 +125,7 @@ public class WhiteListNew extends BaseFragments {
         super.onResume();
         Bundle b = getArguments();
         int count = b.getInt("count");
+        itemNumber = count+1;
         if(b != null && b.getBoolean("isArgs")){
             card = new WhiteListCard();
             card.setID(b.getInt("id"));
@@ -127,28 +141,37 @@ public class WhiteListNew extends BaseFragments {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 setError(false);
-                if (edWhiteList.getText().toString().length() > 3) {
+                if (edWhiteList.getText().toString().length() > 0) {
                     getMainActivity().getHeader().setVisibleOk(true);
                 }
                 if(edWhiteList.getText().toString().length()>=24){
                     edWhiteList.setText(edWhiteList.getText().toString().substring(0,23));
                     edWhiteList.setSelection(edWhiteList.getText().toString().length(), edWhiteList.getText().toString().length());
                 }
+                StringBuilder sb = new StringBuilder();
+                sb.append(edWhiteList.getText().toString().length());
+                sb.append("/");
+                sb.append(itemNumber);
+                tvCounter.setText(sb.toString());
             }
-
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
         StringBuilder sb = new StringBuilder();
-        sb.append(count+1);
+        sb.append(0);
         sb.append("/");
         sb.append(count+1);
         tvCounter.setText(sb.toString());
         getMainActivity().getHeader().setTextHeader(getMainActivity().getResources().getString(R.string.whitelist));
         getMainActivity().getHeader().setInvisibleAll();
         getMainActivity().getHeader().setVisibleCancel(true);
-        //showKeyboadr();
+        rootLayout.showKeyboard();
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        rootLayout.hideKeyboard();
     }
     public void setEnteredText(String message){
         edWhiteList.setText(message);

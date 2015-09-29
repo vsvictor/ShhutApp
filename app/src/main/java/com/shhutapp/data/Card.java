@@ -21,6 +21,7 @@ public class Card extends IntStringPair {
 
 	private int minutes;
 	private boolean onoff;
+	private int time;
 
 	public Card(){
 		super(-1,"");
@@ -134,5 +135,8 @@ public class Card extends IntStringPair {
 	}
 	public boolean isOn(){
 		return onoff;
+	}
+	public int getTime(){
+		return sms.getTime();
 	}
 }

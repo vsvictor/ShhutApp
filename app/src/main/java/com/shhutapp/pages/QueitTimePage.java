@@ -101,7 +101,7 @@ public class QueitTimePage extends BasePage {
                 card.setBegin(DateTimeOperator.toDateTime(ss[0].trim(), "HH:mm"));
                 card.setEnd(DateTimeOperator.toDateTime(ss[1].trim(), "HH:mm"));
                 card.setDays(days);
-                card.setOnOff(instance.onoff);
+                card.setOnOff(getMainActivity().getDB(), instance.onoff);
                 card.save(getMainActivity().getDB(), sms_id, wl_id, isUpdate);
                 if (qt_control.isAdded()) {
                     fragmentManager().beginTransaction().
@@ -142,9 +142,6 @@ public class QueitTimePage extends BasePage {
                             show(qt_list).
                             commit();
                 }
-                //qt_scale = null;
-                //qt_control = null;
-
                 getMainActivity().getHeader().setInvisibleAll();
                 getMainActivity().getHeader().setVisibleBack(true);
                 getMainActivity().getHeader().setTextHeader(getMainActivity().getResources().getString(R.string.queittime));
@@ -176,13 +173,11 @@ public class QueitTimePage extends BasePage {
                         add(R.id.queitTimePage, qt_control).
                         commit();
                 //fragmentManager().beginTransaction().add(R.id.queitTimePage, qt_control).commit();
+                getMainActivity().getSettings().setFirstQueit(false );
             }
-
             @Override
             public void onDelete() {
-
             }
-
             @Override
             public void onEdit(int id) {
                 isUpdate = true;
@@ -231,7 +226,6 @@ public class QueitTimePage extends BasePage {
                 //fragmentManager().beginTransaction().add(R.id.queitTimePage, qt_control).commit();
                 //qt_scale.setTime(d1, d2);
             }
-
             @Override
             public void onSelected(int id) {
             }

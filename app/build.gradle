@@ -8,8 +8,8 @@ android {
         applicationId "com.shhutapp"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 9
-        versionName "1.09"
+        versionCode 10
+        versionName "1.010"
     }
     buildTypes {
         release {

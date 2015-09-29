@@ -32,6 +32,7 @@ public class WhiteListPage extends BasePage{
     private WhiteListContacts whitelistCont;
     private WhiteListApplications whitelistApp;
     private BasePage prev;
+    private WhiteListPage instance;
     //private WhiteListAddContact whiteListAddContact;
     public WhiteListPage(){
         super(MainActivity.getMainActivity());
@@ -64,6 +65,7 @@ public class WhiteListPage extends BasePage{
         bList.putInt("back", prevID);
         whitelistList.setArguments(bList);
         whitelistNew = new WhiteListNew(getMainActivity(), this);
+        instance = this;
     }
     @Override
     public View onCreateView(LayoutInflater inf, ViewGroup container, Bundle savedInstanceState) {
@@ -95,6 +97,7 @@ public class WhiteListPage extends BasePage{
             public void onAdd() {
                 header.setInvisibleAll();
                 header.setVisibleCancel(true);
+                whitelistNew = new WhiteListNew(getMainActivity(), instance);
                 Bundle b = new Bundle();
                 b.putBoolean("isArgs", false);
                 b.putInt("count", whitelistList.getCount());
@@ -139,6 +142,7 @@ public class WhiteListPage extends BasePage{
             public void onAdd() {
                 header.setInvisibleAll();
                 header.setVisibleCancel(true);
+                whitelistList = new WhiteListList(getMainActivity(), instance);
                 Bundle b = new Bundle();
                 b.putBoolean("isArgs", false);
                 b.putInt("count", 0);

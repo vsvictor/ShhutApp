@@ -141,4 +141,5 @@
     <string name="not_book">Not from the phone book</string>
     <string name="urgent">Urgent call</string>
     <string name="urgent_ext">Allow after 3 missing\nfor 5 minutes</string>
+    <string name="whitelist_has_been">This white list has been</string>
 </resources>

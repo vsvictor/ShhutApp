@@ -173,8 +173,12 @@ public class QueitCard extends IntStringPair{
 		}
 	}
 
-	public void setOnOff(boolean b){
+	public void setOnOff(SQLiteDatabase db, boolean b){
 		isOn = b;
+		String[] args = {String.valueOf(getID())};
+		ContentValues cv = new ContentValues();
+		cv.put("onoff", isOn?1:0);
+		db.update("cards",cv, "id=?", args);
 	}
 	public boolean isOn(){return isOn;}
 	public String timeToText(){

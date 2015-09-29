@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -26,6 +27,8 @@ import android.widget.TextView;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
+import com.shhutapp.controls.ExLinearLayout;
+import com.shhutapp.controls.ExRelativeLayout;
 import com.shhutapp.data.ApplicationCard;
 import com.shhutapp.data.BaseObject;
 import com.shhutapp.data.BaseObjectList;
@@ -60,7 +63,7 @@ public class WhiteListAddContact extends BaseFragments {
     //private WhiteListSelectedAdapter adapterSelect;
     //private ListView lvAdded;
     private ListView lvAll;
-    private int id = -1;
+    private int listID = -1;
     private String sName;
     private EditText edSearch;
     //private RelativeLayout rlSelected;
@@ -68,6 +71,7 @@ public class WhiteListAddContact extends BaseFragments {
     //private int hSelected;
     private int hAll;
     private int it;
+    private ExLinearLayout rootLayout;
     public WhiteListAddContact(){
         super(MainActivity.getMainActivity());
     }
@@ -82,7 +86,7 @@ public class WhiteListAddContact extends BaseFragments {
     }
     public void onCreate(Bundle saved){
         super.onCreate(saved);
-        id = getArguments().getInt("id");
+        listID = getArguments().getInt("id");
         sName = getArguments().getString("name");
     }
     public View onCreateView(LayoutInflater inf, ViewGroup container, Bundle savedInstanceState){
@@ -92,6 +96,7 @@ public class WhiteListAddContact extends BaseFragments {
     @Override
     public void onViewCreated(View view, Bundle saved) {
         super.onViewCreated(view, saved);
+        rootLayout = (ExLinearLayout) rView.findViewById(R.id.llAddContactSelector);
         rlAll = (RelativeLayout) rView.findViewById(R.id.rlWhiteListAddContactList);
         hAll = rlAll.getLayoutParams().height;
         lvAll = (ListView)rView.findViewById(R.id.lvAddContactList);
@@ -124,13 +129,20 @@ public class WhiteListAddContact extends BaseFragments {
                 });
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 rlAll.setLayoutParams(params);
+                rootLayout.showKeyboard();
+/*
+                InputMethodManager imm = (InputMethodManager) getMainActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                }
+*/
             }
         });
         getMainActivity().getHeader().setOnCancelSearchListener(new OnCancelListener() {
             @Override
             public void onCancel() {
                 edSearch.setText("");
-                adapterCont = new WhiteListContactsAdapter(getMainActivity(), contacts);
+                adapterCont = new WhiteListContactsAdapter(getMainActivity(), contacts, listID);
                 lvAll.setAdapter(adapterCont);
                 lvAll.setSelection(0);
             }
@@ -138,6 +150,7 @@ public class WhiteListAddContact extends BaseFragments {
         getMainActivity().getHeader().setOnBackSearchListener(new OnBackListener() {
             @Override
             public void onBack() {
+
                 LinearLayout.LayoutParams pSelected = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 LinearLayout.LayoutParams pAll = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 pAll.height = hAll;
@@ -148,6 +161,7 @@ public class WhiteListAddContact extends BaseFragments {
                 getMainActivity().getHeader().setVisibleTextHeader(true);
                 getMainActivity().getHeader().setVisibleBack(true);
                 getMainActivity().getHeader().setVisibleSearch(true);
+                rootLayout.hideKeyboard();
             }
         });
     }
@@ -166,7 +180,7 @@ public class WhiteListAddContact extends BaseFragments {
                 getMainActivity().getHeader().setVisibleCounter(false);
                 page.whitelistAppCont = new WhiteListAppCont(getMainActivity(), page);
                 Bundle bcont = new Bundle();
-                bcont.putInt("id", id);
+                bcont.putInt("id", listID);
                 bcont.putString("name", sName);
                 page.whitelistAppCont.setArguments(bcont);
                 WhiteListContacts www = new WhiteListContacts(getMainActivity(), page);
@@ -185,10 +199,10 @@ public class WhiteListAddContact extends BaseFragments {
         });
         Bundle b = getArguments();
         if(b != null){
-            id = b.getInt("id");
+            listID = b.getInt("id");
         }
-        selected = getMainActivity().getDBHelper().loadContactsSelected(id);
-        contacts = getMainActivity().getDBHelper().loadContacts(id);
+        selected = getMainActivity().getDBHelper().loadContactsSelected(listID);
+        contacts = getMainActivity().getDBHelper().loadContacts(listID);
 
         BaseObjectList ol = new BaseObjectList();
         for(int i = 0; i<selected.size();i++){
@@ -201,8 +215,9 @@ public class WhiteListAddContact extends BaseFragments {
             ap.setSection(1);
             ol.add(ap);
         }
-        adapterCont = new WhiteListContactsAdapter(getMainActivity(),ol);
+        adapterCont = new WhiteListContactsAdapter(getMainActivity(),ol, listID);
         lvAll.setAdapter(adapterCont);
+        lvAll.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
         getMainActivity().getHeader().setVisibleCounter(true);
         if(selected != null) getMainActivity().getHeader().setCounter(selected.size());
         else getMainActivity().getHeader().setCounter(0);
@@ -214,11 +229,33 @@ public class WhiteListAddContact extends BaseFragments {
                 WhiteListContactsAdapter ad = (WhiteListContactsAdapter)parent.getAdapter();
                 ContactCard card = (ContactCard) ad.getData().get(position);
                 if(card.getState()) {
-                    ivOn.performClick();
+                    //ivOn.performClick();
+                    it = position;
+                    card.setState(false);
+                    selected.remove(card);
+                    card.setSection(1);
+                    card.deleteFromList(getMainActivity().getDB(), listID);
+                    ivOn.setVisibility(View.INVISIBLE);
+                    ivOff.setVisibility(View.VISIBLE);
+                    ad.notifyDataSetAdded();
+                    getMainActivity().getHeader().setCounter(selected.size());
+
                 }
                 else {
-                    ivOff.performClick();
+                    //ivOff.performClick();
+                    it = position;
+                    card.setState(true);
+                    selected.add(card);
+                    card.setSection(0);
+                    card.saveToList(getMainActivity().getDB(), listID);
+                    ivOn.setVisibility(View.VISIBLE);
+                    ivOff.setVisibility(View.INVISIBLE);
+                    ad.notifyDataSetAdded();
+                    getMainActivity().getHeader().setCounter(selected.size());
+
                 }
+//                ad.notifyDataSetChanged();
+//                lvAll.invalidate();
             }
         });
     }
@@ -226,8 +263,10 @@ public class WhiteListAddContact extends BaseFragments {
         private ArrayList<String> myElements;
         private HashMap<String, Integer> azIndexer;
         private String[] sections;
-        public WhiteListContactsAdapter(Context context, BaseObjectList list) {
+        private int listID;
+        public WhiteListContactsAdapter(Context context, BaseObjectList list, int id) {
             super(context, list);
+            listID = id;
             myElements = new ArrayList<String>();
             azIndexer = new HashMap<String, Integer>();
             for(BaseObject b: list) {
@@ -290,7 +329,7 @@ public class WhiteListAddContact extends BaseFragments {
                     card.setState(false);
                     selected.remove(card);
                     card.setSection(1);
-                    card.deleteFromList(getMainActivity().getDB(), id);
+                    card.deleteFromList(getMainActivity().getDB(), listID);
                     ivOn.setVisibility(View.INVISIBLE);
                     ivOff.setVisibility(View.VISIBLE);
                     notifyDataSetAdded();
@@ -304,7 +343,7 @@ public class WhiteListAddContact extends BaseFragments {
                     card.setState(true);
                     selected.add(card);
                     card.setSection(0);
-                    card.saveToList(getMainActivity().getDB(), id);
+                    card.saveToList(getMainActivity().getDB(), listID);
                     ivOn.setVisibility(View.VISIBLE);
                     ivOff.setVisibility(View.INVISIBLE);
                     notifyDataSetAdded();
@@ -327,7 +366,7 @@ public class WhiteListAddContact extends BaseFragments {
         private void setDelimiter(ContactCard curr, ContactCard prev){
         }
         public void notifyDataSetUpdated(){
-            list = MainActivity.getMainActivity().getDBHelper().loadContacts(id);
+            list = MainActivity.getMainActivity().getDBHelper().loadContacts(listID);
             data = list;
             super.notifyDataSetChanged();
             lvAll.setSelection(it);

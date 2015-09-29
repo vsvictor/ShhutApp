@@ -25,6 +25,8 @@ import java.util.Date;
 
 public class Scale extends BaseFragments {
     private MainTimeSeekBar msbBegin;
+    private SecondTimeSeekBar msbSec;
+
     private RelativeLayout rlTimer;
     private TextView tvHoursValue;
     private TextView tvMinutesValue;
@@ -33,7 +35,6 @@ public class Scale extends BaseFragments {
     private TextView tvMinutes;
     private MainPage page;
     private boolean showed;
-    private SecondTimeSeekBar msbSec;
     private int minInFirst;
     private int minInsec;
     private TextView tvDiriv;
@@ -76,31 +77,26 @@ public class Scale extends BaseFragments {
         tvMinutes.setText(getMainActivity().getResources().getString(R.string.min));
         tvMinutesValue = (TextView) rView.findViewById(R.id.tvMinutesValue);
         tvBefore = (TextView) rView.findViewById(R.id.tvBefore);
+
         msbBegin = (MainTimeSeekBar) rView.findViewById(R.id.msbBegin);
         msbBegin.setThumb(R.drawable.thumb_full);
         msbBegin.setOnChangeListener(new OnTimeChanged() {
             @Override
             public void onTimeChanged(int minutes) {
                 minInFirst = minutes;
+                Log.i("settime","minutes:"+minutes);
                 if (minutes > 0) {
                     rlTimer.setVisibility(View.VISIBLE);
                     if (!showed) {
-                        /*getMainActivity().getSupportFragmentManager().beginTransaction().
-                                show(page.getOkCancel()).
-                                commit();*/
                         getMainActivity().setDream(true);
                         showed = true;
                     }
                     Date d = Calendar.getInstance().getTime();
-                    d.setTime(d.getTime() + (minutes * 60 * 1000));
+                    //d.setTime(d.getTime() + (minutes * 60 * 1000));
+                    d.setTime((minutes * 60 * 1000));
                     tvBefore.setText(DateTimeOperator.dateToTimeString(d));
                 } else {
                     rlTimer.setVisibility(View.INVISIBLE);
-/*
-                    getMainActivity().getSupportFragmentManager().beginTransaction().
-                            hide(page.getOkCancel()).
-                            commit();
-*/
                     showed = false;
                     getMainActivity().setDream(false);
                 }
@@ -108,7 +104,9 @@ public class Scale extends BaseFragments {
                 tvDiriv.setVisibility(View.VISIBLE);
                 int h = minutes / 60;
                 int m = minutes - (h * 60);
+                //Log.i("MIN",""+m);
                 tvHoursValue.setText(String.valueOf(h));
+                //Log.i("MSBeg",""+minutes);
                 String sText = DateTimeOperator.minutesToString(minutes,
                         getMainActivity().getResources().getString(R.string.h),
                         getMainActivity().getResources().getString(R.string.min));
@@ -126,6 +124,7 @@ public class Scale extends BaseFragments {
             public void onTimeChanged(int minutes) {
                 int h = minInFirst / 60;
                 int t = (h * 60) + minutes;
+                Log.i("mbSec",""+minInFirst+" h:"+h+" h*60:"+h*60+" minutes:"+minutes+" time in minutes:"+t);
                 msbBegin.setTime(t);
                 msbBegin.invalidate();
                 tvMinutesValue.setText(String.valueOf(minutes));
@@ -133,6 +132,7 @@ public class Scale extends BaseFragments {
         });
         msbBegin.setSecond(msbSec);
         msbSec.setMain(msbBegin);
+
     }
     public void setTime(int minutes){
         msbBegin.setTime(minutes);

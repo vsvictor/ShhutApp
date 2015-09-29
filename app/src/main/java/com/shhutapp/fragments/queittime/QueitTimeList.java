@@ -177,7 +177,7 @@ public class QueitTimeList extends BaseFragments {
         super.onResume();
         showEmpty(getMainActivity().isQueitTimeEmpty());
 
-        if(isEmpty){
+        if(isEmpty && getMainActivity().getSettings().isFirstQueit()){
             rlQueitTimeEmpty.setVisibility(View.VISIBLE);
             rlQueitTimeData.setVisibility(View.INVISIBLE);
         }
@@ -234,6 +234,24 @@ public class QueitTimeList extends BaseFragments {
 
             ivCardOn.setVisibility(card.isOn()?View.VISIBLE:View.INVISIBLE);
             ivCardOff.setVisibility(card.isOn()?View.INVISIBLE:View.VISIBLE);
+
+            ivCardOff.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    card.setOnOff(getMainActivity().getDB(), true);
+                    //card.save(getMainActivity().getDB());
+                    notifyDataSetUpdated();
+                }
+            });
+            ivCardOn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    card.setOnOff(getMainActivity().getDB(),false);
+                    //card.save(getMainActivity().getDB());
+                    notifyDataSetUpdated();
+                }
+            });
+
 
             return view;
         }

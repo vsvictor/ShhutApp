@@ -173,7 +173,16 @@ public class MessageList extends BaseFragments {
             final SMSCard card = (SMSCard) getData().get(position);
             view = this.getInflater().inflate(R.layout.message_item, parent, false);
             TextView tvText = (TextView) view.findViewById(R.id.tvTextMessage);
-            tvText.setText(card.getText());
+
+            String s  = card.getText();
+            final int beg = s.indexOf("{Loc}");
+            if(beg > 0) {
+                String res = s.substring(0, beg) + " " + s.substring(beg + 5, s.length() - 1);
+                tvText.setText(res);
+            }
+            else{
+                tvText.setText(card.getText());
+            }
             final ImageView ivOn = (ImageView) view.findViewById(R.id.ivMessageOn);
             final ImageView ivOff = (ImageView) view.findViewById(R.id.ivMessageOff);
             if(card.getState()) {
@@ -189,6 +198,7 @@ public class MessageList extends BaseFragments {
                 public void onClick(View v) {
                     OffAll();
                     card.setState(false);
+
                     notifyDataSetChanged();
                 }
             });
@@ -197,6 +207,7 @@ public class MessageList extends BaseFragments {
                 public void onClick(View v) {
                     OffAll();
                     getMainActivity().selectSMS(card);
+                    listener.onSelected(card.getID());
                     card.setState(true);
                     notifyDataSetChanged();
                 }

@@ -32,12 +32,11 @@ public class MainTimeSeekBar extends ImageView{
     private float offset;
     private boolean isUp;
     private OnTimeChanged onChange;
-    private int tapCounter;
-    private int diriv;
     private boolean isScroll;
     private SecondTimeSeekBar second;
     private MotionEvent ev;
     private boolean isStop;
+    private boolean lock;
 
     public MainTimeSeekBar(Context context) {
         super(context);
@@ -64,10 +63,9 @@ public class MainTimeSeekBar extends ImageView{
         offset = 0;
         minus = 0;
         isUp = true;
-        tapCounter = 1;
-        diriv = 6;
         isScroll = true;
         isStop = false;
+        lock(true);
         gestureDetector = new GestureDetector(new GestureDetector.OnGestureListener() {
             @Override
             public boolean onDown(MotionEvent e) {
@@ -83,14 +81,16 @@ public class MainTimeSeekBar extends ImageView{
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
                 offset = e2.getX();
+                //Log.i("Offset", ""+offset+" e1.getX():"+e1.getX()+" e2.getX():"+e2.getX()+" distanseX:"+distanceX);
                 return true;
             }
             @Override
             public void onLongPress(MotionEvent e) {
                 isUp = true;
                 setVisible(false);
-                MotionEvent toSec = MotionEvent.obtain(ev.getDownTime(), ev.getEventTime(), MotionEvent.ACTION_SCROLL,
-                        ev.getX(), ev.getY(), 0);
+                MotionEvent toSec = MotionEvent.obtain(ev.getDownTime(), ev.getEventTime(),
+                        MotionEvent.ACTION_SCROLL,ev.getX(), ev.getY(), 0);
+
                 isStop = true;
                 getSecond().setFocusableInTouchMode(true);
                 getSecond().requestFocus();
@@ -126,11 +126,11 @@ public class MainTimeSeekBar extends ImageView{
     @Override
     protected synchronized void onDraw(Canvas canvas){
         super.onDraw(canvas);
-        float width = getLayoutParams().width;
+        float width = getLayoutParams().width-(thumb.getWidth()/2);
         float height = getLayoutParams().height;
         float line = 2*(height/4);
         float fourty = height/4;
-        int step = Math.round(width/diriv);
+        //int step = Math.round(width/diriv);
         Paint p = new Paint();
         Paint e = new Paint();
         p.setColor(dis);
@@ -138,36 +138,92 @@ public class MainTimeSeekBar extends ImageView{
 
         canvas.drawRect(0, line - 1, width, line + 1, p);
         canvas.drawRect(0, line - 1, offset, line + 1, e);
-
+/*
         if(isScroll) {
-            if (!isUp && offset > width / 2) minus -= 2;
-            else if (!isUp && offset == 0 && minus < 0) minus += 2;
+            int ii = offsetToTime(0,Math.round(offset));
+            if (!isUp && ii>=480) minus -= 1;
+            else if (!isUp && offset == 0 && minus < 0) minus += 1;
         }
+*/
         boolean isSmall = true;
         int beg = 1;
         if(minus<0) beg=minus;
-        for(int i = beg;i<width;i++){
-            if(i%(step*tapCounter)==0){
-                if(isSmall) canvas.drawRect(i-2,line-fourty/2,i+2,line+fourty/2,p);
-                else canvas.drawRect(i-2,line-fourty,i+2,line+fourty,p);
-                isSmall = !isSmall;
-            }
-        }
         if(thumb != null){
             if(offset>width) offset=width;
             if(offset<0) offset = 0;
             canvas.drawBitmap(thumb, offset, (height/2)-fourty, e);
         }
+        int offtime = offsetToTime(minus, Math.round(offset));
+        Log.i("onDraw",""+offtime+" offset:"+offset+" minus:"+minus);
+        if(onChange != null) onChange.onTimeChanged(offtime);
         invalidate();
-        if(onChange != null) onChange.onTimeChanged(offsetToTime(minus, Math.round(offset)));
     }
     public void setOnChangeListener(OnTimeChanged list){
         onChange = list;
     }
-    public int offsetToTime(int minus, int offset){
+/*
+    public int offsetTo(int minus, int offset){
         float res = 0;
-        float one = getMeasuredWidth()/180;
-        res = Math.round((Math.abs(minus)+Math.abs(offset))*180/getMeasuredWidth());
+        float hour;
+        //hour = Math.round((getMeasuredWidth()-(thumb.getWidth()/2))/8);
+        hour = Math.round((getLayoutParams().width-(thumb.getWidth()/2))/8);
+        float min = hour/60;
+        res = Math.round((Math.abs(minus)+Math.abs(offset))*min);
+        if(res > 24*60) res = 24*60;
+        Log.i("Time",""+res+" offset:"+offset+" minus:"+minus+" onemin:"+min);
+        return Math.round(res);
+    }
+*/
+    public int offsetToTime(int minus, int offset) {
+        float arg = offset;
+        float res = 0;
+        float add = 0;
+        float minutes = 0;
+        float step = (this.getLayoutParams().width-thumb.getWidth()/2)/6;
+        if(offset>=0 && offset<=step){
+            minutes = 60;
+            res = (arg*minutes/step);
+            Log.i("settime", "1");
+        }
+        else if(offset>step && offset<=(2*step)){
+            arg = arg-step;
+            minutes = 120;
+            add = 60;
+            res = (arg*minutes/step)+add;
+            Log.i("settime", "2");
+        }
+        else if(offset>2*step && offset<=3*step){
+            arg = arg-2*step;
+            add = 180;
+            minutes = 180;
+            res = (arg*minutes/step)+add;
+            Log.i("settime", "3");
+        }
+        else if(offset>3*step && offset<=4*step){
+            arg = arg-3*step;
+            add = 360;
+            minutes = 240;
+            res = (arg*minutes/step)+add;
+            Log.i("settime", "4");
+        }
+        else if(offset>4*step && offset<=5*step){
+            arg = arg-4*step;
+            add = 600;
+            minutes = 360;
+            res = (arg*minutes/step)+add;
+            Log.i("settime", "6");
+        }
+        else if(offset>5*step && offset<=6*step){
+            arg = arg-5*step;
+            add = 960;
+            minutes = 480;
+            res = (arg*minutes/step)+add;
+            Log.i("settime", "8");
+        }
+        else if(offset>6*step){
+            res=1440;
+        }
+        Log.i("settime"," Section:"+res+" minutes:"+minutes+" res:"+res+" arg:"+arg+" add:"+add+" step:"+step);
         return Math.round(res);
     }
     public void setThumb(int res){
@@ -180,28 +236,75 @@ public class MainTimeSeekBar extends ImageView{
         minus = 0;
         offset = 0;
     }
-    public void setTime(int minutes){
+/*    public void setTime(int minutes){
         float ff;
-        float f = getLayoutParams().width;//getMeasuredWidth();
-        float onemin = f/180f;
+        //Log.i("setTime:", "minutes:"+minutes);
+        float f = getLayoutParams().width-(thumb.getWidth()/2);
+        float onemin = f/480f;
+        //f = minutes*onemin;
         if((minutes*onemin)>(f-1)){
-            int full = minutes/60;
-            int min = minutes-(full*60);
-            int rr = full/3;
-            int tt = full-(rr*3);
-            minus = -Math.round(rr*180*onemin);
-            offset = onemin*(min+(tt*60));
+            Log.i("setTime minus"," minutes:"+minutes);
+            float full = (int)(minutes/480f);
+            Log.i("setTime minus"," full:"+full);
+            float min = minutes-(full*480f);
+            Log.i("setTime minus"," min:"+min);
+            minus = -(int)Math.abs(full*480*onemin);//-Math.round(rr*480*onemin);
+            offset = (int)Math.abs(onemin * min);
             int qwe = 1;
+            Log.i("setTime minus", "offset:"+offset+" minutes:"+minutes+" onemin:"+onemin+" hours:"+minutes/60+" full:"+full);
         }
         else {
             ff = (float)(onemin*minutes);
             minus = 0;
             offset = ff;
+            Log.i("setTime", "offset:"+offset+" minutes:"+minutes+" onemin:"+onemin+" hours:"+minutes/60);
         }
+        lock(false);
         invalidate();
+        lock(true);
     }
-    public void setDiriv(int dir){
-        diriv = dir;
+*/
+    public void setTime(int minutes){
+        float step = (this.getLayoutParams().width-thumb.getWidth()/2)/6;
+        float add = 0;
+        float mins = 0;
+        if(minutes<=60){
+            offset=step*minutes/60;
+        }
+        else if(minutes>60 && minutes<=180){
+            offset = step;
+            add = 60;
+            mins = 120;
+            offset +=(step*(minutes-add)/mins);
+        }
+        else if(minutes>180 && minutes<=360){
+            offset = 2*step;
+            add = 180;
+            mins = 180;
+            offset +=(step*(minutes-add)/mins);
+        }
+        else if(minutes>360 && minutes<=600){
+            offset = 3*step;
+            add = 360;
+            mins = 240;
+            offset +=(step*(minutes-add)/mins);
+        }
+        else if(minutes>600 && minutes<=960){
+            offset = 4*step;
+            add = 600;
+            mins = 360;
+            offset +=(step*(minutes-add)/mins);
+        }
+        else if(minutes>960 && minutes<1440){
+            offset = 5*step;
+            add = 960;
+            mins = 480;
+            offset +=(step*(minutes-add)/mins);
+        }
+        else if(minutes>1440){
+            offset = (this.getLayoutParams().width-thumb.getWidth()/2);
+        }
+
     }
     public void setScroll(boolean b){
         isScroll = b;
@@ -225,5 +328,6 @@ public class MainTimeSeekBar extends ImageView{
     public void setStop(boolean b){
         isStop = b;
     }
-
+    public boolean lock(boolean b){ this.lock = b; return this.lock;}
+    public boolean lock(){return this.lock;}
 }

@@ -23,24 +23,24 @@ import android.view.LayoutInflater;
 import com.shhutapp.R;
 import com.shhutapp.utils.Convertor;
 
-public class TimeBarHours extends SeekBar implements OnSeekBarChangeListener {
+public class TimeBarHours extends SeekBar{
 	private Context context;
 	private int colorDisabled = Color.argb(128, 255, 255, 255);
 	private int colorEnabled = Color.argb(255, 255, 255, 255);
 
 	public TimeBarHours(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		this.setOnSeekBarChangeListener(this);
+		//this.setOnSeekBarChangeListener(this);
 		this.context = context;
 	}
 	public TimeBarHours(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		this.setOnSeekBarChangeListener(this);
+		//this.setOnSeekBarChangeListener(this);
 		this.context = context;
 	}
 	public TimeBarHours(Context context) {
 		super(context);
-		this.setOnSeekBarChangeListener(this);
+		//this.setOnSeekBarChangeListener(this);
 		this.context = context;
 	}
 	@Override
@@ -74,14 +74,8 @@ public class TimeBarHours extends SeekBar implements OnSeekBarChangeListener {
 		Bitmap bitmapResized = Bitmap.createScaledBitmap(b, h, h, false);
 		return new BitmapDrawable(getResources(), bitmapResized);
 	}
-	@Override
-	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-		float one = getWidth()/getMax();
-	}
-	@Override
-	public void onStartTrackingTouch(SeekBar seekBar) {
-	}
-	@Override
-	public void onStopTrackingTouch(SeekBar seekBar) {
+
+	public void setTime(int time){
+		setProgress(time);
 	}
 }

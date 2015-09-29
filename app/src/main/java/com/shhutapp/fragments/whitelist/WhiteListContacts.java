@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
+import com.shhutapp.controls.ExLinearLayout;
 import com.shhutapp.data.BaseObjectList;
 import com.shhutapp.data.ContactCard;
 import com.shhutapp.data.WhiteListCard;
@@ -39,6 +40,7 @@ public class WhiteListContacts extends BaseFragments {
     private int id = -1;
     private WhiteListCard card;
     private WhiteListAddContact whitelistAddContact;
+    private ExLinearLayout rootLayout;
     public WhiteListContacts(){
         super(MainActivity.getMainActivity());
     }
@@ -71,6 +73,7 @@ public class WhiteListContacts extends BaseFragments {
     @Override
     public void onViewCreated(View view, Bundle saved) {
         super.onViewCreated(view, saved);
+        rootLayout = (ExLinearLayout) rView.findViewById(R.id.llWhiteListContact);
         ivAddContact = (ImageView) rView.findViewById(R.id.ivAddContact);
         ivAddAllContacts = (ImageView) rView.findViewById(R.id.ivAddAllContact);
         ivAddContact.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +167,7 @@ public class WhiteListContacts extends BaseFragments {
     @Override
     public void onResume(){
         super.onResume();
+        //rootLayout.hideKeyboard();
         if(card.getUnknown()){
             ivUnFamOff.setVisibility(View.INVISIBLE);
             ivUnFamOn.setVisibility(View.VISIBLE);

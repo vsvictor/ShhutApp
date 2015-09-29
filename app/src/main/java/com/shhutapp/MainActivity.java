@@ -29,6 +29,8 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.RelativeLayout;
 
+import com.shhutapp.data.BaseObjectList;
+import com.shhutapp.data.Incomming;
 import com.shhutapp.data.QueitCard;
 import com.shhutapp.data.SMSCard;
 import com.shhutapp.data.WhiteListCard;
@@ -70,6 +72,8 @@ public class MainActivity extends FragmentActivity {
     public static Header header;
     private RelativeLayout actionBar;
 
+    public static BaseObjectList in_numbers;
+
     private SMSCard selected_sms;
     private WhiteListCard selectetd_whitelist;
     private QueitCard selected_queit_card;
@@ -86,6 +90,7 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.main);
+        in_numbers = new BaseObjectList();
         NotificationManager man = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
 /*
@@ -120,7 +125,7 @@ public class MainActivity extends FragmentActivity {
         }*/
         startService(new Intent(this, Carder.class));
         //startService(new Intent(this, NoficationService.class));
-        startService(new Intent(this, NLService.class));
+/*        startService(new Intent(this, NLService.class));
         bindService(new Intent(this, NLService.class), new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
@@ -132,7 +137,7 @@ public class MainActivity extends FragmentActivity {
 
             }
         },BIND_AUTO_CREATE);
-
+*/
         settings = new AppSettings(this);
         if (savedInstanceState == null) {
             header = new Header(this);
@@ -411,6 +416,9 @@ public class MainActivity extends FragmentActivity {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
         }
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+    public BaseObjectList getIncomming(){
+        return in_numbers;
     }
 
 }

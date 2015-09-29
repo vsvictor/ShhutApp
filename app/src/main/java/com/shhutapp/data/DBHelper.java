@@ -67,7 +67,8 @@ public class DBHelper extends SQLiteOpenHelper{
 		command = "create table sms ("
 				+ "id integer primary key autoincrement," 
 				+ "name text,"
-				+ "sms text" + ");";
+				+ "sms text,"
+				+ "time integer" + ");";
 		db.execSQL(command);
 		command = "create table white_list ("
 				+ "id integer primary key autoincrement,"
@@ -140,7 +141,7 @@ public class DBHelper extends SQLiteOpenHelper{
 			/*if(idWhiteList >=0) card.setWhiteList(true);
 			else card.setWhiteList(false);*/
 			int onoff = cur.getInt(12);
-			card.setOnOff(onoff==1?true:false);
+			card.setOnOff(act.getDB(), onoff == 1 ? true : false);
 		}
 		return card;
 	}
@@ -162,7 +163,7 @@ public class DBHelper extends SQLiteOpenHelper{
 			String s = cur.getString(5);
 			Bitmap b = Convertor.Base64ToBitmap(s);
 			card.setBackground(b);
-			card.setOnoff(cur.getInt(10)==1?true:false);
+			card.setOnoff(cur.getInt(10) == 1 ? true : false);
 		}
 		return card;
 	}
@@ -184,7 +185,7 @@ public class DBHelper extends SQLiteOpenHelper{
 				String s = cur.getString(5);
 				Bitmap b = Convertor.Base64ToBitmap(s);
 				card.setBackground(b);
-				card.setOnoff(cur.getInt(10)==1?true:false);
+				card.setOnoff(cur.getInt(10) == 1 ? true : false);
 				list.add(card);
 			}while(cur.moveToNext());
 		}
@@ -213,7 +214,7 @@ public class DBHelper extends SQLiteOpenHelper{
 				else card.setSMS(false);
 				long idWhite = cur.getLong(11);
 				int isOn = cur.getInt(12);
-				card.setOnOff(isOn == 1?true:false);
+				card.setOnOff(act.getDB(), isOn == 1 ? true : false);
 				list.add(card);
 			}while(cur.moveToNext());
 		}
@@ -242,7 +243,7 @@ public class DBHelper extends SQLiteOpenHelper{
 				else card.setSMS(false);
 				long idWhite = cur.getLong(11);
 				int isOn = cur.getInt(12);
-				card.setOnOff(isOn == 1?true:false);
+				card.setOnOff(act.getDB(),isOn == 1?true:false);
 				list.add(card);
 			}while(cur.moveToNext());
 		}
@@ -262,6 +263,19 @@ public class DBHelper extends SQLiteOpenHelper{
 			}while(c.moveToNext());
 		}
 		return list;
+	}
+	public SMSCard loadMessage(int id){
+		SMSCard result = null;
+		String[] args = {String.valueOf(id)};
+		Cursor c = act.getDB().query("sms",null,"id=?",args,null,null,null);
+		if(c.moveToFirst()){
+			result = new SMSCard();
+			result.setID(id);
+			result.setName(c.getString(1));
+			result.setText(c.getString(2));
+			result.setTime(c.getInt(3));
+		}
+		return result;
 	}
 	public void deleteGeoCard(long loc){
         long l;
@@ -319,6 +333,13 @@ public class DBHelper extends SQLiteOpenHelper{
 		String[] args = {String.valueOf(id)};
 		act.getDB().delete("white_list", "id=?", args);
 		act.getDB().delete("white_list_contacts", "idlist=?", args);
+	}
+	public boolean isExistWhiteList(String wl_name){
+		String[] cols = {"id"};
+		String[] args = {wl_name};
+		Cursor c = act.getDB().query("white_list",cols,"name=?",args,null,null,null);
+		if(c.moveToFirst()) return true;
+		else return false;
 	}
 	public void deleteQueitCard(long id){
 		String[] args = {String.valueOf(id)};

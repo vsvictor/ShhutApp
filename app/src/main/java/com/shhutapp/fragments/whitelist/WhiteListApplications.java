@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
+import com.shhutapp.controls.ExLinearLayout;
 import com.shhutapp.data.ApplicationCard;
 import com.shhutapp.data.BaseObject;
 import com.shhutapp.data.BaseObjectList;
@@ -58,7 +59,7 @@ public class WhiteListApplications extends BaseFragments {
     private EditText edSearch;
     private BaseObjectList contacts;
     private BaseObjectList selected;
-
+    private ExLinearLayout rootLayout;
     public WhiteListApplications(){
         super(MainActivity.getMainActivity());
     }
@@ -87,6 +88,7 @@ public class WhiteListApplications extends BaseFragments {
     @Override
     public void onViewCreated(View view, Bundle saved) {
         super.onViewCreated(view, saved);
+        rootLayout = (ExLinearLayout) rView.findViewById(R.id.llWhiteListApp);
         rlAll = (RelativeLayout) rView.findViewById(R.id.rlWhiteListAppList);
         hAll = rlAll.getLayoutParams().height;
         lvAll = (ListView)rView.findViewById(R.id.lvAppList);
@@ -120,6 +122,7 @@ public class WhiteListApplications extends BaseFragments {
                 //rlSelected.getLayoutParams().height = 0;
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 rlAll.setLayoutParams(params);
+                rootLayout.showKeyboard();
             }
         });
         getMainActivity().getHeader().setOnCancelSearchListener(new OnCancelListener() {
@@ -143,6 +146,7 @@ public class WhiteListApplications extends BaseFragments {
                 getMainActivity().getHeader().setVisibleTextHeader(true);
                 getMainActivity().getHeader().setVisibleBack(true);
                 getMainActivity().getHeader().setVisibleSearch(true);
+                rootLayout.hideKeyboard();
             }
         });
     }

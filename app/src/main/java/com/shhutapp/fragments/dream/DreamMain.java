@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.shhutapp.MainActivity;
 import com.shhutapp.R;
+import com.shhutapp.controls.AlphaTear;
 import com.shhutapp.controls.TransportedLayoutCircle;
 import com.shhutapp.fragments.BaseFragments;
 import com.shhutapp.pages.BasePage;
@@ -55,7 +56,7 @@ public class DreamMain extends BaseFragments {
     private TransportedLayoutCircle ivDreamBack;
     private TextView tvPressToExit;
     private TextView tvDreamBeginText;
-
+    private AlphaTear tear;
     public DreamMain(){
         super(MainActivity.getMainActivity());
     }
@@ -79,6 +80,10 @@ public class DreamMain extends BaseFragments {
     }
     public void onViewCreated(View view, Bundle saved) {
         super.onViewCreated(view, saved);
+
+        //tear = (AlphaTear) rView.findViewById(R.id.svDreamBack);
+        //tear.setZOrderOnTop(true);
+
         getMainActivity().getHeader().setHeight(0);
         beg = Calendar.getInstance().getTime();
 
@@ -120,7 +125,7 @@ public class DreamMain extends BaseFragments {
         tvDreamBeginValue = (TextView) rView.findViewById(R.id.tvDreamBeginValue);
         tvDreamBeginValue.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Light.ttf"));
         tvDreamBeginValue.setText(DateTimeOperator.dateToTimeString12(beg));
-        //tvDreamBeginValue.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Light.ttf"));
+        tvDreamBeginValue.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Light.ttf"));
         tvDreamTimerHourseValue = (TextView) rView.findViewById(R.id.tvDreamTimerHoursValue);
         tvDreamTimerHourseValue.setTypeface(Typeface.createFromAsset(getMainActivity().getAssets(), "fonts/Roboto-Light.ttf"));
         tvDreamTimerMinValue = (TextView) rView.findViewById(R.id.tvDreamTimerMinValue);

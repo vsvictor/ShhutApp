@@ -3,12 +3,12 @@
 
     <string name="app_name">ShhutApp</string>
     <string name="action_settings">Settings</string>
-    <string name="min">min</string>
+    <string name="min">MIN</string>
     <string name="add_firs_place">Add you\nfirst location!</string>
     <string name="add_firs_massage">Make\nfirst message!</string>
     <string name="add_firs_whitelist">Make\nfirst white list!</string>
     <string name="add_firs_queittime">Make\nfirst queit time!</string>
-    <string name="h">h</string>
+    <string name="h">H</string>
     <string name="m">m</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>

@@ -37,12 +37,12 @@ public class DateTimeOperator {
 		String stringDate = simpledateformat.format(aDate);
 		String[] ss = stringDate.split(":");
 		int hh = Integer.parseInt(ss[0]);
-		String suff = "AM";
+		/*String suff = "AM";
 		if(hh>=12){
 			hh = hh-12;
 			suff = "PM";
-		}
-		return stringDate+" "+suff;
+		}*/
+		return stringDate;//+" "+suff;
 	}
 
 	public static String numberDayToNameDay(Context context, int number){
@@ -67,6 +67,7 @@ public class DateTimeOperator {
 		return d;
 	}
 	public static String minutesToString(int minutes, String h, String m){
+		//Log.i("TAG",""+minutes);
 		int hours = minutes/60;
 		int ost = minutes-(hours*60);
 		return String.valueOf(hours)+" "+h+" "+String.valueOf(ost)+" "+m;

@@ -47,18 +47,21 @@ public abstract class BasePage extends Fragment {
     public FragmentManager fragmentManager(){
         return getMainActivity().getSupportFragmentManager();
     }
+/*
     public void showKeyboadr(){
         InputMethodManager imm = (InputMethodManager) act.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
         }
     }
+
     public void hideKeyboard(){
         InputMethodManager imm = (InputMethodManager) act.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
         }
     }
+*/
     public void setLastOperation(LastOperation oper){
         lastOperation = oper;
     }

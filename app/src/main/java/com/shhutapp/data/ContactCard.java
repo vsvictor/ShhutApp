@@ -41,7 +41,9 @@ public class ContactCard extends IntStringPair{
 		else this.avatar = null;
 	}
 	public Bitmap getAvatar(){ return this.avatar;}
-	public void setState(boolean b){ this.OnOff = b;}
+	public void setState(boolean b){
+		this.OnOff = b;
+	}
 	public boolean getState(){return this.OnOff;}
 	public void saveToList(SQLiteDatabase db, int id){
 		String[] args = {String.valueOf(id),String.valueOf(this.getID()), "0"};
