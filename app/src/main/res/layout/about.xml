@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/aboutback"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:background="@drawable/stars"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/rlRating">
+
+        <RelativeLayout
+            android:layout_width="160dp"
+            android:layout_height="60dp"
+            android:background="@drawable/rate"
+            android:id="@+id/rlRate"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp">
+            <TextView
+                android:id="@+id/tvEstimate"
+                android:text="@string/estimate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/white"
+                android:textSize="22dp" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/copyright"
+            android:id="@+id/tvCopyRight"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/version_lite"
+        android:layout_above="@id/rlRating"
+        android:id="@+id/tvVersion"
+        android:layout_centerHorizontal="true"
+        android:textSize="24dp"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tvAppName" />
+
+</RelativeLayout>

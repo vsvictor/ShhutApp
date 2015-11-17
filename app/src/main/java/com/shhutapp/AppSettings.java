@@ -106,4 +106,13 @@ public class AppSettings {
 
 	public int getDefaultAccuracy(){ return  sh.getInt("accuracy", Criteria.ACCURACY_MEDIUM);}
 	public SharedPreferences getSharedPreferences(){return sh;}
+	public boolean isPurchased(){
+		return sh.getBoolean("purchased", false);
+		//return true;
+	}
+	public void setPurchased(boolean purchased){
+		SharedPreferences.Editor ed = sh.edit();
+		ed.putBoolean("purchased", purchased);
+		ed.commit();
+	}
 }

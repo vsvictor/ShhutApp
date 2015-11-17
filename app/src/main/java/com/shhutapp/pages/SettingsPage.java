@@ -14,7 +14,9 @@ import android.widget.Toast;
 import com.shhutapp.fragments.OnBackListener;
 import com.shhutapp.fragments.OnHelpListener;
 import com.shhutapp.fragments.area.AreaCard;
+import com.shhutapp.fragments.settings.About;
 import com.shhutapp.fragments.settings.MainSettings;
+import com.shhutapp.fragments.settings.OnAbout;
 import com.shhutapp.social.common.AuthListener;
 import com.shhutapp.social.facebook.FacebookFacade;
 import com.shhutapp.social.twitter.TwitterFacade;
@@ -90,7 +92,7 @@ public class SettingsPage extends BasePage {
     }
     public void onViewCreated(View view, Bundle saved){
         super.onViewCreated(view, saved);
-        fragmentManager().beginTransaction().add(R.id.settingsPage,sn).add(R.id.settingsPage, ms).commit();
+        fragmentManager().beginTransaction().add(R.id.rlNet,sn).add(R.id.rlMainSet, ms).commit();
         getMainActivity().getHeader().setInvisibleAll();
         getMainActivity().getHeader().setLeftText(73);
         getMainActivity().getHeader().setTextHeader(getMainActivity().getResources().getString(R.string.settings));
@@ -112,7 +114,6 @@ public class SettingsPage extends BasePage {
             public void onBack() {
                 BasePage page = getMainActivity().createPageFromID(prevID);
                 getMainActivity().getSupportFragmentManager().beginTransaction().remove(getCurrent()).commit();
-
                 getMainActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, page).commit();
             }
         });
@@ -182,7 +183,21 @@ public class SettingsPage extends BasePage {
                 Intent sendIntent = new Intent(Intent.ACTION_VIEW);
                 sendIntent.setType("vnd.android-dir/mms-sms");
                 sendIntent.putExtra("sms_body", SocialCommon.getText());
-                getMainActivity().startActivity(sendIntent);             }
+                getMainActivity().startActivity(sendIntent);
+            }
+        });
+        ms.setOnAbout(new OnAbout() {
+            @Override
+            public void onAbout() {
+                About ab = new About(getMainActivity(), instance);
+                //getMainActivity().getHeader().setHeight(0);
+                getMainActivity().getSupportFragmentManager().beginTransaction().
+                        addToBackStack(null).
+                        remove(sn).
+                        remove(ms).
+                        add(R.id.main, ab).
+                        commit();
+            }
         });
     }
     @Override

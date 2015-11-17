@@ -1,201 +1,268 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/llMainSettings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/llMainSettings">
+    android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rlVolume"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rlVolume">
+        android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/tvVolume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/volume"
-            android:id="@+id/tvVolume"
-            android:layout_marginTop="@dimen/setting_volume_text_top"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/setting_volume_text_top"
+            android:text="@string/volume"
             android:textColor="@color/black"
             android:textSize="@dimen/setting_text_text_size" />
 
         <RelativeLayout
+            android:id="@+id/rlVolumeValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvVolume"
-            android:layout_marginTop="@dimen/setting_volume_top"
-            android:id="@+id/rlVolumeValue">
+            android:layout_marginTop="@dimen/setting_volume_top">
 
             <ImageView
+                android:id="@+id/ivVibro"
                 android:layout_width="@dimen/setting_volume_vibro_width"
                 android:layout_height="@dimen/setting_volume_vibro_height"
-                android:id="@+id/ivVibro"
-                android:src="@drawable/vibro"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/setting_volume_vibro_left"
-                android:layout_centerVertical="true" />
+                android:src="@drawable/vibro" />
+
+            <ImageView
+                android:id="@+id/ivColoc"
+                android:layout_width="@dimen/setting_volume_vibro_width"
+                android:layout_height="@dimen/setting_volume_vibro_height"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/setting_volume_vibro_left"
+                android:src="@drawable/coloc" />
 
             <SeekBar
+                android:id="@+id/sbVolume"
                 android:layout_width="@dimen/setting_volume_vibro_scale_width"
                 android:layout_height="wrap_content"
-                android:id="@+id/sbVolume"
-                android:progressDrawable="@drawable/progress_volume"
-                android:layout_toRightOf="@+id/ivVibro"
-                android:layout_marginLeft="@dimen/setting_volume_vibro_scale_left"
                 android:layout_centerVertical="true"
-                android:progress="100" />
+                android:layout_marginLeft="@dimen/setting_volume_vibro_scale_left"
+                android:layout_toRightOf="@+id/ivVibro"
+                android:progress="100"
+                android:progressDrawable="@drawable/progress_volume" />
         </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
         android:id="@+id/rlDiriv1"
-        android:layout_marginTop="@dimen/setting_diriv1_top"
-        android:background="@drawable/line_diriv">
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rlOnVolumeButton">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/on_volume_button"
-            android:id="@+id/tvOnVolumeText"
-            android:textColor="@color/black"
-            android:layout_marginLeft="@dimen/setting_on_volume_left"
-            android:layout_marginTop="@dimen/setting_on_volume_top"
-            android:layout_marginBottom="@dimen/setting_on_volume_bottom" />
-        <RelativeLayout
-            android:layout_below="@id/tvOnVolumeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-
-        <CheckBox
-            android:layout_width="@dimen/setting_on_volume_cb_width"
-            android:layout_height="@dimen/setting_on_volume_cb_height"
-            android:layout_centerVertical="true"
-            android:text=""
-            android:button="@drawable/check_box"
-            android:id="@+id/cbOnVolumeButton"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/setting_on_volume_cb_right"
-            android:checked="true" />
-    </RelativeLayout>
-    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:id="@+id/rlDiriv2"
-        android:background="@drawable/line_diriv">
+        android:layout_marginTop="@dimen/setting_diriv1_top"
+        android:background="@drawable/line_diriv"></RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlOnVolumeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvOnVolumeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/setting_on_volume_bottom"
+            android:layout_marginLeft="@dimen/setting_on_volume_left"
+            android:layout_marginTop="@dimen/setting_on_volume_top"
+            android:text="@string/on_volume_button"
+            android:textColor="@color/black"
+            android:textSize="@dimen/setting_text_text_size" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvOnVolumeText" />
+
+        <CheckBox
+            android:id="@+id/cbOnVolumeButton"
+            android:layout_width="@dimen/setting_on_volume_cb_width"
+            android:layout_height="@dimen/setting_on_volume_cb_height"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/setting_on_volume_cb_right"
+            android:background="@drawable/check_box_setting"
+            android:button="@android:color/transparent"
+            android:checked="true"
+            android:text="" />
+        <!--
+                <RelativeLayout
+                    android:layout_width="@dimen/setting_on_volume_cb_width"
+                    android:layout_height="@dimen/setting_on_volume_cb_height"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/cbOnVolumeButton"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/setting_on_volume_cb_right"
+                    android:background="@drawable/cb_on"
+                    android:scaleType="fitXY" />
+        -->
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rlDiriv2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rlVibrateOnActivate">
+        android:layout_height="2dp"
+        android:background="@drawable/line_diriv"></RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlVibrateOnActivate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/tvVirrateOnActivate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/on_vibrate"
-            android:id="@+id/tvVirrateOnActivate"
-            android:textColor="@color/black"
+            android:layout_marginBottom="@dimen/setting_on_volume_bottom"
             android:layout_marginLeft="@dimen/setting_on_volume_left"
             android:layout_marginTop="@dimen/setting_on_volume_top"
-            android:layout_marginBottom="@dimen/setting_on_volume_bottom" />
+            android:text="@string/on_vibrate"
+            android:textColor="@color/black"
+            android:textSize="@dimen/setting_text_text_size" />
+
         <RelativeLayout
-            android:layout_below="@id/tvVirrateOnActivate"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvVirrateOnActivate" />
 
         <CheckBox
+            android:id="@+id/cbVibrateOnActivate"
+            android:layout_width="@dimen/setting_on_volume_cb_width"
+            android:layout_height="@dimen/setting_on_volume_cb_height"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/setting_on_volume_cb_right"
+            android:background="@drawable/check_box_setting"
+            android:button="@android:color/transparent"
+            android:checked="true"
+            android:text="" />
+
+        <!--
+        <RelativeLayout
             android:layout_width="@dimen/setting_on_volume_cb_width"
             android:layout_height="@dimen/setting_on_volume_cb_height"
             android:layout_centerVertical="true"
-            android:text=""
-            android:button="@drawable/check_box"
             android:id="@+id/cbVibrateOnActivate"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/setting_on_volume_cb_right"
-            android:checked="true" />
+            android:background="@drawable/cb_on"
+            android:scaleType="fitEnd" />
+            -->
     </RelativeLayout>
+
     <RelativeLayout
+        android:id="@+id/rlDiriv3"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:id="@+id/rlDiriv3"
-        android:background="@drawable/line_diriv">
-    </RelativeLayout>
+        android:background="@drawable/line_diriv"></RelativeLayout>
+
     <RelativeLayout
+        android:id="@+id/rlLanguage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rlLanguage">
+        android:layout_height="wrap_content">
+
         <ExpandableListView
+            android:id="@+id/exLanguage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/exLanguage"
-            android:layout_marginLeft="@dimen/setting_language_left"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/setting_language_left"
             android:childDivider="@null"
             android:divider="@null"
             android:groupIndicator="@null" />
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:id="@+id/rlDiriv4"
-        android:background="@drawable/line_diriv">
-    </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rlDiriv4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rlTeam">
+        android:layout_height="2dp"
+        android:background="@drawable/line_diriv"></RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlTeam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/tvTeam"
-            android:text="@string/team"
-            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/setting_team_left"
             android:layout_marginTop="@dimen/setting_team_text_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:text="@string/team"
+            android:textColor="@color/black"
+            android:textSize="@dimen/setting_language_groupe_textsize" />
+
         <ExpandableListView
+            android:id="@+id/exTeam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvTeam"
-            android:id="@+id/exTeam"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/setting_team_left"
             android:layout_marginTop="@dimen/setting_team_top"
             android:childDivider="@null"
             android:divider="@null"
             android:groupIndicator="@null" />
     </RelativeLayout>
+
     <RelativeLayout
+        android:id="@+id/rlDiriv5"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:id="@+id/rlDiriv5"
-        android:background="@drawable/line_diriv">
-    </RelativeLayout>
+        android:layout_marginTop="16dp"
+        android:background="@drawable/line_diriv"></RelativeLayout>
+
     <RelativeLayout
+        android:id="@+id/rlAbout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rlAbout">
+        android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/tvAbout"
-            android:text="@string/about"
-            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/setting_team_left"
             android:layout_marginTop="@dimen/setting_team_text_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:text="@string/about"
+            android:textColor="@color/black"
+            android:textSize="@dimen/setting_text_text_size" />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:id="@+id/rlDiriv6"
-        android:background="@drawable/line_diriv">
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rlDiriv6"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/line_diriv"></RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlYellowBaks"
+            android:layout_width="@dimen/card_list_add_add_button_width"
+            android:layout_height="@dimen/card_list_add_add_button_height"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/card_list_add_add_button_bottom"
+            android:layout_marginRight="@dimen/card_list_add_add_button_right">
+
+            <ImageView
+                android:id="@+id/ivYelowBaks"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/yellow_baks" />
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>
